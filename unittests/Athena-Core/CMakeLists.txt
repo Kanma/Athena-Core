@@ -3,6 +3,7 @@ include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${UNITTEST_CPP_SOURCE_DIR}
 
 # List the source files
 file(GLOB SRCS main.cpp
+               test_Iterators.cpp
                test_StringsMap.cpp
                test_StringUtils.cpp
 )

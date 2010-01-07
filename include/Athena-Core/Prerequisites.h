@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <list>
+
 
 //---------------------------------------------------------------------------------------
 /// @brief	Main namespace. All the components of the Athena engine belongs to this
