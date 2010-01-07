@@ -23,6 +23,7 @@ namespace Athena
 	//-----------------------------------------------------------------------------------
     namespace Utils
     {
+        class Path;
         class StringsMap;
         class StringUtils;
 		

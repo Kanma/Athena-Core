@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS StringsMap.cpp
+set(SRCS Path.cpp
+         StringsMap.cpp
          StringUtils.cpp
 )
 
