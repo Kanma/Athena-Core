@@ -2,6 +2,9 @@
 	@author	Philip Abbet
 
 	Implementation of the class 'Athena::Utils::StringUtils'
+
+    @note   This is based on the corresponding class from
+            <a href="http://www.ogre3d.org/">Ogre3D</a>.
 */
 
 #include <Athena-Core/StringUtils.h>
