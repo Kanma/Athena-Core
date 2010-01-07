@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS StringUtils.cpp
+set(SRCS StringsMap.cpp
+         StringUtils.cpp
 )
 
 # Precompiler definitions

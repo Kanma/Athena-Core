@@ -10,6 +10,7 @@
 #include <Athena-Core/Declarations.h>
 #include <string>
 #include <vector>
+#include <map>
 
 //---------------------------------------------------------------------------------------
 /// @brief	Main namespace. All the components of the Athena engine belongs to this
@@ -22,7 +23,11 @@ namespace Athena
 	//-----------------------------------------------------------------------------------
     namespace Utils
     {
+        class StringsMap;
         class StringUtils;
+		
+		/// @brief Used to represent an ID
+		typedef unsigned int tID;
     }
 }
 
