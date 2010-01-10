@@ -6,6 +6,7 @@ file(GLOB SRCS main.cpp
                test_Iterators.cpp
                test_StringsMap.cpp
                test_StringUtils.cpp
+               test_Variant.cpp
 )
 
 # Create and link the executable
