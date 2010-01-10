@@ -47,6 +47,38 @@ public:
   	/// @return         The list of substrings
     //-----------------------------------------------------------------------------------
 	static tStringsList split(const std::string& str, const std::string& delims = "\t\n ");
+
+    //-----------------------------------------------------------------------------------
+  	/// @brief  Upper-cases all the characters in the string
+    //-----------------------------------------------------------------------------------
+    static void toLowerCase(std::string& str);
+
+    //-----------------------------------------------------------------------------------
+  	/// @brief  Lower-cases all the characters in the string
+    //-----------------------------------------------------------------------------------
+    static void toUpperCase(std::string& str);
+
+    //-----------------------------------------------------------------------------------
+  	/// @brief  Indicates whether the string begins with the pattern passed in
+   	///  	
+  	/// @param str          Source string
+  	/// @param pattern      The pattern to compare with
+  	/// @param lowerCase    If true, the start of the string will be lower cased before
+  	///                     comparison, pattern should also be in lower case.
+    //-----------------------------------------------------------------------------------
+    static bool startsWith(const std::string& str, const std::string& pattern,
+                           bool lowerCase = true);
+
+    //-----------------------------------------------------------------------------------
+  	/// @brief  Indicates whether the string ends with the pattern passed in
+   	///  	
+  	/// @param str          Source string
+  	/// @param pattern      The pattern to compare with
+  	/// @param lowerCase    If true, the end of the string will be lower cased before
+  	///                     comparison, pattern should also be in lower case.
+    //-----------------------------------------------------------------------------------
+    static bool endsWith(const std::string& str, const std::string& pattern,
+                         bool lowerCase = true);
 };
 
 }

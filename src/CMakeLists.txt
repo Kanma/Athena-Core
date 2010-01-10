@@ -2,6 +2,7 @@
 set(SRCS Path.cpp
          StringsMap.cpp
          StringUtils.cpp
+         StringConverter.cpp
 )
 
 # Precompiler definitions

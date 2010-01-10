@@ -66,3 +66,49 @@ StringUtils::tStringsList StringUtils::split(const string& str, const string& de
 
 	return ret;
 }
+
+//-----------------------------------------------------------------------
+
+void StringUtils::toLowerCase(std::string& str)
+{
+    std::transform(str.begin(), str.end(), str.begin(), tolower);
+}
+
+//-----------------------------------------------------------------------
+
+void StringUtils::toUpperCase(std::string& str) 
+{
+    std::transform(str.begin(), str.end(), str.begin(), toupper);
+}
+
+//-----------------------------------------------------------------------
+
+bool StringUtils::startsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+{
+    size_t thisLen = str.length();
+    size_t patternLen = pattern.length();
+    if (thisLen < patternLen || patternLen == 0)
+        return false;
+
+    string startOfThis = str.substr(0, patternLen);
+    if (lowerCase)
+        StringUtils::toLowerCase(startOfThis);
+
+    return (startOfThis == pattern);
+}
+
+//-----------------------------------------------------------------------
+
+bool StringUtils::endsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+{
+    size_t thisLen = str.length();
+    size_t patternLen = pattern.length();
+    if (thisLen < patternLen || patternLen == 0)
+        return false;
+
+    string endOfThis = str.substr(thisLen - patternLen, patternLen);
+    if (lowerCase)
+        StringUtils::toLowerCase(endOfThis);
+
+    return (endOfThis == pattern);
+}
