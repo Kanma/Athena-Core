@@ -8,6 +8,7 @@
 #define _ATHENA_CORE_PREREQUISITES_H_
 
 #include <Athena-Core/Declarations.h>
+#include <Athena-Math/Prerequisites.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -28,6 +29,7 @@ namespace Athena
         class Path;
         class StringsMap;
         class StringUtils;
+        class StringConverter;
 		
 		/// @brief Used to represent an ID
 		typedef unsigned int tID;

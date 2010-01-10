@@ -11,6 +11,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
 
+# Setup the dependencies
+if (NOT ATHENA_MATH_STATIC)
+    set(ATHENA_MATH_STATIC ON)
+endif()
+
 # Subdirectories to process
 add_subdirectory(dependencies)
 add_subdirectory(src)
