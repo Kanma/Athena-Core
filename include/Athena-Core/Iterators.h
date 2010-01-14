@@ -1,7 +1,7 @@
 /** @file	ListIterator.h
 	@author	Philip Abbet
 
-	Definition of the class 'Athena::Utils::ListIterator'
+	Declaration of the iterators classes
     
     @note   This is based on the corresponding class from
             <a href="http://www.ogre3d.org/">Ogre3D</a>.

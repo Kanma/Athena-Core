@@ -1,7 +1,7 @@
 /**	@file	Variant.h
 	@author	Philip Abbet
 
-	Definition of the class 'Athena::Utils::Variant'
+	Declaration of the class 'Athena::Utils::Variant'
 */
 
 #ifndef _ATHENA_UTILS_VARIANT_H_

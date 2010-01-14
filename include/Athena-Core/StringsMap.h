@@ -1,7 +1,7 @@
 /** @file   StringsMap.h
     @author Philip Abbet
 
-    Definition of the class 'Athena::Utils::StringsMap'
+    Declaration of the class 'Athena::Utils::StringsMap'
 */
 
 #ifndef _ATHENA_UTILS_STRINGSMAP_H_
