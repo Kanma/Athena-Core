@@ -27,9 +27,11 @@ namespace Athena
     namespace Utils
     {
         class Path;
+        class PropertiesList;
         class StringsMap;
         class StringUtils;
         class StringConverter;
+        class Variant;
 		
 		/// @brief Used to represent an ID
 		typedef unsigned int tID;

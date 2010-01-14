@@ -4,6 +4,7 @@ include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/
 # List the source files
 file(GLOB SRCS main.cpp
                test_Iterators.cpp
+               test_PropertiesList.cpp
                test_StringsMap.cpp
                test_StringUtils.cpp
                test_Variant.cpp

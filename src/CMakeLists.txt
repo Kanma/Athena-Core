@@ -1,5 +1,6 @@
 # List the source files
 set(SRCS Path.cpp
+         PropertiesList.cpp
          StringsMap.cpp
          StringUtils.cpp
          StringConverter.cpp
