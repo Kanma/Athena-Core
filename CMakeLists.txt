@@ -6,6 +6,10 @@ if (NOT ATHENA_DOUBLE_PRECISION)
     set(ATHENA_DOUBLE_PRECISION OFF CACHE BOOL "Use double-precision floating point numbers")
 endif()
 
+if (NOT ATHENA_CORE_SCRIPTING)
+    set(ATHENA_CORE_SCRIPTING OFF CACHE BOOL "Enable scripting support (needs Athena-Scripting)")
+endif()
+
 # Set the output paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/lib")

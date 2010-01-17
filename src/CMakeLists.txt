@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS Utils/Describable.cpp
+set(SRCS Signals/Signal.cpp
+         Utils/Describable.cpp
          Utils/Path.cpp
          Utils/PropertiesList.cpp
          Utils/StringsMap.cpp
@@ -19,6 +20,12 @@ if (ATHENA_DOUBLE_PRECISION)
     add_definitions(-DATHENA_DOUBLE_PRECISION=1)
 else()
     add_definitions(-DATHENA_DOUBLE_PRECISION=0)
+endif()
+
+if (ATHENA_CORE_SCRIPTING)
+    add_definitions(-DATHENA_CORE_SCRIPTING=1)
+else()
+    add_definitions(-DATHENA_CORE_SCRIPTING=0)
 endif()
 
 # List the include paths

@@ -6,6 +6,7 @@ file(GLOB SRCS main.cpp
                test_Describable.cpp
                test_Iterators.cpp
                test_PropertiesList.cpp
+               test_Signal.cpp
                test_StringsMap.cpp
                test_StringUtils.cpp
                test_Variant.cpp
