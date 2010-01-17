@@ -8,6 +8,10 @@ set(SRCS Describable.cpp
          Variant.cpp
 )
 
+if (APPLE)
+    set(PLATFORM_SRCS OSX/Timer.cpp)
+endif()
+
 # Precompiler definitions
 add_definitions(-DATHENA_EXPORTS)
 
@@ -22,8 +26,8 @@ include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/
 
 # Declaration of the library
 if (NOT ATHENA_CORE_STATIC)
-    add_library(Athena-Core SHARED ${SRCS})
+    add_library(Athena-Core SHARED ${SRCS} ${PLATFORM_SRCS})
     target_link_libraries(Athena-Core Athena-Math)
 else()
-    add_library(Athena-Core STATIC ${SRCS})
+    add_library(Athena-Core STATIC ${SRCS} ${PLATFORM_SRCS})
 endif()
