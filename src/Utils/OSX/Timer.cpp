@@ -7,7 +7,7 @@
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
 */
 
-#include <Athena-Core/Timer.h>
+#include <Athena-Core/Utils/Timer.h>
 #include <sys/time.h>
 
 using namespace Athena::Utils;

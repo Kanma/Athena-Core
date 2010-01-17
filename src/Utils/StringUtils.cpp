@@ -7,7 +7,7 @@
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
 */
 
-#include <Athena-Core/StringUtils.h>
+#include <Athena-Core/Utils/StringUtils.h>
 
 using namespace Athena::Utils;
 using namespace std;

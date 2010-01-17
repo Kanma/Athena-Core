@@ -1,5 +1,5 @@
 #include <UnitTest++.h>
-#include <Athena-Core/Variant.h>
+#include <Athena-Core/Utils/Variant.h>
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Color.h>

@@ -8,8 +8,8 @@
 #define _ATHENA_UTILS_PROPERTIESLIST_H
 
 #include <Athena-Core/Prerequisites.h>
-#include <Athena-Core/Variant.h>
-#include <Athena-Core/Iterators.h>
+#include <Athena-Core/Utils/Variant.h>
+#include <Athena-Core/Utils/Iterators.h>
 
 namespace Athena {
 namespace Utils {

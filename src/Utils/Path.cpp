@@ -4,7 +4,7 @@
 	Implementation of the class 'Athena::Utils::Path'
 */
 
-#include <Athena-Core/Path.h>
+#include <Athena-Core/Utils/Path.h>
 
 #if ATHENA_CORE_PLATFORM == ATHENA_CORE_PLATFORM_WIN32
 	#include <direct.h>

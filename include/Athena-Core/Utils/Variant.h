@@ -8,7 +8,7 @@
 #define _ATHENA_UTILS_VARIANT_H_
 
 #include <Athena-Core/Prerequisites.h>
-#include <Athena-Core/Iterators.h>
+#include <Athena-Core/Utils/Iterators.h>
 
 namespace Athena {
 namespace Utils {

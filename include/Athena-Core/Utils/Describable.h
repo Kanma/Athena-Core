@@ -8,7 +8,7 @@
 #define _ATHENA_UTILS_DESCRIBABLE_H
 
 #include <Athena-Core/Prerequisites.h>
-#include <Athena-Core/PropertiesList.h>
+#include <Athena-Core/Utils/PropertiesList.h>
 
 namespace Athena {
 namespace Utils {

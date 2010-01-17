@@ -4,7 +4,7 @@
 	Implementation of the class 'Athena::Utils::Describable'
 */
 
-#include <Athena-Core/Describable.h>
+#include <Athena-Core/Utils/Describable.h>
 
 
 using namespace Athena;

@@ -4,7 +4,7 @@
 	Implementation of the class 'Athena::Utils::StringsMap'
 */
 
-#include <Athena-Core/StringsMap.h>
+#include <Athena-Core/Utils/StringsMap.h>
 #include <assert.h>
 
 using namespace Athena;

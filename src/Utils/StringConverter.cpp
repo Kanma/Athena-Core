@@ -7,8 +7,8 @@
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
 */
 
-#include <Athena-Core/StringConverter.h>
-#include <Athena-Core/StringUtils.h>
+#include <Athena-Core/Utils/StringConverter.h>
+#include <Athena-Core/Utils/StringUtils.h>
 #include <sstream>
 
 using namespace Athena::Utils;

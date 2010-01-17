@@ -1,5 +1,5 @@
 #include <UnitTest++.h>
-#include <Athena-Core/StringUtils.h>
+#include <Athena-Core/Utils/StringUtils.h>
 
 using namespace Athena;
 using namespace Athena::Utils;

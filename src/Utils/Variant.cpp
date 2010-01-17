@@ -4,8 +4,8 @@
 	Implementation of the class 'Athena::Utils::Variant'
 */
 
-#include <Athena-Core/Variant.h>
-#include <Athena-Core/StringConverter.h>
+#include <Athena-Core/Utils/Variant.h>
+#include <Athena-Core/Utils/StringConverter.h>
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Color.h>

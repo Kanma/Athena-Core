@@ -1,5 +1,5 @@
 #include <UnitTest++.h>
-#include <Athena-Core/Describable.h>
+#include <Athena-Core/Utils/Describable.h>
 #include "mocks/Describable.h"
 
 using namespace Athena;

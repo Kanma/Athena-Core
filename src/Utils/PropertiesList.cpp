@@ -4,7 +4,7 @@
 	Implementation of the class 'Athena::Utils::PropertiesList'
 */
 
-#include <Athena-Core/PropertiesList.h>
+#include <Athena-Core/Utils/PropertiesList.h>
 
 using namespace Athena;
 using namespace Athena::Utils;

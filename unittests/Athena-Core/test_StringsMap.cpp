@@ -1,5 +1,5 @@
 #include <UnitTest++.h>
-#include <Athena-Core/StringsMap.h>
+#include <Athena-Core/Utils/StringsMap.h>
 
 using namespace Athena;
 using namespace Athena::Utils;

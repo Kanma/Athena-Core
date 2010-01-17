@@ -8,7 +8,7 @@
 #define _MOCKDESCRIBABLE_H_
 
 #include <Athena-Core/Prerequisites.h>
-#include <Athena-Core/Describable.h>
+#include <Athena-Core/Utils/Describable.h>
 
 
 //---------------------------------------------------------------------------------------

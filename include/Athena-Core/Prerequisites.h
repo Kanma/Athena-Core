@@ -31,6 +31,7 @@ namespace Athena
         class StringsMap;
         class StringUtils;
         class StringConverter;
+        class Timer;
         class Variant;
 		
 		/// @brief Used to represent an ID

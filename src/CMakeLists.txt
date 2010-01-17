@@ -1,15 +1,15 @@
 # List the source files
-set(SRCS Describable.cpp
-         Path.cpp
-         PropertiesList.cpp
-         StringsMap.cpp
-         StringUtils.cpp
-         StringConverter.cpp
-         Variant.cpp
+set(SRCS Utils/Describable.cpp
+         Utils/Path.cpp
+         Utils/PropertiesList.cpp
+         Utils/StringsMap.cpp
+         Utils/StringUtils.cpp
+         Utils/StringConverter.cpp
+         Utils/Variant.cpp
 )
 
 if (APPLE)
-    set(PLATFORM_SRCS OSX/Timer.cpp)
+    set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
 endif()
 
 # Precompiler definitions

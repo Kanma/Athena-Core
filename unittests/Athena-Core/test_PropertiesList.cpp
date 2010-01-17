@@ -1,6 +1,6 @@
 #include <UnitTest++.h>
-#include <Athena-Core/PropertiesList.h>
-#include <Athena-Core/Variant.h>
+#include <Athena-Core/Utils/PropertiesList.h>
+#include <Athena-Core/Utils/Variant.h>
 
 using namespace Athena;
 using namespace Athena::Utils;
