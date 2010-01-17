@@ -101,8 +101,8 @@ public:
     //------------------------------------------------------------------------------------
     /// @brief	Connect a method to the signal
     ///
-    /// @param  pObject   The object that is interested by the signal
-    /// @param  pMethod   The method representing the slot
+    /// @param  pObject     The object that is interested by the signal
+    /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
 	template<typename T>
     void connect(T* pObject, void (T::*pMethod)(Utils::Variant*))
@@ -135,8 +135,8 @@ public:
     //------------------------------------------------------------------------------------
     /// @brief	Disconnect a method from the signal
     ///
-    /// @param  pObject   The object that isn't interested by the signal anymore
-    /// @param  pMethod   The method representing the slot
+    /// @param  pObject     The object that isn't interested by the signal anymore
+    /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
 	template<typename T>
     void disconnect(T* pObject, void (T::*pMethod)(Utils::Variant*))

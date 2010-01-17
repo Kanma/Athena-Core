@@ -27,6 +27,8 @@ namespace Athena
     namespace Signals
     {
         class Signal;
+
+        typedef unsigned int tSignalID;
     }
 
 	//-----------------------------------------------------------------------------------
