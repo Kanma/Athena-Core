@@ -9,6 +9,7 @@
 
 #include <Athena-Core/Declarations.h>
 #include <Athena-Math/Prerequisites.h>
+#include <Athena-Core/Utils/Singleton.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -22,11 +23,21 @@
 namespace Athena
 {
 	//-----------------------------------------------------------------------------------
+	/// @brief	Contains all the logging-related classes
+	//-----------------------------------------------------------------------------------
+    namespace Log
+    {
+        class LogManager;
+        class ILogListener;
+    }
+
+	//-----------------------------------------------------------------------------------
 	/// @brief	Contains all the signals-related classes
 	//-----------------------------------------------------------------------------------
     namespace Signals
     {
         class Signal;
+        class SignalsList;
 
         typedef unsigned int tSignalID;
     }

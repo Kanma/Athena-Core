@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS Signals/Signal.cpp
+set(SRCS Log/LogManager.cpp
+         Signals/Signal.cpp
          Signals/SignalsList.cpp
          Signals/SignalsUtils.cpp
          Utils/Describable.cpp

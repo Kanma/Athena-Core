@@ -5,6 +5,7 @@ include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/
 file(GLOB SRCS main.cpp
                test_Describable.cpp
                test_Iterators.cpp
+               test_LogManager.cpp
                test_PropertiesList.cpp
                test_Signal.cpp
                test_SignalsList.cpp

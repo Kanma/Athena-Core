@@ -4,7 +4,7 @@
 
 using namespace Athena::Signals;
 using namespace Athena::Utils;
-using namespace std:
+using namespace std;
 
 
 const string SIGNAL_1 = "Signal1";
