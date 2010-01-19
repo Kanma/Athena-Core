@@ -74,7 +74,7 @@ public:
 	//------------------------------------------------------------------------------------
 	/// @brief	Returns the current byte offset from beginning
 	//------------------------------------------------------------------------------------
-    virtual size_t tell() const = 0;
+    virtual size_t tell() = 0;
 
 	//------------------------------------------------------------------------------------
 	/// @brief	Indicates if the stream has reached the end

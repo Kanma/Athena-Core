@@ -1,5 +1,6 @@
 # List the source files
 set(SRCS Data/DataStream.cpp
+         Data/FileDataStream.cpp
          Log/LogManager.cpp
          Log/XMLLogListener.cpp
          Signals/Signal.cpp
