@@ -8,6 +8,7 @@ file(GLOB SRCS main.cpp
                test_PropertiesList.cpp
                test_Signal.cpp
                test_SignalsList.cpp
+               test_SignalsUtils.cpp
                test_StringsMap.cpp
                test_StringUtils.cpp
                test_Variant.cpp

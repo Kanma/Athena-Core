@@ -1,6 +1,7 @@
 # List the source files
 set(SRCS Signals/Signal.cpp
          Signals/SignalsList.cpp
+         Signals/SignalsUtils.cpp
          Utils/Describable.cpp
          Utils/Path.cpp
          Utils/PropertiesList.cpp

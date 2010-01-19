@@ -56,7 +56,7 @@ public:
 };
 
 
-SUITE(SignalTests)
+SUITE(SignalsListTests)
 {
     TEST(SignalsList_ConnectDisconnectFunctionSlot)
     {
