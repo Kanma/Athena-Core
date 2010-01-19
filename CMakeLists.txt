@@ -10,6 +10,8 @@ if (NOT ATHENA_CORE_SCRIPTING)
     set(ATHENA_CORE_SCRIPTING OFF CACHE BOOL "Enable scripting support (needs Athena-Scripting)")
 endif()
 
+set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
+
 # Set the output paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/lib")

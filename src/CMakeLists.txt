@@ -32,6 +32,12 @@ else()
     add_definitions(-DATHENA_CORE_SCRIPTING=0)
 endif()
 
+if (ATHENA_CORE_DETAILED_LOGS)
+    add_definitions(-DATHENA_CORE_DETAILED_LOGS=1)
+else()
+    add_definitions(-DATHENA_CORE_DETAILED_LOGS=0)
+endif()
+
 # List the include paths
 include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/include)
 
