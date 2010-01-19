@@ -1,5 +1,6 @@
 # List the source files
 set(SRCS Log/LogManager.cpp
+         Log/XMLLogListener.cpp
          Signals/Signal.cpp
          Signals/SignalsList.cpp
          Signals/SignalsUtils.cpp
