@@ -129,4 +129,34 @@ SUITE(StringUtilsTests)
     	CHECK_EQUAL("gh", result[4]);
     	CHECK_EQUAL("", result[5]);
     }
+
+
+    TEST(Trim)
+    {
+        string s = " \tab c\td \t";
+
+        StringUtils::trim(s);
+
+    	CHECK_EQUAL("ab c\td", s);
+    }
+
+
+    TEST(TrimLeft)
+    {
+        string s = " \tab c\td \t";
+
+        StringUtils::trim(s, true, false);
+
+    	CHECK_EQUAL("ab c\td \t", s);
+    }
+
+
+    TEST(TrimRight)
+    {
+        string s = " \tab c\td \t";
+
+        StringUtils::trim(s, false);
+
+    	CHECK_EQUAL(" \tab c\td", s);
+    }
 }
