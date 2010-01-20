@@ -18,7 +18,7 @@ namespace Utils {
 //----------------------------------------------------------------------------------------
 /// @brief	Represents a timer
 //----------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL Timer
+class ATHENA_SYMBOL Timer
 {
 	//_____ Construction / Destruction __________
 public:

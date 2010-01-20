@@ -20,7 +20,7 @@ namespace Utils {
 //---------------------------------------------------------------------------------------
 /// @brief	Contains conversions methods to/from string
 //---------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL StringConverter
+class ATHENA_SYMBOL StringConverter
 {
 public:
     //-----------------------------------------------------------------------------------

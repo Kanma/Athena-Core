@@ -21,7 +21,7 @@ namespace Utils {
 /// @remark	The categories and properties aren't sorted by name, so the user can rely
 ///			on their order if needed
 //-----------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL PropertiesList
+class ATHENA_SYMBOL PropertiesList
 {
 	//_____ Internal types __________
 public:

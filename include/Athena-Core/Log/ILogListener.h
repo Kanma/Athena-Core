@@ -19,7 +19,7 @@ namespace Log {
 ///
 /// The log listeners must be registered with the Log Manager
 //---------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL ILogListener
+class ATHENA_SYMBOL ILogListener
 {
 	//_____ Construction / Destruction __________
 public:

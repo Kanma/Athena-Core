@@ -26,7 +26,7 @@ namespace Data {
 /// @remark This mecanism is a simplified version of Ogre::DataStream from
 ///         <a href="http://www.ogre3d.org/">Ogre3D</a>.
 //----------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL DataStream
+class ATHENA_SYMBOL DataStream
 {
 	//_____ Construction / Destruction __________
 public:

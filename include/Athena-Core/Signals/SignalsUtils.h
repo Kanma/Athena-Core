@@ -20,7 +20,7 @@ namespace Signals {
 ///
 ///	@remark All the methods of this class are static
 //----------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL SignalsUtils
+class ATHENA_SYMBOL SignalsUtils
 {
 	//_____ Internal types __________
 private:

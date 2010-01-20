@@ -18,7 +18,7 @@ namespace Data {
 //----------------------------------------------------------------------------------------
 /// @brief	DataStream implementation for a file
 //----------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL FileDataStream: public DataStream
+class ATHENA_SYMBOL FileDataStream: public DataStream
 {
 	//_____ Construction / Destruction __________
 public:

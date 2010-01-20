@@ -15,7 +15,7 @@ namespace Utils {
 //---------------------------------------------------------------------------------------
 /// @brief	Contains utility methods to manipulate file paths
 //---------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL Path
+class ATHENA_SYMBOL Path
 {
 	//_____ Static methods __________
 public:

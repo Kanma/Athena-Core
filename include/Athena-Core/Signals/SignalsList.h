@@ -18,7 +18,7 @@ namespace Signals {
 //----------------------------------------------------------------------------------------
 /// @brief	Represents a list of signals, each identified by an ID
 //----------------------------------------------------------------------------------------
-class ATHENA_CORE_SYMBOL SignalsList
+class ATHENA_SYMBOL SignalsList
 {
 	//_____ Construction / Destruction __________
 public:

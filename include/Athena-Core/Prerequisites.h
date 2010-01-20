@@ -7,8 +7,8 @@
 #ifndef _ATHENA_CORE_PREREQUISITES_H_
 #define _ATHENA_CORE_PREREQUISITES_H_
 
-#include <Athena-Core/Declarations.h>
 #include <Athena-Math/Prerequisites.h>
+#include <Athena-Core/Config.h>
 #include <Athena-Core/Utils/Singleton.h>
 #include <string>
 #include <vector>
