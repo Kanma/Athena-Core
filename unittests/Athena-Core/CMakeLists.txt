@@ -1,5 +1,8 @@
 # Setup the search paths
-include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/include ${UNITTEST_CPP_SOURCE_DIR}/include)
+include_directories(${ATHENA_CORE_SOURCE_DIR}/include
+                    ${ATHENA_MATH_SOURCE_DIR}/include
+                    ${ATHENA_BINARY_DIR}/include
+                    ${UNITTEST_CPP_SOURCE_DIR}/include)
 
 # List the source files
 file(GLOB SRCS main.cpp

@@ -13,9 +13,12 @@ endif()
 set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 
 # Set the output paths
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/lib")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
+if (NOT ATHENA_BINARY_DIR)
+    set(ATHENA_BINARY_DIR "${ATHENA_CORE_BINARY_DIR}")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/lib")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
+endif()
 
 # Setup the dependencies
 if (NOT ATHENA_MATH_STATIC)
@@ -24,5 +27,6 @@ endif()
 
 # Subdirectories to process
 add_subdirectory(dependencies)
+add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(unittests)

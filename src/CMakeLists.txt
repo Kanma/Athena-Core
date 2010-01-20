@@ -22,26 +22,10 @@ endif()
 # Precompiler definitions
 add_definitions(-DATHENA_EXPORTS)
 
-if (ATHENA_DOUBLE_PRECISION)
-    add_definitions(-DATHENA_DOUBLE_PRECISION=1)
-else()
-    add_definitions(-DATHENA_DOUBLE_PRECISION=0)
-endif()
-
-if (ATHENA_CORE_SCRIPTING)
-    add_definitions(-DATHENA_CORE_SCRIPTING=1)
-else()
-    add_definitions(-DATHENA_CORE_SCRIPTING=0)
-endif()
-
-if (ATHENA_CORE_DETAILED_LOGS)
-    add_definitions(-DATHENA_CORE_DETAILED_LOGS=1)
-else()
-    add_definitions(-DATHENA_CORE_DETAILED_LOGS=0)
-endif()
-
 # List the include paths
-include_directories(${ATHENA_CORE_SOURCE_DIR}/include ${ATHENA_MATH_SOURCE_DIR}/include)
+include_directories(${ATHENA_CORE_SOURCE_DIR}/include
+                    ${ATHENA_MATH_SOURCE_DIR}/include
+                    ${ATHENA_BINARY_DIR}/include)
 
 # Declaration of the library
 if (NOT ATHENA_CORE_STATIC)

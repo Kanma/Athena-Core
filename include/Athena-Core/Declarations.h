@@ -7,6 +7,7 @@
 #ifndef _ATHENA_CORE_DECLARATIONS_H_
 #define _ATHENA_CORE_DECLARATIONS_H_
 
+#include <Athena-Core/Config.h>
 
 // Supported platforms
 #define ATHENA_CORE_PLATFORM_WIN32 1
