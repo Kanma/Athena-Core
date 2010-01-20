@@ -144,3 +144,11 @@ size_t DataStream::skipLine(const string& delim)
 
     return total;
 }
+
+//-----------------------------------------------------------------------
+
+template<typename T> DataStream& DataStream::operator>>(T& val)
+{
+    read(static_cast<void*>(&val), sizeof(T));
+    return *this;
+}

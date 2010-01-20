@@ -133,6 +133,12 @@ public:
 	/// @return         The number of bytes skipped
 	//------------------------------------------------------------------------------------
 	virtual size_t skipLine(const std::string& delim = "\n");
+
+	//------------------------------------------------------------------------------------
+	/// @brief	Streaming operators
+	//------------------------------------------------------------------------------------
+	// Streaming operators
+    template<typename T> DataStream& operator>>(T& val);
 };
 
 }
