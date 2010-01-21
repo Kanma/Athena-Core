@@ -28,9 +28,23 @@ namespace Data {
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL DataStream
 {
+    //_____ Internal types __________
+public:
+    enum tMode
+    {
+        READ = 1,
+        WRITE = 2,
+        READ_WRITE = READ | WRITE
+    };
+    
+
 	//_____ Construction / Destruction __________
 public:
-	DataStream() {};
+	DataStream(tMode mode)
+	: m_mode(mode)
+	{
+	}
+	
 	virtual ~DataStream() {};
 
 
@@ -137,8 +151,20 @@ public:
 	//------------------------------------------------------------------------------------
 	/// @brief	Streaming operators
 	//------------------------------------------------------------------------------------
-	// Streaming operators
     template<typename T> DataStream& operator>>(T& val);
+
+	//------------------------------------------------------------------------------------
+	/// @brief	Returns the mode of the stream
+	//------------------------------------------------------------------------------------
+    inline tMode getMode() const
+    {
+        return m_mode;
+    }
+
+
+    //_____ Attributes __________
+protected:
+    tMode m_mode;
 };
 
 }

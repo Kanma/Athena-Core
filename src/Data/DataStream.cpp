@@ -19,6 +19,9 @@ using namespace std;
 
 size_t DataStream::readLine(char* buf, size_t maxCount, const string& delim)
 {
+    if ((m_mode & READ) == 0)
+        return 0;
+
 	// Deal with both Unix & Windows LFs
 	bool trimCR = false;
 	if (delim.find_first_of('\n') != string::npos)
@@ -78,6 +81,9 @@ string DataStream::getLine(bool trimAfter)
     string retString;
     size_t readCount;
     
+    if ((m_mode & READ) == 0)
+        return 0;
+
     // Keep looping while not hitting delimiter
     while ((readCount = read(tmpBuf, ATHENA_STREAM_TEMP_SIZE-1)) != 0)
     {
@@ -119,6 +125,9 @@ size_t DataStream::skipLine(const string& delim)
     size_t total = 0;
     size_t readCount;
     
+    if ((m_mode & READ) == 0)
+        return 0;
+
     // Keep looping while not hitting delimiter
     while ((readCount = read(tmpBuf, ATHENA_STREAM_TEMP_SIZE - 1)) != 0)
     {
@@ -149,6 +158,9 @@ size_t DataStream::skipLine(const string& delim)
 
 template<typename T> DataStream& DataStream::operator>>(T& val)
 {
+    if ((m_mode & READ) == 0)
+        return 0;
+
     read(static_cast<void*>(&val), sizeof(T));
     return *this;
 }

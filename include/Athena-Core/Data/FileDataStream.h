@@ -28,7 +28,7 @@ public:
     /// @param  strFileName     Path to the file
     /// @param  bReadOnly       Indicates if the file must be open in read-only mode
     //------------------------------------------------------------------------------------
-    FileDataStream(const std::string& strFileName, bool bReadOnly = true);
+    FileDataStream(const std::string& strFileName, tMode mode = READ);
 
     //------------------------------------------------------------------------------------
     /// @brief	Destructor

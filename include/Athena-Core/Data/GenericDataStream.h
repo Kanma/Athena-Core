@@ -28,8 +28,8 @@ public:
     /// @param  strFileName     Path to the file
     /// @param  bReadOnly       Indicates if the file must be open in read-only mode
     //------------------------------------------------------------------------------------
-    GenericDataStream(T* stream)
-    : m_stream(stream)
+    GenericDataStream(T* stream, tMode mode)
+    : DataStream(mode), m_stream(stream)
     {
     }
 

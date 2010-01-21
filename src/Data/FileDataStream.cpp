@@ -12,9 +12,12 @@ using namespace std;
 
 /****************************** CONSTRUCTION / DESTRUCTION ******************************/
 
-FileDataStream::FileDataStream(const std::string& strFileName, bool bReadOnly)
+FileDataStream::FileDataStream(const std::string& strFileName, tMode mode)
+: DataStream(mode)
 {
-    m_stream.open(strFileName.c_str(), (bReadOnly ? ios_base::in : ios_base::in | ios_base::out));
+    m_stream.open(strFileName.c_str(), (mode == READ ? ios_base::in :
+                                                       (mode == WRITE ? ios_base::out :
+                                                                        ios_base::in | ios_base::out)));
 }
 
 //-----------------------------------------------------------------------
@@ -29,6 +32,9 @@ FileDataStream::~FileDataStream()
 
 size_t FileDataStream::read(void* buf, size_t count)
 {
+    if ((m_mode & READ) == 0)
+        return 0;
+
 	m_stream.read(static_cast<char*>(buf), static_cast<std::streamsize>(count));
     return m_stream.gcount();
 }
@@ -37,6 +43,9 @@ size_t FileDataStream::read(void* buf, size_t count)
 
 size_t FileDataStream::write(const void* buf, size_t count)
 {
+    if ((m_mode & WRITE) == 0)
+        return 0;
+
 	m_stream.write(static_cast<const char*>(buf), static_cast<std::streamsize>(count));
 	return count;
 }
