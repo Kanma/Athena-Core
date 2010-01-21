@@ -27,6 +27,7 @@ namespace Athena
 	//-----------------------------------------------------------------------------------
     namespace Data
     {
+        class ConfigFile;
         class DataStream;
         class FileDataStream;
     }

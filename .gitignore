@@ -1,3 +1,5 @@
 *.tmproj
 
 /build*
+
+/unittests/data/TestConfigFile2.cfg

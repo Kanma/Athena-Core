@@ -6,6 +6,7 @@ include_directories(${ATHENA_CORE_SOURCE_DIR}/include
 
 # List the source files
 file(GLOB SRCS main.cpp
+               test_ConfigFile.cpp
                test_Describable.cpp
                test_FileDataStream.cpp
                test_Iterators.cpp
