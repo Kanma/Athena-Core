@@ -81,6 +81,27 @@ public:
 	void log(tMessageType type, const char* strContext, const std::string& strMessage,
 			 const char* strFileName, const char* strFunction, unsigned int uiLine);
 
+    //------------------------------------------------------------------------------------
+    /// @brief	Log a message in the file
+    ///
+    /// @param	type			Type of the message
+    /// @param	strContext		Context of the message
+    /// @param	strMessage		The message
+    /// @param	strFileName		The name of the file in which the call is made
+    /// @param	strFunction		The name of the function in which the call is made
+    /// @param	uiLine			The line in the file in which the call is made
+    //------------------------------------------------------------------------------------
+	inline static void Log(tMessageType type, const char* strContext,
+	                       const std::string& strMessage, const char* strFileName,
+	                       const char* strFunction, unsigned int uiLine)
+	{
+	    if (ms_Singleton)
+	    {
+            ms_Singleton->log(type, strContext, strMessage, strFileName,
+                              strFunction, uiLine);
+	    }
+	}
+
 
 	//_____ Internal types __________
 private:
