@@ -26,7 +26,14 @@ add_definitions(-DATHENA_CORE_UNITTESTS_DATA_PATH="${ATHENA_CORE_SOURCE_DIR}/uni
 
 # Create and link the executable
 add_executable(UnitTests-Athena-Core ${SRCS})
-target_link_libraries(UnitTests-Athena-Core UnitTest++ Athena-Core)
+
+set(LIBS UnitTest++ Athena-Core)
+
+if (ATHENA_CORE_STATIC)
+    list(APPEND LIBS Athena-Math)
+endif()
+
+target_link_libraries(UnitTests-Athena-Core ${LIBS})
 
 # Run the unit tests
 get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)

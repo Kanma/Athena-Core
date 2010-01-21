@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 2.6)
 project(ATHENA_CORE)
 
 # Settings
-if (NOT ATHENA_DOUBLE_PRECISION)
-    set(ATHENA_DOUBLE_PRECISION OFF CACHE BOOL "Use double-precision floating point numbers")
-endif()
-
 if (NOT ATHENA_CORE_SCRIPTING)
     set(ATHENA_CORE_SCRIPTING OFF CACHE BOOL "Enable scripting support (needs Athena-Scripting)")
 endif()
