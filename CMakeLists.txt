@@ -20,11 +20,20 @@ if (NOT ATHENA_BINARY_DIR)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ATHENA_CORE_BINARY_DIR}/bin")
 endif()
 
-# XMake settings
+# Setup the dependencies
+if (NOT DEFINED ATHENA_MATH_STATIC)
+    set(ATHENA_MATH_STATIC ON)
+endif()
+
+# Import XMake
 if (EXISTS "${ATHENA_CORE_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
     include("${ATHENA_CORE_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
 endif()
 
+# Process the dependencies
+add_subdirectory(dependencies)
+
+# XMake settings
 if (ATHENA_CORE_STATIC)
     xmake_init_static(ATHENA_CORE)
     xmake_add_link_paths(ATHENA_CORE "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
@@ -38,13 +47,7 @@ endif()
 xmake_add_include_paths(ATHENA_CORE ${ATHENA_CORE_SOURCE_DIR}/include
                                     ${XMAKE_ATHENA_MATH_INCLUDE_PATHS})
 
-# Setup the dependencies
-if (NOT DEFINED ATHENA_MATH_STATIC)
-    set(ATHENA_MATH_STATIC ON)
-endif()
-
 # Subdirectories to process
-add_subdirectory(dependencies)
 add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(unittests)
