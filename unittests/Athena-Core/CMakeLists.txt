@@ -1,8 +1,6 @@
 # Setup the search paths
-include_directories(${ATHENA_CORE_SOURCE_DIR}/include
-                    ${ATHENA_MATH_SOURCE_DIR}/include
-                    ${ATHENA_BINARY_DIR}/include
-                    ${UNITTEST_CPP_SOURCE_DIR}/include)
+xmake_include_directories(ATHENA_CORE)
+xmake_include_directories(UNITTEST_CPP)
 
 # List the source files
 file(GLOB SRCS main.cpp
@@ -27,13 +25,8 @@ add_definitions(-DATHENA_CORE_UNITTESTS_DATA_PATH="${ATHENA_CORE_SOURCE_DIR}/uni
 # Create and link the executable
 add_executable(UnitTests-Athena-Core ${SRCS})
 
-set(LIBS UnitTest++ Athena-Core)
-
-if (ATHENA_CORE_STATIC)
-    list(APPEND LIBS Athena-Math)
-endif()
-
-target_link_libraries(UnitTests-Athena-Core ${LIBS})
+xmake_target_link_libraries(UnitTests-Athena-Core UNITTEST_CPP)
+xmake_target_link_libraries(UnitTests-Athena-Core ATHENA_CORE)
 
 # Run the unit tests
 get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)

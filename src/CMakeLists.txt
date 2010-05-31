@@ -24,14 +24,12 @@ endif()
 add_definitions(-DATHENA_EXPORTS)
 
 # List the include paths
-include_directories(${ATHENA_CORE_SOURCE_DIR}/include
-                    ${ATHENA_MATH_SOURCE_DIR}/include
-                    ${ATHENA_BINARY_DIR}/include)
+xmake_include_directories(ATHENA_CORE)
 
 # Declaration of the library
 if (NOT ATHENA_CORE_STATIC)
     add_library(Athena-Core SHARED ${SRCS} ${PLATFORM_SRCS})
-    target_link_libraries(Athena-Core Athena-Math)
+    xmake_target_link_libraries(Athena-Core ATHENA_MATH)
 else()
     add_library(Athena-Core STATIC ${SRCS} ${PLATFORM_SRCS})
 endif()
