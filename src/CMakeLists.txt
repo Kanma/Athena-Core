@@ -30,6 +30,11 @@ xmake_include_directories(ATHENA_CORE)
 if (NOT ATHENA_CORE_STATIC)
     add_library(Athena-Core SHARED ${SRCS} ${PLATFORM_SRCS})
     xmake_target_link_libraries(Athena-Core ATHENA_MATH)
+
+    # Set the INSTALL_PATH so that the dynamic library can be local
+    set_target_properties(Athena-Core PROPERTIES BUILD_WITH_INSTALL_RPATH ON
+                                                 INSTALL_NAME_DIR "@rpath"
+    )
 else()
     add_library(Athena-Core STATIC ${SRCS} ${PLATFORM_SRCS})
 endif()

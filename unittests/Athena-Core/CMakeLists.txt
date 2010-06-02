@@ -28,6 +28,13 @@ add_executable(UnitTests-Athena-Core ${SRCS})
 xmake_target_link_libraries(UnitTests-Athena-Core UNITTEST_CPP)
 xmake_target_link_libraries(UnitTests-Athena-Core ATHENA_CORE)
 
+# Set the RPATH
+if (APPLE)
+    set_target_properties(UnitTests-Athena-Core PROPERTIES LINK_FLAGS "-Wl,-rpath,@loader_path/.")
+elseif (UNIX)
+    set_target_properties(UnitTests-Athena-Core PROPERTIES INSTALL_RPATH ".")
+endif()
+
 # Run the unit tests
 get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)
 add_custom_target(Run-UnitTests-Athena-Core ALL UnitTests-Athena-Core DEPENDS UnitTests-Athena-Core WORKING_DIRECTORY ${PATH} COMMENT "Unit testing: Athena-Core..." VERBATIM)
