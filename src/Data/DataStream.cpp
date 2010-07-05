@@ -6,6 +6,8 @@
 
 #include <Athena-Core/Data/DataStream.h>
 #include <Athena-Core/Utils/StringUtils.h>
+#include <memory.h>
+#include <string.h>
 
 using namespace Athena::Data;
 using namespace Athena::Utils;

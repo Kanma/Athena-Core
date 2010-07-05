@@ -71,14 +71,14 @@ StringUtils::tStringsList StringUtils::split(const string& str, const string& de
 
 void StringUtils::toLowerCase(std::string& str)
 {
-    std::transform(str.begin(), str.end(), str.begin(), tolower);
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
 }
 
 //-----------------------------------------------------------------------
 
 void StringUtils::toUpperCase(std::string& str) 
 {
-    std::transform(str.begin(), str.end(), str.begin(), toupper);
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 }
 
 //-----------------------------------------------------------------------

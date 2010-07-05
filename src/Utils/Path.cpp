@@ -27,7 +27,7 @@ std::string Path::getCurrentWorkingDirectory()
 	getcwd(currentPath, _MAX_PATH);
 #else
 	char currentPath[256];
-	getcwd(currentPath, 256);
+	char* unused = getcwd(currentPath, 256);
 #endif
 
 	currentWorkingDirectory = currentPath;
