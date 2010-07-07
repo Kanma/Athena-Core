@@ -18,6 +18,8 @@ set(SRCS Data/ConfigFile.cpp
 
 if (APPLE)
     set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
+elseif (UNIX)
+    set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
 endif()
 
 # Precompiler definitions
