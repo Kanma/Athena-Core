@@ -1,3 +1,3 @@
 # Subdirectories to process
-add_subdirectory(Athena-Math)
-add_subdirectory(UnitTest++)
+xmake_add_subdirectory("${ATHENA_CORE_SOURCE_DIR}/dependencies/Athena-Math")
+xmake_add_subdirectory("${ATHENA_CORE_SOURCE_DIR}/dependencies/UnitTest++")
