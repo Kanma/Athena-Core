@@ -1,6 +1,7 @@
 # Setup the search paths
-xmake_include_directories(ATHENA_CORE)
-xmake_include_directories(UNITTEST_CPP)
+xmake_import_search_paths(ATHENA_CORE)
+xmake_import_search_paths(UNITTEST_CPP)
+
 
 # List the source files
 file(GLOB SRCS main.cpp
@@ -19,21 +20,16 @@ file(GLOB SRCS main.cpp
                Utils.cpp
 )
 
-# Precompiler definitions
-add_definitions(-DATHENA_CORE_UNITTESTS_DATA_PATH="${ATHENA_CORE_SOURCE_DIR}/unittests/data/")
 
-# Create and link the executable
-add_executable(UnitTests-Athena-Core ${SRCS})
 
-xmake_target_link_libraries(UnitTests-Athena-Core UNITTEST_CPP)
-xmake_target_link_libraries(UnitTests-Athena-Core ATHENA_CORE)
+# Declaration of the executable
+xmake_create_executable(UNITTESTS_ATHENA_CORE UnitTests-Athena-Core ${SRCS})
 
-# Set the RPATH
-if (APPLE)
-    set_target_properties(UnitTests-Athena-Core PROPERTIES LINK_FLAGS "-Wl,-rpath,@loader_path/.")
-elseif (UNIX)
-    set_target_properties(UnitTests-Athena-Core PROPERTIES INSTALL_RPATH ".")
-endif()
+xmake_project_link(UNITTESTS_ATHENA_CORE UNITTEST_CPP)
+xmake_project_link(UNITTESTS_ATHENA_CORE ATHENA_CORE)
+
+xmake_add_to_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
+
 
 # Run the unit tests
 get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)

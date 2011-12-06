@@ -106,17 +106,17 @@ public:
 	}
 
 
-#if ATHENA_CORE_SCRIPTING
-
-	//_____ Python slots management __________
-public:
-	void connect(tSignalID id, void* pPythonCallable);
-	void disconnect(tSignalID id, void* pPythonCallable);
-
-	void connect(tSignalID id, void* pPythonObject, void* pMethod);
-	void disconnect(tSignalID id, void* pPythonObject, void* pMethod);
-
-#endif
+// #if ATHENA_CORE_SCRIPTING
+// 
+//  //_____ Python slots management __________
+// public:
+//  void connect(tSignalID id, void* pPythonCallable);
+//  void disconnect(tSignalID id, void* pPythonCallable);
+// 
+//  void connect(tSignalID id, void* pPythonObject, void* pMethod);
+//  void disconnect(tSignalID id, void* pPythonObject, void* pMethod);
+// 
+// #endif
 
 
 	//_____ Methods __________

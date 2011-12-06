@@ -175,41 +175,41 @@ private:
     void disconnect(IMethodCallback* pMethod);
 
 
-#if ATHENA_CORE_SCRIPTING
-
-	//_____ Python slots management __________
-public:
-    //------------------------------------------------------------------------------------
-    /// @brief	Connect a Python function to the signal
-    ///
-    /// @param  pSlot   The Python function representing the slot
-    //------------------------------------------------------------------------------------
- 	void connect(void* pPythonFunction);
-
-    //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a Python function form the signal
-    ///
-    /// @param  pSlot   The Python function representing the slot
-    //------------------------------------------------------------------------------------
-	void disconnect(void* pPythonFunction);
-
-    //------------------------------------------------------------------------------------
-    /// @brief	Connect a Python method to the signal
-    ///
-    /// @param  pObject   The Python object that is interested by the signal
-    /// @param  pMethod   The Python method representing the slot
-    //------------------------------------------------------------------------------------
-	void connect(void* pPythonObject, void* pMethod);
-
-    //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a Python method from the signal
-    ///
-    /// @param  pObject   The Python object that isn't interested by the signal anymore
-    /// @param  pMethod   The Python method representing the slot
-    //------------------------------------------------------------------------------------
-	void disconnect(void* pPythonObject, void* pMethod);
-
-#endif
+// #if ATHENA_CORE_SCRIPTING
+// 
+//  //_____ Python slots management __________
+// public:
+//     //------------------------------------------------------------------------------------
+//     /// @brief   Connect a Python function to the signal
+//     ///
+//     /// @param  pSlot   The Python function representing the slot
+//     //------------------------------------------------------------------------------------
+//      void connect(void* pPythonFunction);
+// 
+//     //------------------------------------------------------------------------------------
+//     /// @brief   Disconnect a Python function form the signal
+//     ///
+//     /// @param  pSlot   The Python function representing the slot
+//     //------------------------------------------------------------------------------------
+//  void disconnect(void* pPythonFunction);
+// 
+//     //------------------------------------------------------------------------------------
+//     /// @brief   Connect a Python method to the signal
+//     ///
+//     /// @param  pObject   The Python object that is interested by the signal
+//     /// @param  pMethod   The Python method representing the slot
+//     //------------------------------------------------------------------------------------
+//  void connect(void* pPythonObject, void* pMethod);
+// 
+//     //------------------------------------------------------------------------------------
+//     /// @brief   Disconnect a Python method from the signal
+//     ///
+//     /// @param  pObject   The Python object that isn't interested by the signal anymore
+//     /// @param  pMethod   The Python method representing the slot
+//     //------------------------------------------------------------------------------------
+//  void disconnect(void* pPythonObject, void* pMethod);
+// 
+// #endif
 
 
 	//_____ Methods __________
@@ -243,23 +243,23 @@ private:
 		enum {
 		    SLOT_FUNCTION,
 		    SLOT_METHOD,
-#if ATHENA_CORE_SCRIPTING
-		    SLOT_PYTHON_FUNCTION,
-		    SLOT_PYTHON_METHOD
-#endif
+// #if ATHENA_CORE_SCRIPTING
+//          SLOT_PYTHON_FUNCTION,
+//          SLOT_PYTHON_METHOD
+// #endif
 		} type;
 
 		union
 		{
 			tSlot*				pFunction;
 			IMethodCallback*	pMethod;
-#if ATHENA_CORE_SCRIPTING
-			struct
-			{
-				void*			pCallable;
-				void*			pObject;
-			} python;
-#endif
+// #if ATHENA_CORE_SCRIPTING
+//          struct
+//          {
+//              void*           pCallable;
+//              void*           pObject;
+//          } python;
+// #endif
 		};
 	};
 

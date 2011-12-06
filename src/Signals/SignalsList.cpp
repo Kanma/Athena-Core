@@ -70,83 +70,83 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 
 /******************************** PYTHON SLOTS MANAGEMENT ******************************/
 
-#if ATHENA_CORE_SCRIPTING
-
-void SignalsList::connect(tSignalID id, void* pPythonCallable)
-{
-	assert(pPythonCallable);
-
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->connect(pPythonCallable);
-	}
-	else
-	{
-		Signal* pSignal = new Signal();
-		pSignal->connect(pPythonCallable);
-		m_signals[id] = pSignal;
-	}
-}
-
-//-----------------------------------------------------------------------
-
-void SignalsList::disconnect(tSignalID id, void* pPythonCallable)
-{
-	assert(pPythonCallable);
-
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->disconnect(pPythonCallable);
-		if (iter->second->isDisconnected())
-		{
-			delete iter->second;
-			m_signals.erase(iter);
-		}
-	}
-}
-
-//-----------------------------------------------------------------------
-
-void SignalsList::connect(tSignalID id, void* pPythonObject, void* pMethod)
-{
-	assert(pPythonObject);
-	assert(pMethod);
-
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->connect(pPythonObject, pMethod);
-	}
-	else
-	{
-		Signal* pSignal = new Signal();
-		pSignal->connect(pPythonObject, pMethod);
-		m_signals[id] = pSignal;
-	}
-}
-
-//-----------------------------------------------------------------------
-
-void SignalsList::disconnect(tSignalID id, void* pPythonObject, void* pMethod)
-{
-	assert(pPythonObject);
-	assert(pMethod);
-
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->disconnect(pPythonObject, pMethod);
-		if (iter->second->isDisconnected())
-		{
-			delete iter->second;
-			m_signals.erase(iter);
-		}
-	}
-}
-
-#endif
+// #if ATHENA_CORE_SCRIPTING
+// 
+// void SignalsList::connect(tSignalID id, void* pPythonCallable)
+// {
+//  assert(pPythonCallable);
+// 
+//  tSignalsNativeIterator iter = m_signals.find(id);
+//  if (iter != m_signals.end())
+//  {
+//      iter->second->connect(pPythonCallable);
+//  }
+//  else
+//  {
+//      Signal* pSignal = new Signal();
+//      pSignal->connect(pPythonCallable);
+//      m_signals[id] = pSignal;
+//  }
+// }
+// 
+// //-----------------------------------------------------------------------
+// 
+// void SignalsList::disconnect(tSignalID id, void* pPythonCallable)
+// {
+//  assert(pPythonCallable);
+// 
+//  tSignalsNativeIterator iter = m_signals.find(id);
+//  if (iter != m_signals.end())
+//  {
+//      iter->second->disconnect(pPythonCallable);
+//      if (iter->second->isDisconnected())
+//      {
+//          delete iter->second;
+//          m_signals.erase(iter);
+//      }
+//  }
+// }
+// 
+// //-----------------------------------------------------------------------
+// 
+// void SignalsList::connect(tSignalID id, void* pPythonObject, void* pMethod)
+// {
+//  assert(pPythonObject);
+//  assert(pMethod);
+// 
+//  tSignalsNativeIterator iter = m_signals.find(id);
+//  if (iter != m_signals.end())
+//  {
+//      iter->second->connect(pPythonObject, pMethod);
+//  }
+//  else
+//  {
+//      Signal* pSignal = new Signal();
+//      pSignal->connect(pPythonObject, pMethod);
+//      m_signals[id] = pSignal;
+//  }
+// }
+// 
+// //-----------------------------------------------------------------------
+// 
+// void SignalsList::disconnect(tSignalID id, void* pPythonObject, void* pMethod)
+// {
+//  assert(pPythonObject);
+//  assert(pMethod);
+// 
+//  tSignalsNativeIterator iter = m_signals.find(id);
+//  if (iter != m_signals.end())
+//  {
+//      iter->second->disconnect(pPythonObject, pMethod);
+//      if (iter->second->isDisconnected())
+//      {
+//          delete iter->second;
+//          m_signals.erase(iter);
+//      }
+//  }
+// }
+// 
+// #endif
 
 
 /*************************************** METHODS ***************************************/
