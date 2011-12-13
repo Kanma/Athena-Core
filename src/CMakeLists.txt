@@ -41,7 +41,7 @@ endif()
 
 xmake_project_link(ATHENA_CORE ATHENA_MATH)
 
-xmake_add_to_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_EXPORTS")
+xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_EXPORTS")
 
 
 # Exportations

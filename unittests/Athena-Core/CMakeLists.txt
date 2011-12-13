@@ -28,7 +28,7 @@ xmake_create_executable(UNITTESTS_ATHENA_CORE UnitTests-Athena-Core ${SRCS})
 xmake_project_link(UNITTESTS_ATHENA_CORE UNITTEST_CPP)
 xmake_project_link(UNITTESTS_ATHENA_CORE ATHENA_CORE)
 
-xmake_add_to_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
+xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
 
 
 # Run the unit tests
