@@ -10,6 +10,7 @@
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Log/Declarations.h>
 #include <Athena-Core/Utils/Iterators.h>
+#include <iostream>
 #include <time.h>
 
 
@@ -100,6 +101,12 @@ public:
             ms_Singleton->log(type, strContext, strMessage, strFileName,
                               strFunction, uiLine);
 	    }
+
+        // We want to be notified about errors (at least during development)
+    	else if (type == LOG_ERROR)
+    	{
+    	    std::cerr << "ERROR: " << strMessage.c_str() << std::endl;
+    	}
 	}
 
 

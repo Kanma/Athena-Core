@@ -2,11 +2,14 @@
 #include <Athena-Core/Data/ConfigFile.h>
 #include <Athena-Core/Data/FileDataStream.h>
 #include <Athena-Core/Utils/StringConverter.h>
+#include <Athena-Core/Log/LogManager.h>
+#include <Athena-Core/Log/XMLLogListener.h>
 #include "Utils.h"
 
 using namespace Athena;
 using namespace Athena::Data;
 using namespace Athena::Utils;
+using namespace Athena::Log;
 
 
 struct Loader
@@ -523,6 +526,11 @@ SUITE(ConfigFile_Others)
 
 	TEST(ReloadingOfUnknownFileFail)
 	{
+        // Disable error output on stderr
+        LogManager logManager;
+        logManager.addListener(new XMLLogListener("test_log.xml"), true);
+
+
 		ConfigFile cfgFile;
 		
         FileDataStream stream(getFilePath("TestConfigFile.cfg"));
