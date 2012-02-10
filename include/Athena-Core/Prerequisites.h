@@ -69,6 +69,14 @@ namespace Athena
 		/// @brief Used to represent an ID
 		typedef unsigned int tID;
     }
+
+    //-----------------------------------------------------------------------------------
+	/// @brief	Contains all the core declarations
+	//-----------------------------------------------------------------------------------
+    namespace Core
+    {
+        extern const char* VERSION;
+    }
 }
 
 #endif
