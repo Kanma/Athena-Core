@@ -71,3 +71,7 @@ add_subdirectory(dependencies)
 add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(unittests)
+
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    add_subdirectory(scripting)
+endif()
