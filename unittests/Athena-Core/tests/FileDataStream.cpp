@@ -1,6 +1,6 @@
 #include <UnitTest++.h>
 #include <Athena-Core/Data/FileDataStream.h>
-#include "Utils.h"
+#include "../Utils.h"
 
 using namespace Athena::Data;
 using namespace std;

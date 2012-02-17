@@ -4,7 +4,7 @@
 #include <Athena-Core/Utils/StringConverter.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Athena-Core/Log/XMLLogListener.h>
-#include "Utils.h"
+#include "../Utils.h"
 
 using namespace Athena;
 using namespace Athena::Data;

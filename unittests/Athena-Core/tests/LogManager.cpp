@@ -1,6 +1,6 @@
 #include <UnitTest++.h>
 #include <Athena-Core/Log/LogManager.h>
-#include "mocks/LogListener.h"
+#include "../mocks/LogListener.h"
 
 using namespace Athena;
 using namespace Athena::Log;
