@@ -5,6 +5,7 @@ xmake_import_search_paths(ATHENA_SCRIPTING)
 # List the source files
 set(SRCS module.cpp
          Utils/Describable.cpp
+         Utils/PropertiesList.cpp
 )
 
 set(JS_SRCS ""

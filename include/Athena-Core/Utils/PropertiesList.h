@@ -61,12 +61,12 @@ public:
 	//_____ Management of the list __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Select a category of peroperties
+    /// @brief	Select a category of properties
     ///
     /// @remark	If the category doesn't exists, create it.
     ///
     /// @param	strCategory	    Name of the category
-    /// @param	bInsertAtEnd	Indicates if the created category (if any) is insterted
+    /// @param	bInsertAtEnd	Indicates if the created category (if any) is inserted
     ///                         at the end or at the beginning of the list
     //-----------------------------------------------------------------------------------
 	void selectCategory(const std::string& strCategory, bool bInsertAtEnd = true);

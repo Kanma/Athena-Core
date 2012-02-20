@@ -13,13 +13,6 @@ namespace Athena {
 
 namespace Utils {
 
-    enum
-    {
-        CLASSID_DESCRIBABLE = 200,
-    };
-
-    extern v8::Persistent<v8::FunctionTemplate> function_Utils_Describable;
-
 }
 
 }

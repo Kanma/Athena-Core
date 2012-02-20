@@ -17,6 +17,7 @@ using namespace Athena::Scripting;
 // extern bool bind_Data_DataStream(Handle<Object> parent);
 
 extern bool bind_Utils_Describable(Handle<Object> parent);
+extern bool bind_Utils_PropertiesList(Handle<Object> parent);
 
 
 /*************************************** FUNCTIONS *************************************/
@@ -39,7 +40,8 @@ bool init_utils_submodule(Handle<Object> parent, const std::string& modulePath)
     Handle<Object> ns = Object::New();
     parent->Set(String::New("Utils"), ns);
 
-    return bind_Utils_Describable(ns);
+    return bind_Utils_Describable(ns) &&
+           bind_Utils_PropertiesList(ns);
 }
 
 

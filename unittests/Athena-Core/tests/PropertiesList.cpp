@@ -136,7 +136,6 @@ SUITE(PropertiesListTests)
     }
 
 
-
     TEST(ValuesEnumeration)
     {
     	PropertiesList list;
@@ -179,7 +178,6 @@ SUITE(PropertiesListTests)
     		}
     	}
     }
-
 
 
     TEST(ValuesEnumerationInSelectedCategory)
@@ -238,7 +236,6 @@ SUITE(PropertiesListTests)
 
     	CHECK(!iter.hasMoreElements());
     }
-
 
 
     TEST(AppendList)

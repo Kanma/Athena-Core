@@ -29,7 +29,7 @@ if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
     set(SRCS ${SRCS}
              module/module.cpp
              module/Describable.cpp
-             tests/scripting_Describable.cpp
+             tests/scripting.cpp
     )
 endif()
 
