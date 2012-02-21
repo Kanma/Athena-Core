@@ -27,6 +27,9 @@ SUITE(Scripting_Describable)
 {
     JS_TEST(Describable_PropertiesSerialization);
     JS_TEST(Describable_GetProperties);
+    JS_TEST(Describable_SetProperties);
+    JS_TEST(Describable_UnknownProperties);
+    JS_TEST(Describable_DelayedProperties);
 }
 
 
