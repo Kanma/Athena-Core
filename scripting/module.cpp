@@ -18,6 +18,7 @@ using namespace Athena::Scripting;
 
 extern bool bind_Utils_Describable(Handle<Object> parent);
 extern bool bind_Utils_PropertiesList(Handle<Object> parent);
+extern bool bind_Utils_Timer(Handle<Object> parent);
 
 
 /*************************************** FUNCTIONS *************************************/
@@ -40,8 +41,11 @@ bool init_utils_submodule(Handle<Object> parent, const std::string& modulePath)
     Handle<Object> ns = Object::New();
     parent->Set(String::New("Utils"), ns);
 
+    parent->Set(String::New("VERSION"), String::New(Athena::Core::VERSION));
+
     return bind_Utils_Describable(ns) &&
-           bind_Utils_PropertiesList(ns);
+           bind_Utils_PropertiesList(ns) &&
+           bind_Utils_Timer(ns);
 }
 
 

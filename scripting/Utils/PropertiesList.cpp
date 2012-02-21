@@ -25,7 +25,6 @@ using namespace v8;
 
 
 /********************************** UTILITY FUNCTIONS **********************************/
-#include <iostream>
 
 Handle<Value> toJS(Variant* pValue)
 {

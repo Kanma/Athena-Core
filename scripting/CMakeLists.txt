@@ -6,6 +6,7 @@ xmake_import_search_paths(ATHENA_SCRIPTING)
 set(SRCS module.cpp
          Utils/Describable.cpp
          Utils/PropertiesList.cpp
+         Utils/Timer.cpp
 )
 
 set(JS_SRCS ""

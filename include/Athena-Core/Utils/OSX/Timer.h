@@ -23,7 +23,7 @@ class ATHENA_SYMBOL Timer
 	//_____ Construction / Destruction __________
 public:
 	Timer();
-	virtual ~Timer();
+	~Timer();
 
 
 	//_____ Management of the timer __________
