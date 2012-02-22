@@ -7,23 +7,17 @@
 #include <Athena-Core/Signals/Signal.h>
 #include <Athena-Core/Utils/Variant.h>
 
-
-// #if ATHENA_CORE_SCRIPTING
-// #   ifdef __APPLE__
-// #        include <Python/Python.h>
-// #   else
-// #        include <Python.h>
-// #   endif
-// #endif
+#if ATHENA_CORE_SCRIPTING
+    #include <Athena-Core/Scripting.h>
+#endif
 
 
 using namespace Athena::Signals;
 using namespace Athena::Utils;
 
-
-/*********************************** STATIC ATTRIBUTES *********************************/
-
-Variant* Signal::m_pCurrentValue = 0;
+#if ATHENA_CORE_SCRIPTING
+    using namespace v8;
+#endif
 
 
 /****************************** CONSTRUCTION / DESTRUCTION *****************************/
@@ -43,23 +37,7 @@ Signal::~Signal()
         tInternalSlot* pSlot = iter.peekNextPtr();
 	    
 		if (pSlot->type == tInternalSlot::SLOT_METHOD)
-		{
 			delete pSlot->pMethod;
-		}
-
-// #if ATHENA_CORE_SCRIPTING
-// 
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_FUNCTION)
-//      {
-//          Py_XDECREF((PyObject*) pSlot->python.pCallable);
-//      }
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_METHOD)
-//      {
-//          Py_XDECREF((PyObject*) pSlot->python.pObject);
-//          Py_XDECREF((PyObject*) pSlot->python.pCallable);
-//      }
-// 
-// #endif
 
         iter.moveNext();
 	}
@@ -154,141 +132,129 @@ void Signal::disconnect(IMethodCallback* pMethod)
 }
 
 
-/******************************** PYTHON SLOTS MANAGEMENT ******************************/
+/****************************** JAVASCRIPT SLOTS MANAGEMENT ****************************/
 
-// #if ATHENA_CORE_SCRIPTING
-// 
-// void Signal::connect(void* pPythonFunction)
-// {
-//  assert(pPythonFunction);
-// 
-//  // Check that the slot isn't already in the list
-//  tSlotsNativeIterator iter, iterEnd;
-//  for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-//  {
-//      if ((iter->type == tInternalSlot::SLOT_PYTHON_FUNCTION) && (iter->python.pCallable == pPythonFunction))
-//          return;
-//  }
-// 
-//  tInternalSlot intSlot;
-//  intSlot.type = tInternalSlot::SLOT_PYTHON_FUNCTION;
-//  intSlot.python.pCallable = pPythonFunction;
-// 
-//  if (!m_bFiring)
-//      m_slots.push_back(intSlot);
-//  else
-//      m_slotsToConnect.push_back(intSlot);
-// 
-//  Py_XINCREF((PyObject*) pPythonFunction);
-// }
-// 
-// //-----------------------------------------------------------------------
-// 
-// void Signal::disconnect(void* pPythonFunction)
-// {
-//  assert(pPythonFunction);
-// 
-//  tSlotsNativeIterator iter, iterEnd;
-//  for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-//  {
-//      if ((iter->type == tInternalSlot::SLOT_PYTHON_FUNCTION) && (iter->python.pCallable == pPythonFunction))
-//      {
-//          if (!m_bFiring)
-//          {
-//              Py_XDECREF((PyObject*) iter->python.pCallable);
-//              m_slots.erase(iter);
-//          }
-//          else
-//          {
-//              tInternalSlot intSlot;
-//              intSlot.type = tInternalSlot::SLOT_PYTHON_FUNCTION;
-//              intSlot.python.pCallable = pPythonFunction;
-// 
-//              m_slotsToDisconnect.push_back(intSlot);
-//          }
-//          return;
-//      }
-//  }
-// }
-// 
-// //-----------------------------------------------------------------------
-// 
-// void Signal::connect(void* pPythonObject, void* pMethod)
-// {
-//  assert(pPythonObject);
-//  assert(pMethod);
-// 
-//  pMethod = PyMethod_Function((PyObject*) pMethod);
-// 
-//  // Check that the slot isn't already in the list
-//  tSlotsNativeIterator iter, iterEnd;
-//  for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-//  {
-//      if ((iter->type == tInternalSlot::SLOT_PYTHON_METHOD) && (iter->python.pObject == pPythonObject) &&
-//          (iter->python.pCallable == pMethod))
-//          return;
-//  }
-// 
-//  tInternalSlot intSlot;
-//  intSlot.type = tInternalSlot::SLOT_PYTHON_METHOD;
-//  intSlot.python.pObject = pPythonObject;
-//  intSlot.python.pCallable = pMethod;
-// 
-//  if (!m_bFiring)
-//      m_slots.push_back(intSlot);
-//  else
-//      m_slotsToConnect.push_back(intSlot);
-// 
-//  Py_XINCREF((PyObject*) pPythonObject);
-//  Py_XINCREF((PyObject*) pMethod);
-// }
-// 
-// //-----------------------------------------------------------------------
-// 
-// void Signal::disconnect(void* pPythonObject, void* pMethod)
-// {
-//  assert(pPythonObject);
-//  assert(pMethod);
-// 
-//  pMethod = PyMethod_Function((PyObject*) pMethod);
-// 
-//  tSlotsNativeIterator iter, iterEnd;
-//  for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-//  {
-//      if ((iter->type == tInternalSlot::SLOT_PYTHON_METHOD) && (iter->python.pObject == pPythonObject) &&
-//          (iter->python.pCallable == pMethod))
-//      {
-//          if (!m_bFiring)
-//          {
-//              Py_XDECREF((PyObject*) iter->python.pObject);
-//              Py_XDECREF((PyObject*) iter->python.pCallable);
-//              m_slots.erase(iter);
-//          }
-//          else
-//          {
-//              tInternalSlot intSlot;
-//              intSlot.type = tInternalSlot::SLOT_PYTHON_METHOD;
-//              intSlot.python.pObject = pPythonObject;
-//              intSlot.python.pCallable = pMethod;
-// 
-//              m_slotsToDisconnect.push_back(intSlot);
-//          }
-// 
-//          return;
-//      }
-//  }
-// }
-// 
-// #endif
+#if ATHENA_CORE_SCRIPTING
+
+void Signal::connect(v8::Persistent<v8::Object> function)
+{
+    assert(!function.IsEmpty());
+
+    // Check that the slot isn't already in the list
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if ((iter->type == tInternalSlot::SLOT_JS_FUNCTION) && (iter->js.function == function))
+            return;
+    }
+
+    tInternalSlot intSlot;
+    intSlot.type = tInternalSlot::SLOT_JS_FUNCTION;
+    intSlot.js.function = function;
+
+    if (!m_bFiring)
+        m_slots.push_back(intSlot);
+    else
+        m_slotsToConnect.push_back(intSlot);
+}
+
+//-----------------------------------------------------------------------
+
+void Signal::disconnect(v8::Persistent<v8::Object> function)
+{
+    assert(!function.IsEmpty());
+
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if ((iter->type == tInternalSlot::SLOT_JS_FUNCTION) && (iter->js.function == function))
+        {
+            if (!m_bFiring)
+            {
+                m_slots.erase(iter);
+            }
+            else
+            {
+                tInternalSlot intSlot;
+                intSlot.type = tInternalSlot::SLOT_JS_FUNCTION;
+                intSlot.js.function = function;
+
+                m_slotsToDisconnect.push_back(intSlot);
+            }
+
+            return;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+
+void Signal::connect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function)
+{
+    assert(!function.IsEmpty());
+    assert(!object.IsEmpty());
+
+    // Check that the slot isn't already in the list
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if ((iter->type == tInternalSlot::SLOT_JS_METHOD) &&
+            (iter->js.object == object) && (iter->js.function == function))
+            return;
+    }
+
+    tInternalSlot intSlot;
+    intSlot.type        = tInternalSlot::SLOT_JS_METHOD;
+    intSlot.js.object   = object;
+    intSlot.js.function = function;
+
+    if (!m_bFiring)
+        m_slots.push_back(intSlot);
+    else
+        m_slotsToConnect.push_back(intSlot);
+}
+
+//-----------------------------------------------------------------------
+
+void Signal::disconnect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function)
+{
+    assert(!function.IsEmpty());
+    assert(!object.IsEmpty());
+
+
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if ((iter->type == tInternalSlot::SLOT_JS_METHOD) &&
+            (iter->js.object == object) && (iter->js.function == function))
+        {
+            if (!m_bFiring)
+            {
+                m_slots.erase(iter);
+            }
+            else
+            {
+                tInternalSlot intSlot;
+                intSlot.type        = tInternalSlot::SLOT_JS_METHOD;
+                intSlot.js.object   = object;
+                intSlot.js.function = function;
+
+                m_slotsToDisconnect.push_back(intSlot);
+            }
+
+            return;
+        }
+    }
+}
+
+#endif
 
 
 /*************************************** METHODS ***************************************/
 
 void Signal::fire(Variant* pValue)
 {
-	Variant* pPreviousValue = m_pCurrentValue;
-	m_pCurrentValue = pValue;
-
+    // Fire the signal
 	m_bFiring = true;
 
 	tSlotsIterator iter(m_slots);
@@ -305,36 +271,42 @@ void Signal::fire(Variant* pValue)
 			pSlot->pMethod->fire(pValue);
 		}
 
-// #if ATHENA_CORE_SCRIPTING
-// 
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_FUNCTION)
-//      {
-//          PyObject* arglist = PyTuple_New(0);
-//          
-//          PyObject* result = PyEval_CallObject((PyObject*) pSlot->python.pCallable, arglist);
-//          Py_DECREF(arglist);
-// 
-//          if (result != 0)
-//              Py_DECREF(result);
-//      }
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_METHOD)
-//      {
-//          PyObject* arglist = PyTuple_Pack(1, (PyObject*) pSlot->python.pObject);
-//          
-//          PyObject* result = PyEval_CallObject((PyObject*) pSlot->python.pCallable, arglist);
-//          Py_DECREF(arglist);
-// 
-//          if (result != 0)
-//              Py_DECREF(result);
-//      }
-// 
-// #endif
+#if ATHENA_CORE_SCRIPTING
+        else if (pSlot->type == tInternalSlot::SLOT_JS_FUNCTION)
+        {
+            if (pValue)
+            {
+                HandleScope handle_scope;
+                Handle<Value> value = toJS(pValue);
+                Function::Cast(*pSlot->js.function)->Call(pSlot->js.function, 1, &value);
+            }
+            else
+            {
+                Function::Cast(*pSlot->js.function)->Call(pSlot->js.function, 0, 0);
+            }
+        }
+        else if (pSlot->type == tInternalSlot::SLOT_JS_METHOD)
+        {
+            if (pValue)
+            {
+                HandleScope handle_scope;
+                Handle<Value> value = toJS(pValue);
+                Function::Cast(*pSlot->js.function)->Call(pSlot->js.object, 1,  &value);
+            }
+            else
+            {
+                Function::Cast(*pSlot->js.function)->Call(pSlot->js.object, 0, 0);
+            }
+        }
+#endif
 
         iter.moveNext();
 	}
 
 	m_bFiring = false;
 
+
+    // Disconnect the slots that asked for it during the signal firing
 	tSlotsIterator iter2(m_slotsToDisconnect);
 	while (iter2.hasMoreElements())
 	{
@@ -345,19 +317,19 @@ void Signal::fire(Variant* pValue)
 		else if (pSlot->type == tInternalSlot::SLOT_METHOD)
 			disconnect(pSlot->pMethod);
 
-// #if ATHENA_CORE_SCRIPTING
-// 
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_FUNCTION)
-//          disconnect(pSlot->python.pCallable);
-//      else if (pSlot->type == tInternalSlot::SLOT_PYTHON_METHOD)
-//          disconnect(pSlot->python.pObject, pSlot->python.pCallable);
-// 
-// #endif
+#if ATHENA_CORE_SCRIPTING
+         else if (pSlot->type == tInternalSlot::SLOT_JS_FUNCTION)
+             disconnect(pSlot->js.function);
+         else if (pSlot->type == tInternalSlot::SLOT_JS_METHOD)
+             disconnect(pSlot->js.object, pSlot->js.function);
+#endif
 
         iter2.moveNext();
 	}
 	m_slotsToDisconnect.clear();
 
+
+    // Connect the slots that asked for it during the signal firing
 	tSlotsIterator iter3(m_slotsToConnect);
 	while (iter3.hasMoreElements())
 	{
@@ -366,14 +338,4 @@ void Signal::fire(Variant* pValue)
         iter3.moveNext();
 	}
 	m_slotsToConnect.clear();
-
-	delete m_pCurrentValue;
-	m_pCurrentValue = pPreviousValue;
-}
-
-//-----------------------------------------------------------------------
-
-Variant* Signal::_getCurrentValue()
-{
-	return m_pCurrentValue;
 }

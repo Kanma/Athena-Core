@@ -10,6 +10,11 @@
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Utils/Iterators.h>
 
+#if ATHENA_CORE_SCRIPTING
+    #include <v8.h>
+#endif
+
+
 namespace Athena {
 namespace Signals {
 
@@ -175,41 +180,42 @@ private:
     void disconnect(IMethodCallback* pMethod);
 
 
-// #if ATHENA_CORE_SCRIPTING
-// 
-//  //_____ Python slots management __________
-// public:
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Connect a Python function to the signal
-//     ///
-//     /// @param  pSlot   The Python function representing the slot
-//     //------------------------------------------------------------------------------------
-//      void connect(void* pPythonFunction);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Disconnect a Python function form the signal
-//     ///
-//     /// @param  pSlot   The Python function representing the slot
-//     //------------------------------------------------------------------------------------
-//  void disconnect(void* pPythonFunction);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Connect a Python method to the signal
-//     ///
-//     /// @param  pObject   The Python object that is interested by the signal
-//     /// @param  pMethod   The Python method representing the slot
-//     //------------------------------------------------------------------------------------
-//  void connect(void* pPythonObject, void* pMethod);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Disconnect a Python method from the signal
-//     ///
-//     /// @param  pObject   The Python object that isn't interested by the signal anymore
-//     /// @param  pMethod   The Python method representing the slot
-//     //------------------------------------------------------------------------------------
-//  void disconnect(void* pPythonObject, void* pMethod);
-// 
-// #endif
+#if ATHENA_CORE_SCRIPTING
+
+ //_____ JavaScript slots management __________
+public:
+    //------------------------------------------------------------------------------------
+    /// @brief   Connect a JavaScript function to the signal
+    ///
+    /// @param  function    he JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript function form the signal
+    ///
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Connect a JavaScript method to the signal
+    ///
+    /// @param  object      The JavaScript object that is interested by the signal
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript method from the signal
+    ///
+    /// @param  object      The JavaScript object that isn't interested by the signal
+    ///                     anymore
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function);
+
+#endif
 
 
 	//_____ Methods __________
@@ -229,12 +235,6 @@ public:
 		return m_slots.empty();
 	}
 
-    //------------------------------------------------------------------------------------
-    /// @brief	Returns the parameter of the currently fired signal (only usefull for
-    ///         Python slots)
-    //------------------------------------------------------------------------------------
-	static Utils::Variant* _getCurrentValue();
-
 
 	//_____ Internal types __________
 private:
@@ -243,24 +243,25 @@ private:
 		enum {
 		    SLOT_FUNCTION,
 		    SLOT_METHOD,
-// #if ATHENA_CORE_SCRIPTING
-//          SLOT_PYTHON_FUNCTION,
-//          SLOT_PYTHON_METHOD
-// #endif
+#if ATHENA_CORE_SCRIPTING
+            SLOT_JS_FUNCTION,
+            SLOT_JS_METHOD
+#endif
 		} type;
 
 		union
 		{
-			tSlot*				pFunction;
-			IMethodCallback*	pMethod;
-// #if ATHENA_CORE_SCRIPTING
-//          struct
-//          {
-//              void*           pCallable;
-//              void*           pObject;
-//          } python;
-// #endif
-		};
+			tSlot*			 pFunction;
+			IMethodCallback* pMethod;
+        };
+        
+#if ATHENA_CORE_SCRIPTING
+        struct
+        {
+            v8::Persistent<v8::Object> function;
+            v8::Persistent<v8::Object> object;
+        } js;
+#endif
 	};
 
     typedef std::vector<tInternalSlot>          tSlotsList;
@@ -270,12 +271,10 @@ private:
 
 	//_____ Attributes __________
 private:
-	tSlotsList	            m_slots;                ///< The slots connected to the signal
-	bool					m_bFiring;              ///< Indicates if the signal is currently fired
-	tSlotsList	            m_slotsToDisconnect;    ///< Slots to disconnect when all the slots triggered
-	tSlotsList	            m_slotsToConnect;       ///< Slots to connect when all the slots triggered
-
-	static Utils::Variant*	m_pCurrentValue;        ///< Parameter of the signal currently fired
+	tSlotsList  m_slots;                ///< The slots connected to the signal
+	bool	    m_bFiring;              ///< Indicates if the signal is currently fired
+	tSlotsList  m_slotsToDisconnect;    ///< Slots to disconnect when all the slots triggered
+	tSlotsList  m_slotsToConnect;       ///< Slots to connect when all the slots triggered
 };
 
 }

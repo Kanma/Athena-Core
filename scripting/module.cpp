@@ -16,6 +16,8 @@ using namespace Athena::Scripting;
 
 // extern bool bind_Data_DataStream(Handle<Object> parent);
 
+extern bool bind_Signals_Signal(Handle<Object> parent);
+
 extern bool bind_Utils_Describable(Handle<Object> parent);
 extern bool bind_Utils_PropertiesList(Handle<Object> parent);
 extern bool bind_Utils_Timer(Handle<Object> parent);
@@ -32,6 +34,19 @@ extern bool bind_Utils_Timer(Handle<Object> parent);
 // 
 //     return bind_Data_DataStream(ns);
 // }
+
+
+bool init_signals_submodule(Handle<Object> parent, const std::string& modulePath)
+{
+    HandleScope handle_scope;
+
+    Handle<Object> ns = Object::New();
+    parent->Set(String::New("Signals"), ns);
+
+    parent->Set(String::New("VERSION"), String::New(Athena::Core::VERSION));
+
+    return bind_Signals_Signal(ns);
+}
 
 
 bool init_utils_submodule(Handle<Object> parent, const std::string& modulePath)
@@ -62,6 +77,7 @@ extern "C" {
         Handle<Context> context = parent->CreationContext();
         Handle<Object> ns = context->Global()->Get(String::New("Athena"))->ToObject();
 
-        return init_utils_submodule(ns, modulePath);
+        return init_signals_submodule(ns, modulePath) &&
+               init_utils_submodule(ns, modulePath);
     }
 }

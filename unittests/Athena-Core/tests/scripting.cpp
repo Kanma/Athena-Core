@@ -23,7 +23,7 @@ using namespace v8;
 
 
 
-SUITE(Scripting_Describable)
+SUITE(Scripting_Utils_Describable)
 {
     JS_TEST(Describable_PropertiesSerialization);
     JS_TEST(Describable_GetProperties);
@@ -33,7 +33,7 @@ SUITE(Scripting_Describable)
 }
 
 
-SUITE(Scripting_PropertiesList)
+SUITE(Scripting_Utils_PropertiesList)
 {
     JS_TEST(PropertiesList_SetGetValueWithCategory);
     JS_TEST(PropertiesList_SetGetValueWithoutCategory);
@@ -47,4 +47,17 @@ SUITE(Scripting_PropertiesList)
     JS_TEST(PropertiesList_ValuesEnumerationInNonExistingCategory);
     JS_TEST(PropertiesList_AppendList);
     JS_TEST(PropertiesList_PrependList);
+}
+
+
+SUITE(Scripting_Signals_Signal)
+{
+    JS_TEST(Signal_ConnectDisconnectFunctionSlot);
+    JS_TEST(Signal_FunctionSlot);
+    JS_TEST(Signal_TwoFunctionSlots);
+    JS_TEST(Signal_ConnectOnlyOnceFunctionSlot);
+    JS_TEST(Signal_ConnectDisconnectMethodSlot);
+    JS_TEST(Signal_MethodSlot);
+    JS_TEST(Signal_TwoMethodSlots);
+    JS_TEST(Signal_ConnectOnlyOneMethodSlot);
 }
