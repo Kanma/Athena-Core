@@ -21,6 +21,13 @@ set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp
          Utils/Variant.cpp
 )
 
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    set(SRCS ${SRCS}
+             Scripting.cpp
+    )
+endif()
+
+
 if (APPLE)
     set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
 elseif (UNIX)

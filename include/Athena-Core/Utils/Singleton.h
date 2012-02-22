@@ -1,7 +1,7 @@
-/**	@file	Singleton.h
-	@author	Philip Abbet
+/** @file   Singleton.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Utils::Singleton'
+    Declaration of the class 'Athena::Utils::Singleton'
 */
 
 /* Original version Copyright (C) Scott Bilas, 2000.
@@ -31,16 +31,16 @@ namespace Utils {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Template class for creating single-instance global classes
+/// @brief  Template class for creating single-instance global classes
 //---------------------------------------------------------------------------------------
 template <typename T> class Singleton
 {
 private:
-	/** \brief Explicit private copy constructor. This is a forbidden operation.*/
-	Singleton(const Singleton<T> &);
+    /** \brief Explicit private copy constructor. This is a forbidden operation.*/
+    Singleton(const Singleton<T> &);
 
-	/** \brief Private operator= . This is a forbidden operation. */
-	Singleton& operator=(const Singleton<T> &);
+    /** \brief Private operator= . This is a forbidden operation. */
+    Singleton& operator=(const Singleton<T> &);
 
 protected:
     static T* ms_Singleton;
@@ -49,7 +49,7 @@ public:
     Singleton()
     {
         assert(!ms_Singleton);
-#if defined( _MSC_VER ) && _MSC_VER < 1200	 
+#if defined( _MSC_VER ) && _MSC_VER < 1200
         int offset = (int)(T*)1 - (int)(Singleton<T>*)(T*)1;
         ms_Singleton = (T*) ((int) this + offset);
 #else
@@ -62,17 +62,17 @@ public:
         assert(ms_Singleton);
         ms_Singleton = 0;
     }
-    
+
     static T& getSingleton()
-	{
-	    assert(ms_Singleton);
-	    return (*ms_Singleton);
-	}
-    
+    {
+        assert(ms_Singleton);
+        return (*ms_Singleton);
+    }
+
     static T* getSingletonPtr()
-	{
-	    return ms_Singleton;
-	}
+    {
+        return ms_Singleton;
+    }
 };
 
 }
