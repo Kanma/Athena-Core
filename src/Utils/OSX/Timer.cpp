@@ -1,7 +1,7 @@
-/**	@file	Timer.cpp
-	@author	Philip Abbet
+/** @file   Timer.cpp
+    @author Philip Abbet
 
-	Implementation of the MacOS X-specific class 'Athena::Utils::Timer'
+    Implementation of the MacOS X-specific class 'Athena::Utils::Timer'
 
     @note   This is based on the corresponding class from
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
@@ -21,7 +21,7 @@ static const float INV_CLOCKS_PER_MICROSECOND = 1000000.0f / (float) CLOCKS_PER_
 
 Timer::Timer()
 {
-	reset();
+    reset();
 }
 
 //-----------------------------------------------------------------------
@@ -35,40 +35,40 @@ Timer::~Timer()
 
 void Timer::reset()
 {
-	zeroClock = clock();
-	gettimeofday(&start, NULL);
+    zeroClock = clock();
+    gettimeofday(&start, NULL);
 }
 
 //-----------------------------------------------------------------------
 
 unsigned long Timer::getMilliseconds()
 {
-	struct timeval now;
-	gettimeofday(&now, NULL);
-	return (now.tv_sec - start.tv_sec) * 1000 + (now.tv_usec - start.tv_usec) / 1000;
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return (now.tv_sec - start.tv_sec) * 1000 + (now.tv_usec - start.tv_usec) / 1000;
 }
 
 //-----------------------------------------------------------------------
 
 unsigned long Timer::getMicroseconds()
 {
-	struct timeval now;
-	gettimeofday(&now, NULL);
-	return (now.tv_sec - start.tv_sec) * 1000000 + (now.tv_usec - start.tv_usec);
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return (now.tv_sec - start.tv_sec) * 1000000 + (now.tv_usec - start.tv_usec);
 }
 
 //-----------------------------------------------------------------------
 
 unsigned long Timer::getMillisecondsCPU()
 {
-	clock_t newClock = clock();
-	return (unsigned long) ((float) (newClock-zeroClock) * INV_CLOCKS_PER_MILLISECOND);
+    clock_t newClock = clock();
+    return (unsigned long) ((float) (newClock-zeroClock) * INV_CLOCKS_PER_MILLISECOND);
 }
 
 //-----------------------------------------------------------------------
 
 unsigned long Timer::getMicrosecondsCPU()
 {
-	clock_t newClock = clock();
-	return (unsigned long) ((float) (newClock-zeroClock) * INV_CLOCKS_PER_MICROSECOND);
+    clock_t newClock = clock();
+    return (unsigned long) ((float) (newClock-zeroClock) * INV_CLOCKS_PER_MICROSECOND);
 }

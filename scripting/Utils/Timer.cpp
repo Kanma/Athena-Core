@@ -1,6 +1,6 @@
 /** @file   Timer.cpp
     @author Philip Abbet
-    
+
     Javascript binding of the class Athena::Utils::Timer
 */
 
@@ -34,10 +34,10 @@ Handle<Value> Timer_New(const Arguments& args)
 Handle<Value> Timer_Reset(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     Timer* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     self->reset();
 
     return Handle<Value>();
@@ -51,7 +51,7 @@ Handle<Value> Timer_GetMilliseconds(const Arguments& args)
 
     Timer* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     return handle_scope.Close(Uint32::New(self->getMilliseconds()));
 }
 
@@ -63,7 +63,7 @@ Handle<Value> Timer_GetMicroseconds(const Arguments& args)
 
     Timer* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     return handle_scope.Close(Uint32::New(self->getMicroseconds()));
 }
 
@@ -75,7 +75,7 @@ Handle<Value> Timer_GetMillisecondsCPU(const Arguments& args)
 
     Timer* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     return handle_scope.Close(Uint32::New(self->getMillisecondsCPU()));
 }
 
@@ -87,7 +87,7 @@ Handle<Value> Timer_GetMicrosecondsCPU(const Arguments& args)
 
     Timer* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     return handle_scope.Close(Uint32::New(self->getMicrosecondsCPU()));
 }
 

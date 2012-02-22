@@ -62,10 +62,10 @@ Handle<Value> MockDescribable2_GetIndex(Local<String> property, const AccessorIn
 bool bind_Tests_Describable(Handle<Object> parent)
 {
     ScriptingManager* pManager = ScriptingManager::getSingletonPtr();
-    
+
     Handle<FunctionTemplate> mock1 = pManager->getClassTemplate("Tests.MockDescribable1");
     Handle<FunctionTemplate> mock2 = pManager->getClassTemplate("Tests.MockDescribable2");
-    
+
     if (mock1.IsEmpty())
     {
         // Create the object template for MockDescribable1

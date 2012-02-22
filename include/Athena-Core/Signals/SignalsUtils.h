@@ -1,7 +1,7 @@
-/**	@file	SignalsUtils.h
-	@author	Philip Abbet
+/**    @file    SignalsUtils.h
+    @author    Philip Abbet
 
-	Declaration of the class 'Athena::Signals::SignalsUtils'
+    Declaration of the class 'Athena::Signals::SignalsUtils'
 */
 
 #ifndef _ATHENA_SIGNALS_SIGNALSUTILS_H_
@@ -15,29 +15,29 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-///	@brief	Used to convert a signal name (in string form) to a signal ID (usable with
-///			the SignalsList class)
+///    @brief    Used to convert a signal name (in string form) to a signal ID (usable with
+///            the SignalsList class)
 ///
-///	@remark All the methods of this class are static
+///    @remark All the methods of this class are static
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL SignalsUtils
 {
-	//_____ Internal types __________
+    //_____ Internal types __________
 private:
-	typedef std::map<std::string, tSignalID>	tIDsList;
-	typedef Utils::MapIterator<tIDsList>		tIDsIterator;
-	typedef tIDsList::iterator					tIDsNativeIterator;
+    typedef std::map<std::string, tSignalID>    tIDsList;
+    typedef Utils::MapIterator<tIDsList>        tIDsIterator;
+    typedef tIDsList::iterator                    tIDsNativeIterator;
 
 
-	//_____ Methods __________
+    //_____ Methods __________
 public:
-	static tSignalID getSignalID(const std::string& strName);
-	static std::string getSignalName(tSignalID id);
+    static tSignalID getSignalID(const std::string& strName);
+    static std::string getSignalName(tSignalID id);
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 private:
-	static tIDsList	m_ids;
+    static tIDsList    m_ids;
 };
 
 }

@@ -1,7 +1,7 @@
-/**	@file	PropertiesList.cpp
-	@author	Philip Abbet
+/** @file   PropertiesList.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Utils::PropertiesList'
+    Implementation of the class 'Athena::Utils::PropertiesList'
 */
 
 #include <Athena-Core/Utils/PropertiesList.h>
@@ -18,24 +18,24 @@ static PropertiesList::tPropertiesList empty;
 
 PropertiesList::PropertiesList()
 {
-	m_selectedCategory = m_categories.end();
+    m_selectedCategory = m_categories.end();
 }
 
 //-----------------------------------------------------------------------
 
 PropertiesList::~PropertiesList()
 {
-	tCategoriesIterator catIter(m_categories.begin(), m_categories.end());
-	while (catIter.hasMoreElements())
-	{
-		tPropertiesList* pProperties = &(catIter.peekNextPtr()->values);
+    tCategoriesIterator catIter(m_categories.begin(), m_categories.end());
+    while (catIter.hasMoreElements())
+    {
+        tPropertiesList* pProperties = &(catIter.peekNextPtr()->values);
 
-		tPropertiesIterator propIter(pProperties->begin(), pProperties->end());
-		while (propIter.hasMoreElements())
-			delete propIter.getNext().pValue;
-		
-		catIter.moveNext();
-	}
+        tPropertiesIterator propIter(pProperties->begin(), pProperties->end());
+        while (propIter.hasMoreElements())
+            delete propIter.getNext().pValue;
+
+        catIter.moveNext();
+    }
 }
 
 
@@ -43,10 +43,10 @@ PropertiesList::~PropertiesList()
 
 void PropertiesList::selectCategory(const std::string& strCategory, bool bInsertAtEnd)
 {
-	// Assertions
-	assert(!strCategory.empty());
+    // Assertions
+    assert(!strCategory.empty());
 
-	selectCategory(strCategory, bInsertAtEnd ? m_categories.end() : m_categories.begin());
+    selectCategory(strCategory, bInsertAtEnd ? m_categories.end() : m_categories.begin());
 }
 
 
@@ -54,179 +54,179 @@ void PropertiesList::selectCategory(const std::string& strCategory, bool bInsert
 
 void PropertiesList::selectCategory(const std::string& strCategory, tCategoriesList::iterator position)
 {
-	// Assertions
-	assert(!strCategory.empty());
+    // Assertions
+    assert(!strCategory.empty());
 
-	// Search the category
-	for (m_selectedCategory = m_categories.begin(); m_selectedCategory != m_categories.end();
-		 ++m_selectedCategory)
-	{
-		if (m_selectedCategory->strName == strCategory)
-			return;
-	}
+    // Search the category
+    for (m_selectedCategory = m_categories.begin(); m_selectedCategory != m_categories.end();
+         ++m_selectedCategory)
+    {
+        if (m_selectedCategory->strName == strCategory)
+            return;
+    }
 
-	// Not found, create it
-	tCategory category;
-	category.strName = strCategory;
-	m_selectedCategory = m_categories.insert(position, category);
+    // Not found, create it
+    tCategory category;
+    category.strName = strCategory;
+    m_selectedCategory = m_categories.insert(position, category);
 }
 
 //-----------------------------------------------------------------------
 
 void PropertiesList::set(const std::string& strName, Variant* pValue)
 {
-	// Assertions
-	assert(!strName.empty());
-	assert(pValue);
+    // Assertions
+    assert(!strName.empty());
+    assert(pValue);
 
-	// Create a default category if none is selected
-	if (m_selectedCategory == m_categories.end())
-		selectCategory("DEFAULT");
+    // Create a default category if none is selected
+    if (m_selectedCategory == m_categories.end())
+        selectCategory("DEFAULT");
 
-	// Search the value
-	PropertiesList::tPropertiesIterator iter(m_selectedCategory->values.begin(),
-	                                         m_selectedCategory->values.end());
-	while (iter.hasMoreElements())
-	{
-		if (iter.peekNextPtr()->strName == strName)
-		{
-			delete iter.peekNextPtr()->pValue;
-			iter.peekNextPtr()->pValue = pValue;
-			return;
-		}
+    // Search the value
+    PropertiesList::tPropertiesIterator iter(m_selectedCategory->values.begin(),
+                                             m_selectedCategory->values.end());
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strName)
+        {
+            delete iter.peekNextPtr()->pValue;
+            iter.peekNextPtr()->pValue = pValue;
+            return;
+        }
 
-		iter.moveNext();
-	}
+        iter.moveNext();
+    }
 
-	// Not found: create it
-	tProperty prop;
-	prop.strName = strName;
-	prop.pValue = pValue;
-	m_selectedCategory->values.push_back(prop);
+    // Not found: create it
+    tProperty prop;
+    prop.strName = strName;
+    prop.pValue = pValue;
+    m_selectedCategory->values.push_back(prop);
 }
 
 //-----------------------------------------------------------------------
 
 void PropertiesList::set(const std::string& strCategory, const std::string& strName,
-						 Variant* pValue)
+                         Variant* pValue)
 {
-	// Assertions
-	assert(!strCategory.empty());
-	assert(!strName.empty());
-	assert(pValue);
+    // Assertions
+    assert(!strCategory.empty());
+    assert(!strName.empty());
+    assert(pValue);
 
-	// Select the category
-	selectCategory(strCategory);
+    // Select the category
+    selectCategory(strCategory);
 
-	// Set the value
-	set(strName, pValue);
+    // Set the value
+    set(strName, pValue);
 }
 
 //-----------------------------------------------------------------------
 
 Variant* PropertiesList::get(const std::string& strName)
 {
-	assert(m_selectedCategory != m_categories.end());
-	assert(!strName.empty());
+    assert(m_selectedCategory != m_categories.end());
+    assert(!strName.empty());
 
-	// Search the value
-	PropertiesList::tPropertiesIterator iter(m_selectedCategory->values.begin(), m_selectedCategory->values.end());
-	while (iter.hasMoreElements())
-	{
-		if (iter.peekNextPtr()->strName == strName)
-			return iter.peekNextPtr()->pValue;
+    // Search the value
+    PropertiesList::tPropertiesIterator iter(m_selectedCategory->values.begin(), m_selectedCategory->values.end());
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strName)
+            return iter.peekNextPtr()->pValue;
 
-		iter.moveNext();
-	}
+        iter.moveNext();
+    }
 
-	// Not found
-	return 0;
+    // Not found
+    return 0;
 }
 
 //-----------------------------------------------------------------------
 
 Variant* PropertiesList::get(const std::string& strCategory, const std::string& strName)
 {
-	assert(!strCategory.empty());
-	assert(!strName.empty());
+    assert(!strCategory.empty());
+    assert(!strName.empty());
 
-	// Search the value
-	PropertiesList::tPropertiesIterator iter = getPropertiesIterator(strCategory);
-	while (iter.hasMoreElements())
-	{
-		if (iter.peekNextPtr()->strName == strName)
-			return iter.peekNextPtr()->pValue;
+    // Search the value
+    PropertiesList::tPropertiesIterator iter = getPropertiesIterator(strCategory);
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strName)
+            return iter.peekNextPtr()->pValue;
 
-		iter.moveNext();
-	}
+        iter.moveNext();
+    }
 
-	// Not found
-	return 0;
+    // Not found
+    return 0;
 }
 
 //-----------------------------------------------------------------------
 
 PropertiesList::tCategoriesIterator PropertiesList::getCategoriesIterator()
 {
-	return tCategoriesIterator(m_categories.begin(), m_categories.end());
+    return tCategoriesIterator(m_categories.begin(), m_categories.end());
 }
 
 //-----------------------------------------------------------------------
 
 PropertiesList::tPropertiesIterator PropertiesList::getPropertiesIterator()
 {
-	assert(m_selectedCategory != m_categories.end());
+    assert(m_selectedCategory != m_categories.end());
 
-	return tPropertiesIterator(m_selectedCategory->values.begin(), m_selectedCategory->values.end());
+    return tPropertiesIterator(m_selectedCategory->values.begin(), m_selectedCategory->values.end());
 }
 
 //-----------------------------------------------------------------------
 
 PropertiesList::tPropertiesIterator PropertiesList::getPropertiesIterator(const std::string& strCategory)
 {
-	assert(!strCategory.empty());
+    assert(!strCategory.empty());
 
-	// Search the category
-	PropertiesList::tCategoriesIterator iter = getCategoriesIterator();
-	while (iter.hasMoreElements())
-	{
-		if (iter.peekNextPtr()->strName == strCategory)
-			return tPropertiesIterator(iter.peekNextPtr()->values.begin(), iter.peekNextPtr()->values.end());
-		
-		iter.moveNext();
-	}
+    // Search the category
+    PropertiesList::tCategoriesIterator iter = getCategoriesIterator();
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strCategory)
+            return tPropertiesIterator(iter.peekNextPtr()->values.begin(), iter.peekNextPtr()->values.end());
 
-	// Not found
-	return tPropertiesIterator(empty.begin(), empty.end());
+        iter.moveNext();
+    }
+
+    // Not found
+    return tPropertiesIterator(empty.begin(), empty.end());
 }
 
 //-----------------------------------------------------------------------
 
 void PropertiesList::append(PropertiesList* pList, bool bAtEnd)
 {
-	// Assertions
-	assert(pList);
+    // Assertions
+    assert(pList);
 
-	// Declarations
-	tCategoriesList::iterator position = bAtEnd ? m_categories.end() : m_categories.begin();
+    // Declarations
+    tCategoriesList::iterator position = bAtEnd ? m_categories.end() : m_categories.begin();
 
-	PropertiesList::tCategoriesIterator iter = pList->getCategoriesIterator();
-	while (iter.hasMoreElements())
-	{
-		// Select the category
-		selectCategory(iter.peekNextPtr()->strName, position);
-		position = m_selectedCategory;
-		++position;
+    PropertiesList::tCategoriesIterator iter = pList->getCategoriesIterator();
+    while (iter.hasMoreElements())
+    {
+        // Select the category
+        selectCategory(iter.peekNextPtr()->strName, position);
+        position = m_selectedCategory;
+        ++position;
 
-		tPropertiesIterator propIter = tPropertiesIterator(iter.peekNextPtr()->values.begin(), iter.peekNextPtr()->values.end());
-		while (propIter.hasMoreElements())
-		{
-			// Set the value
-			set(propIter.peekNextPtr()->strName, new Variant(*(propIter.peekNextPtr()->pValue)));
+        tPropertiesIterator propIter = tPropertiesIterator(iter.peekNextPtr()->values.begin(), iter.peekNextPtr()->values.end());
+        while (propIter.hasMoreElements())
+        {
+            // Set the value
+            set(propIter.peekNextPtr()->strName, new Variant(*(propIter.peekNextPtr()->pValue)));
 
-			propIter.moveNext();
-		}
+            propIter.moveNext();
+        }
 
-		iter.moveNext();
-	}
+        iter.moveNext();
+    }
 }

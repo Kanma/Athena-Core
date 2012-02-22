@@ -1,7 +1,7 @@
-/**	@file	Athena_Utils_Timer.h
-	@author	Philip Abbet
+/** @file   Athena_Utils_Timer.h
+    @author Philip Abbet
 
-	Declaration of the MacOS X-specific class 'Athena::Utils::Timer'
+    Declaration of the MacOS X-specific class 'Athena::Utils::Timer'
 
     @note   This is based on the corresponding class from
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
@@ -16,54 +16,54 @@ namespace Athena {
 namespace Utils {
 
 //----------------------------------------------------------------------------------------
-/// @brief	Represents a timer
+/// @brief    Represents a timer
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL Timer
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
-	Timer();
-	~Timer();
+    Timer();
+    ~Timer();
 
 
-	//_____ Management of the timer __________
+    //_____ Management of the timer __________
 public:
-	//------------------------------------------------------------------------------------
-	/// @brief	Resets the timer
-	//------------------------------------------------------------------------------------
-	void reset();
+    //------------------------------------------------------------------------------------
+    /// @brief    Resets the timer
+    //------------------------------------------------------------------------------------
+    void reset();
 
-	//------------------------------------------------------------------------------------
-	/// @brief	Returns the number of milliseconds elapsed since the last reset
-	/// @return	The number of milliseconds
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    /// @brief    Returns the number of milliseconds elapsed since the last reset
+    /// @return    The number of milliseconds
+    //------------------------------------------------------------------------------------
     unsigned long getMilliseconds();
 
-	//------------------------------------------------------------------------------------
-	/// @brief	Returns the number of microseconds elapsed since the last reset
-	/// @return	The number of microseconds
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    /// @brief    Returns the number of microseconds elapsed since the last reset
+    /// @return    The number of microseconds
+    //------------------------------------------------------------------------------------
     unsigned long getMicroseconds();
 
-	//------------------------------------------------------------------------------------
-	/// @brief	Returns the number of milliseconds elapsed since the last reset, only CPU
-	///         time measured
-	/// @return	The number of milliseconds
-	//------------------------------------------------------------------------------------
-	unsigned long getMillisecondsCPU();
+    //------------------------------------------------------------------------------------
+    /// @brief    Returns the number of milliseconds elapsed since the last reset, only CPU
+    ///         time measured
+    /// @return    The number of milliseconds
+    //------------------------------------------------------------------------------------
+    unsigned long getMillisecondsCPU();
 
-	//------------------------------------------------------------------------------------
-	/// @brief	Returns the number of microseconds elapsed since the last reset, only CPU
-	///         time measured
-	/// @return	The number of milliseconds
-	//------------------------------------------------------------------------------------
-	unsigned long getMicrosecondsCPU();
+    //------------------------------------------------------------------------------------
+    /// @brief    Returns the number of microseconds elapsed since the last reset, only CPU
+    ///         time measured
+    /// @return    The number of milliseconds
+    //------------------------------------------------------------------------------------
+    unsigned long getMicrosecondsCPU();
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 private:
-	struct timeval  start;
-	clock_t         zeroClock;
+    struct timeval  start;
+    clock_t         zeroClock;
 };
 
 }

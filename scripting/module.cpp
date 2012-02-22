@@ -29,10 +29,10 @@ extern bool bind_Utils_Timer(Handle<Object> parent);
 // bool init_data_submodule(Handle<Object> parent, const std::string& modulePath)
 // {
 //     HandleScope handle_scope;
-// 
+//
 //     Handle<Object> ns = Object::New();
 //     parent->Set(String::New("Data"), ns);
-// 
+//
 //     return bind_Data_DataStream(ns);
 // }
 

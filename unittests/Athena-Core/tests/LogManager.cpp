@@ -11,28 +11,28 @@ unsigned int CMockLogListener::uiInstances = 0;
 
 TEST(LogManager_Singleton)
 {
-	CHECK(!LogManager::getSingletonPtr());
-	
-	LogManager* pLogManager = new LogManager();
-	CHECK(pLogManager == LogManager::getSingletonPtr());
+    CHECK(!LogManager::getSingletonPtr());
 
-	delete pLogManager;
-	CHECK(!LogManager::getSingletonPtr());
+    LogManager* pLogManager = new LogManager();
+    CHECK(pLogManager == LogManager::getSingletonPtr());
+
+    delete pLogManager;
+    CHECK(!LogManager::getSingletonPtr());
 }
 
 
 struct LogEnvironment
 {
-	LogEnvironment()
-	{
-		pLogManager = new LogManager();
-	}
+    LogEnvironment()
+    {
+        pLogManager = new LogManager();
+    }
 
-	~LogEnvironment()
-	{
-		delete pLogManager;
-	}
-	
+    ~LogEnvironment()
+    {
+        delete pLogManager;
+    }
+
     LogManager* pLogManager;
 };
 
@@ -57,8 +57,8 @@ SUITE(LogManager_Listener)
 
         pLogManager->removeListener(&listener);
     }
-    
-    
+
+
     TEST_FIXTURE(LogEnvironment, TwoListeners)
     {
         CMockLogListener listener1;
@@ -81,8 +81,8 @@ SUITE(LogManager_Listener)
         pLogManager->removeListener(&listener1);
         pLogManager->removeListener(&listener2);
     }
-    
-    
+
+
     TEST_FIXTURE(LogEnvironment, NoDestructionManagement)
     {
         CMockLogListener listener;
@@ -93,8 +93,8 @@ SUITE(LogManager_Listener)
         pLogManager->removeListener(&listener);
         CHECK_EQUAL(1, CMockLogListener::uiInstances);
     }
-    
-    
+
+
     TEST_FIXTURE(LogEnvironment, NoDestructionManagement2)
     {
         CMockLogListener listener;
@@ -107,8 +107,8 @@ SUITE(LogManager_Listener)
 
         CHECK_EQUAL(1, CMockLogListener::uiInstances);
     }
-    
-    
+
+
     TEST_FIXTURE(LogEnvironment, DestructionManagement)
     {
         CMockLogListener* pListener = new CMockLogListener();
@@ -119,18 +119,18 @@ SUITE(LogManager_Listener)
         pLogManager->removeListener(pListener);
         CHECK_EQUAL(0, CMockLogListener::uiInstances);
     }
-    
-    
+
+
     TEST_FIXTURE(LogEnvironment, DestructionManagement2)
     {
         CMockLogListener* pListener = new CMockLogListener();
-    
+
         pLogManager->addListener(pListener, true);
         CHECK_EQUAL(1, CMockLogListener::uiInstances);
-    
+
         delete pLogManager;
         pLogManager = 0;
-     
+
         CHECK_EQUAL(0, CMockLogListener::uiInstances);
     }
 }

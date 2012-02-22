@@ -1,7 +1,7 @@
-/**	@file	SignalsList.cpp
-	@author	Philip Abbet
+/** @file   SignalsList.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Signals::SignalsList'
+    Implementation of the class 'Athena::Signals::SignalsList'
 */
 
 #include <Athena-Core/Signals/SignalsList.h>
@@ -21,12 +21,12 @@ SignalsList::SignalsList()
 
 SignalsList::~SignalsList()
 {
-	// Declarations
-	tSignalsNativeIterator iter, iterEnd;
-	
-	// Destroy the signals
-	for (iter = m_signals.begin(), iterEnd = m_signals.end(); iter != iterEnd; ++iter)
-		delete iter->second;
+    // Declarations
+    tSignalsNativeIterator iter, iterEnd;
+
+    // Destroy the signals
+    for (iter = m_signals.begin(), iterEnd = m_signals.end(); iter != iterEnd; ++iter)
+        delete iter->second;
 }
 
 
@@ -34,48 +34,48 @@ SignalsList::~SignalsList()
 
 void SignalsList::connect(tSignalID id, tSlot* pSlot)
 {
-	assert(pSlot);
+    assert(pSlot);
 
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->connect(pSlot);
-	}
-	else
-	{
-		Signal* pSignal = new Signal();
-		pSignal->connect(pSlot);
-		m_signals[id] = pSignal;
-	}
+    tSignalsNativeIterator iter = m_signals.find(id);
+    if (iter != m_signals.end())
+    {
+        iter->second->connect(pSlot);
+    }
+    else
+    {
+        Signal* pSignal = new Signal();
+        pSignal->connect(pSlot);
+        m_signals[id] = pSignal;
+    }
 }
 
 //-----------------------------------------------------------------------
 
 void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 {
-	assert(pSlot);
+    assert(pSlot);
 
-	tSignalsNativeIterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-	{
-		iter->second->disconnect(pSlot);
-		if (iter->second->isDisconnected())
-		{
-			delete iter->second;
-			m_signals.erase(iter);
-		}
-	}
+    tSignalsNativeIterator iter = m_signals.find(id);
+    if (iter != m_signals.end())
+    {
+        iter->second->disconnect(pSlot);
+        if (iter->second->isDisconnected())
+        {
+            delete iter->second;
+            m_signals.erase(iter);
+        }
+    }
 }
 
 
 /******************************** PYTHON SLOTS MANAGEMENT ******************************/
 
 // #if ATHENA_CORE_SCRIPTING
-// 
+//
 // void SignalsList::connect(tSignalID id, void* pPythonCallable)
 // {
 //  assert(pPythonCallable);
-// 
+//
 //  tSignalsNativeIterator iter = m_signals.find(id);
 //  if (iter != m_signals.end())
 //  {
@@ -88,13 +88,13 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 //      m_signals[id] = pSignal;
 //  }
 // }
-// 
+//
 // //-----------------------------------------------------------------------
-// 
+//
 // void SignalsList::disconnect(tSignalID id, void* pPythonCallable)
 // {
 //  assert(pPythonCallable);
-// 
+//
 //  tSignalsNativeIterator iter = m_signals.find(id);
 //  if (iter != m_signals.end())
 //  {
@@ -106,14 +106,14 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 //      }
 //  }
 // }
-// 
+//
 // //-----------------------------------------------------------------------
-// 
+//
 // void SignalsList::connect(tSignalID id, void* pPythonObject, void* pMethod)
 // {
 //  assert(pPythonObject);
 //  assert(pMethod);
-// 
+//
 //  tSignalsNativeIterator iter = m_signals.find(id);
 //  if (iter != m_signals.end())
 //  {
@@ -126,14 +126,14 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 //      m_signals[id] = pSignal;
 //  }
 // }
-// 
+//
 // //-----------------------------------------------------------------------
-// 
+//
 // void SignalsList::disconnect(tSignalID id, void* pPythonObject, void* pMethod)
 // {
 //  assert(pPythonObject);
 //  assert(pMethod);
-// 
+//
 //  tSignalsNativeIterator iter = m_signals.find(id);
 //  if (iter != m_signals.end())
 //  {
@@ -145,7 +145,7 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 //      }
 //  }
 // }
-// 
+//
 // #endif
 
 
@@ -153,7 +153,7 @@ void SignalsList::disconnect(tSignalID id, tSlot* pSlot)
 
 void SignalsList::fire(tSignalID id, Utils::Variant* pValue) const
 {
-	tSignalsList::const_iterator iter = m_signals.find(id);
-	if (iter != m_signals.end())
-		iter->second->fire(pValue);
+    tSignalsList::const_iterator iter = m_signals.find(id);
+    if (iter != m_signals.end())
+        iter->second->fire(pValue);
 }

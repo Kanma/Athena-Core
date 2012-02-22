@@ -1,6 +1,6 @@
 /** @file   Describable.cpp
     @author Philip Abbet
-    
+
     Javascript binding of the class Athena::Utils::Describable
 */
 
@@ -79,7 +79,7 @@ Handle<Value> Describable_SetProperties(const Arguments& args)
 
         return handle_scope.Close(jsList);
     }
-    
+
     delete pDelayedProperties;
 
     return Handle<Value>();
@@ -115,15 +115,15 @@ Handle<Value> Describable_GetUnknownProperties(const Arguments& args)
 bool bind_Utils_Describable(Handle<Object> parent)
 {
     ScriptingManager* pManager = ScriptingManager::getSingletonPtr();
-    
+
     Handle<FunctionTemplate> describable = pManager->getClassTemplate("Athena.Utils.Describable");
-    
+
     if (describable.IsEmpty())
     {
         // Declaration of the class
         describable = FunctionTemplate::New(Describable_New);
         describable->InstanceTemplate()->SetInternalFieldCount(1);
-        
+
         // Methods
         AddMethod(describable, "properties",        Describable_GetProperties);
         AddMethod(describable, "setProperties",     Describable_SetProperties);

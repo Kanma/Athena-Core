@@ -1,7 +1,7 @@
-/**	@file	StringConverter.cpp
-	@author	Philip Abbet
+/** @file   StringConverter.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Utils::StringConverter'
+    Implementation of the class 'Athena::Utils::StringConverter'
 
     @note   This is based on the corresponding class from
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
@@ -37,7 +37,7 @@ string StringConverter::toString(int val, unsigned short width, char fill,
                                  std::ios::fmtflags flags)
 {
     stringstream stream;
-	stream.width(width);
+    stream.width(width);
     stream.fill(fill);
     if (flags)
         stream.setf(flags);
@@ -79,7 +79,7 @@ string StringConverter::toString(long val, unsigned short width, char fill,
                                  std::ios::fmtflags flags)
 {
     stringstream stream;
-	stream.width(width);
+    stream.width(width);
     stream.fill(fill);
     if (flags)
         stream.setf(flags);
@@ -119,10 +119,10 @@ string StringConverter::toString(bool val, bool yesNo)
 
 Real StringConverter::parseReal(const std::string& val)
 {
-	// Use istringstream for direct correspondence with toString
-	istringstream str(val);
-	Real ret = 0;
-	str >> ret;
+    // Use istringstream for direct correspondence with toString
+    istringstream str(val);
+    Real ret = 0;
+    str >> ret;
 
     return ret;
 }
@@ -130,10 +130,10 @@ Real StringConverter::parseReal(const std::string& val)
 //-----------------------------------------------------------------------
 int StringConverter::parseInt(const std::string& val)
 {
-	// Use istringstream for direct correspondence with toString
-	istringstream str(val);
-	int ret = 0;
-	str >> ret;
+    // Use istringstream for direct correspondence with toString
+    istringstream str(val);
+    int ret = 0;
+    str >> ret;
 
     return ret;
 }
@@ -141,52 +141,52 @@ int StringConverter::parseInt(const std::string& val)
 //-----------------------------------------------------------------------
 unsigned int StringConverter::parseUnsignedInt(const std::string& val)
 {
-	// Use istringstream for direct correspondence with toString
-	istringstream str(val);
-	unsigned int ret = 0;
-	str >> ret;
+    // Use istringstream for direct correspondence with toString
+    istringstream str(val);
+    unsigned int ret = 0;
+    str >> ret;
 
-	return ret;
+    return ret;
 }
 
 //-----------------------------------------------------------------------
 
 long StringConverter::parseLong(const std::string& val)
 {
-	// Use istringstream for direct correspondence with toString
-	istringstream str(val);
-	long ret = 0;
-	str >> ret;
+    // Use istringstream for direct correspondence with toString
+    istringstream str(val);
+    long ret = 0;
+    str >> ret;
 
-	return ret;
+    return ret;
 }
 
 //-----------------------------------------------------------------------
 
 unsigned long StringConverter::parseUnsignedLong(const std::string& val)
 {
-	// Use istringstream for direct correspondence with toString
-	istringstream str(val);
-	unsigned long ret = 0;
-	str >> ret;
+    // Use istringstream for direct correspondence with toString
+    istringstream str(val);
+    unsigned long ret = 0;
+    str >> ret;
 
-	return ret;
+    return ret;
 }
 
 //-----------------------------------------------------------------------
 
 bool StringConverter::parseBool(const std::string& val)
 {
-	return (StringUtils::startsWith(val, "true") || StringUtils::startsWith(val, "yes") ||
-		    StringUtils::startsWith(val, "1"));
+    return (StringUtils::startsWith(val, "true") || StringUtils::startsWith(val, "yes") ||
+            StringUtils::startsWith(val, "1"));
 }
 
 //-----------------------------------------------------------------------
 
 bool StringConverter::isNumber(const std::string& val)
 {
-	istringstream str(val);
-	float tst;
-	str >> tst;
-	return !str.fail() && str.eof();
+    istringstream str(val);
+    float tst;
+    str >> tst;
+    return !str.fail() && str.eof();
 }

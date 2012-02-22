@@ -15,7 +15,7 @@ namespace Utils {
 
 //---------------------------------------------------------------------------------------
 /// @brief  Represents a map of strings
-/// 
+///
 /// This class is used similarly than a hash-table. Each string is associated with an ID.
 //---------------------------------------------------------------------------------------
 class ATHENA_SYMBOL StringsMap
@@ -53,18 +53,18 @@ public:
     tID registerString(const std::string& strValue);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns a string
+    /// @brief    Returns a string
     ///
-    /// @param	id	ID of the string
-    /// @return		The string, empty if the ID is invalid
+    /// @param    id    ID of the string
+    /// @return        The string, empty if the ID is invalid
     //-----------------------------------------------------------------------------------
     std::string getString(tID id);
-    
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the ID of a string
+    /// @brief    Returns the ID of a string
     ///
-    /// @param	strValue	The string
-    /// @return				The ID of the string
+    /// @param    strValue    The string
+    /// @return                The ID of the string
     //-----------------------------------------------------------------------------------
     tID getID(const std::string& strValue);
 

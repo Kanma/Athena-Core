@@ -1,6 +1,6 @@
 /** @file   SignalsUtils.cpp
     @author Philip Abbet
-    
+
     Javascript binding of the class Athena::Signals::SignalsUtils
 */
 

@@ -1,6 +1,6 @@
 /** @file   Signal.cpp
     @author Philip Abbet
-    
+
     Javascript binding of the class Athena::Signals::Signal
 */
 
@@ -87,17 +87,17 @@ Handle<Value> Signal_Disconnect(const Arguments& args)
 Handle<Value> Signal_Fire(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     Signal* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     Variant* pValue = 0;
-    
+
     if (args.Length() == 1)
         pValue = fromJS(args[0]);
 
     self->fire(pValue);
-    
+
     return Handle<Value>();
 }
 
@@ -106,10 +106,10 @@ Handle<Value> Signal_Fire(const Arguments& args)
 Handle<Value> Signal_IsDisconnected(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     Signal* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     return handle_scope.Close(Boolean::New(self->isDisconnected()));
 }
 

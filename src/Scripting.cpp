@@ -20,12 +20,12 @@ Handle<Value> Athena::Utils::toJS(Variant* pValue)
     {
         case Variant::STRING:
             return String::New(pValue->toString().c_str());
-        
+
         case Variant::INTEGER:
         case Variant::SHORT:
         case Variant::CHAR:
             return Int32::New(pValue->toInt());
-        
+
         case Variant::UNSIGNED_INTEGER:
         case Variant::UNSIGNED_SHORT:
         case Variant::UNSIGNED_CHAR:
@@ -34,7 +34,7 @@ Handle<Value> Athena::Utils::toJS(Variant* pValue)
         case Variant::FLOAT:
         case Variant::DOUBLE:
             return Number::New(pValue->toFloat());
-        
+
         case Variant::BOOLEAN:
             return Boolean::New(pValue->toBool());
 
@@ -50,18 +50,18 @@ Handle<Value> Athena::Utils::toJS(Variant* pValue)
         case Variant::RADIAN:
         case Variant::DEGREE:
             return Number::New(pValue->toRadian().valueRadians());
-        
+
         case Variant::STRUCT:
         {
             Handle<Object> obj = Object::New();
-            
+
             Variant::tFieldsIterator iter = pValue->getFieldsIterator();
             while (iter.hasMoreElements())
             {
                 obj->Set(String::New(iter.peekNextKey().c_str()), toJS(iter.peekNextValue()));
                 iter.moveNext();
             }
-            
+
             return obj;
         }
     }
@@ -76,7 +76,7 @@ Handle<Value> Athena::Utils::toJS(PropertiesList::tPropertiesIterator propIter)
     HandleScope handle_scope;
 
     Handle<Array> jsProperties = Array::New();
-    
+
     while (propIter.hasMoreElements())
     {
         PropertiesList::tProperty* property = propIter.peekNextPtr();
@@ -84,9 +84,9 @@ Handle<Value> Athena::Utils::toJS(PropertiesList::tPropertiesIterator propIter)
         Handle<Object> jsProperty = Object::New();
         jsProperty->Set(String::New("name"), String::New(property->strName.c_str()));
         jsProperty->Set(String::New("value"), toJS(property->pValue));
-        
+
         jsProperties->Set(jsProperties->Length(), jsProperty);
-        
+
         propIter.moveNext();
     }
 
@@ -121,7 +121,7 @@ Variant* Athena::Utils::fromJS(Handle<Value> value)
     {
         Handle<Object> object = value->ToObject();
         Handle<Function> prototype = Handle<Function>::Cast(object->GetPrototype());
-        
+
         if (prototype->Has(String::New("__classname__")))
         {
             std::string classname = *String::AsciiValue(prototype->Get(String::New("__classname__")));
@@ -145,7 +145,7 @@ Variant* Athena::Utils::fromJS(Handle<Value> value)
                 if (pValue)
                     pStruct->setField(*String::AsciiValue(name), pValue);
             }
-            
+
             return pStruct;
         }
     }

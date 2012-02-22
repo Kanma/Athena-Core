@@ -12,24 +12,24 @@ struct ScriptingTestEnvironment
 {
     Athena::Scripting::ScriptingManager* pScriptingManager;
 
-	ScriptingTestEnvironment()
-	: pScriptingManager(0)
-	{
+    ScriptingTestEnvironment()
+    : pScriptingManager(0)
+    {
         v8::HandleScope handle_scope;
 
         pScriptingManager = new Athena::Scripting::ScriptingManager();
-        
+
         pScriptingManager->import("Athena.Core");
 
         init_test_module(pScriptingManager->mainContext());
 
-    	pScriptingManager->executeFile(ATHENA_SCRIPTING_JS_TEST_RUNNER_PATH "tests.js");
-	}
+        pScriptingManager->executeFile(ATHENA_SCRIPTING_JS_TEST_RUNNER_PATH "tests.js");
+    }
 
-	~ScriptingTestEnvironment()
-	{
+    ~ScriptingTestEnvironment()
+    {
         delete pScriptingManager;
-	}
+    }
 };
 
 

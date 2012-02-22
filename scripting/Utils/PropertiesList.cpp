@@ -1,6 +1,6 @@
 /** @file   PropertiesList.cpp
     @author Philip Abbet
-    
+
     Javascript binding of the class Athena::Utils::PropertiesList
 */
 
@@ -34,21 +34,21 @@ Handle<Value> PropertiesList_New(const Arguments& args)
 Handle<Value> PropertiesList_ToArray(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
 
     Handle<Array> jsCategories = Array::New();
 
-	PropertiesList::tCategoriesIterator catIter = self->getCategoriesIterator();
+    PropertiesList::tCategoriesIterator catIter = self->getCategoriesIterator();
     while (catIter.hasMoreElements())
     {
         PropertiesList::tCategory* category = catIter.peekNextPtr();
 
         Handle<Value> jsProperties = toJS(
                     PropertiesList::tPropertiesIterator(category->values.begin(),
-                                             	        category->values.end()));
-        
+                                                         category->values.end()));
+
         Handle<Object> jsCategory = Object::New();
         jsCategory->Set(String::New("name"), String::New(category->strName.c_str()));
         jsCategory->Set(String::New("properties"), jsProperties);
@@ -69,7 +69,7 @@ Handle<Value> PropertiesList_SelectCategory(const Arguments& args)
 
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     if ((args.Length() == 2) && args[0]->IsString() && args[1]->IsBoolean())
     {
         self->selectCategory(*String::AsciiValue(args[0]->ToString()), args[1]->ToBoolean()->Value());
@@ -94,7 +94,7 @@ Handle<Value> PropertiesList_Set(const Arguments& args)
 
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     if ((args.Length() == 3) && args[0]->IsString() && args[1]->IsString())
     {
         self->set(*String::AsciiValue(args[0]->ToString()),
@@ -121,9 +121,9 @@ Handle<Value> PropertiesList_Get(const Arguments& args)
 
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
-    
+
     Variant* pValue = 0;
-    
+
     if ((args.Length() == 2) && args[0]->IsString() && args[1]->IsString())
     {
         pValue = self->get(*String::AsciiValue(args[0]->ToString()),
@@ -149,12 +149,12 @@ Handle<Value> PropertiesList_Get(const Arguments& args)
 Handle<Value> PropertiesList_GetProperties(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
 
     Handle<Value> jsProperties;
-    
+
     if ((args.Length() == 1) && args[0]->IsString())
     {
         jsProperties = toJS(self->getPropertiesIterator(*String::AsciiValue(args[0]->ToString())));
@@ -176,7 +176,7 @@ Handle<Value> PropertiesList_GetProperties(const Arguments& args)
 Handle<Value> PropertiesList_Append(const Arguments& args)
 {
     HandleScope handle_scope;
-    
+
     PropertiesList* self = GetObjectPtr(args.This());
     assert(self);
 
@@ -207,15 +207,15 @@ Handle<Value> PropertiesList_Append(const Arguments& args)
 bool bind_Utils_PropertiesList(Handle<Object> parent)
 {
     ScriptingManager* pManager = ScriptingManager::getSingletonPtr();
-    
+
     Handle<FunctionTemplate> propertiesList = pManager->getClassTemplate("Athena.Utils.PropertiesList");
-    
+
     if (propertiesList.IsEmpty())
     {
         // Declaration of the class
         propertiesList = FunctionTemplate::New(PropertiesList_New);
         propertiesList->InstanceTemplate()->SetInternalFieldCount(1);
-        
+
         // Methods
         AddMethod(propertiesList, "toArray",        PropertiesList_ToArray);
         AddMethod(propertiesList, "selectCategory", PropertiesList_SelectCategory);

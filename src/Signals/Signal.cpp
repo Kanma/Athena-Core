@@ -1,7 +1,7 @@
-/**	@file	Signal.cpp
-	@author	Philip Abbet
+/** @file   Signal.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Signals::Signal'
+    Implementation of the class 'Athena::Signals::Signal'
 */
 
 #include <Athena-Core/Signals/Signal.h>
@@ -31,16 +31,16 @@ Signal::Signal()
 
 Signal::~Signal()
 {
-	tSlotsIterator iter(m_slots);
-	while (iter.hasMoreElements())
-	{
+    tSlotsIterator iter(m_slots);
+    while (iter.hasMoreElements())
+    {
         tInternalSlot* pSlot = iter.peekNextPtr();
-	    
-		if (pSlot->type == tInternalSlot::SLOT_METHOD)
-			delete pSlot->pMethod;
+
+        if (pSlot->type == tInternalSlot::SLOT_METHOD)
+            delete pSlot->pMethod;
 
         iter.moveNext();
-	}
+    }
 }
 
 
@@ -48,87 +48,87 @@ Signal::~Signal()
 
 void Signal::connect(tSlot* pSlot)
 {
-	assert(pSlot);
+    assert(pSlot);
 
-	// Check that the slot isn't already in the list
-	tSlotsIterator iter(m_slots);
-	while (iter.hasMoreElements())
-	{
+    // Check that the slot isn't already in the list
+    tSlotsIterator iter(m_slots);
+    while (iter.hasMoreElements())
+    {
         tInternalSlot* pSlot2 = iter.peekNextPtr();
-		if ((pSlot2->type == tInternalSlot::SLOT_FUNCTION) && (pSlot2->pFunction == pSlot))
-			return;
+        if ((pSlot2->type == tInternalSlot::SLOT_FUNCTION) && (pSlot2->pFunction == pSlot))
+            return;
 
         iter.moveNext();
-	}
+    }
 
-	tInternalSlot intSlot;
-	intSlot.type = tInternalSlot::SLOT_FUNCTION;
-	intSlot.pFunction = pSlot;
+    tInternalSlot intSlot;
+    intSlot.type = tInternalSlot::SLOT_FUNCTION;
+    intSlot.pFunction = pSlot;
 
-	if (!m_bFiring)
-		m_slots.push_back(intSlot);
-	else
-		m_slotsToConnect.push_back(intSlot);
+    if (!m_bFiring)
+        m_slots.push_back(intSlot);
+    else
+        m_slotsToConnect.push_back(intSlot);
 }
 
 //-----------------------------------------------------------------------
 
 void Signal::disconnect(tSlot* pSlot)
 {
-	assert(pSlot);
+    assert(pSlot);
 
-	tSlotsNativeIterator iter, iterEnd;
-	for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-	{
-		if ((iter->type == tInternalSlot::SLOT_FUNCTION) && (iter->pFunction == pSlot))
-		{
-			if (!m_bFiring)
-			{
-				m_slots.erase(iter);
-			}
-			else
-			{
-				tInternalSlot intSlot;
-				intSlot.type = tInternalSlot::SLOT_FUNCTION;
-				intSlot.pFunction = pSlot;
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if ((iter->type == tInternalSlot::SLOT_FUNCTION) && (iter->pFunction == pSlot))
+        {
+            if (!m_bFiring)
+            {
+                m_slots.erase(iter);
+            }
+            else
+            {
+                tInternalSlot intSlot;
+                intSlot.type = tInternalSlot::SLOT_FUNCTION;
+                intSlot.pFunction = pSlot;
 
-				m_slotsToDisconnect.push_back(intSlot);
-			}
-			return;
-		}
-	}
+                m_slotsToDisconnect.push_back(intSlot);
+            }
+            return;
+        }
+    }
 }
 
 //-----------------------------------------------------------------------
 
 void Signal::disconnect(IMethodCallback* pMethod)
 {
-	assert(pMethod);
+    assert(pMethod);
 
-	tSlotsNativeIterator iter, iterEnd;
-	for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-	{
-		if (iter->type == tInternalSlot::SLOT_METHOD)
-		{
-			if (iter->pMethod == pMethod)
-			{
-				if (!m_bFiring)
-				{
-					delete iter->pMethod;
-					m_slots.erase(iter);
-				}
-				else
-				{
-					tInternalSlot intSlot;
-					intSlot.type = tInternalSlot::SLOT_METHOD;
-					intSlot.pMethod = pMethod;
+    tSlotsNativeIterator iter, iterEnd;
+    for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+    {
+        if (iter->type == tInternalSlot::SLOT_METHOD)
+        {
+            if (iter->pMethod == pMethod)
+            {
+                if (!m_bFiring)
+                {
+                    delete iter->pMethod;
+                    m_slots.erase(iter);
+                }
+                else
+                {
+                    tInternalSlot intSlot;
+                    intSlot.type = tInternalSlot::SLOT_METHOD;
+                    intSlot.pMethod = pMethod;
 
-					m_slotsToDisconnect.push_back(intSlot);
-				}
-				return;
-			}
-		}
-	}
+                    m_slotsToDisconnect.push_back(intSlot);
+                }
+                return;
+            }
+        }
+    }
 }
 
 
@@ -255,21 +255,21 @@ void Signal::disconnect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Ob
 void Signal::fire(Variant* pValue)
 {
     // Fire the signal
-	m_bFiring = true;
+    m_bFiring = true;
 
-	tSlotsIterator iter(m_slots);
-	while (iter.hasMoreElements())
-	{
+    tSlotsIterator iter(m_slots);
+    while (iter.hasMoreElements())
+    {
         tInternalSlot* pSlot = iter.peekNextPtr();
-        
-		if (pSlot->type == tInternalSlot::SLOT_FUNCTION)
-		{
-			pSlot->pFunction(pValue);
-		}
-		else if (pSlot->type == tInternalSlot::SLOT_METHOD)
-		{
-			pSlot->pMethod->fire(pValue);
-		}
+
+        if (pSlot->type == tInternalSlot::SLOT_FUNCTION)
+        {
+            pSlot->pFunction(pValue);
+        }
+        else if (pSlot->type == tInternalSlot::SLOT_METHOD)
+        {
+            pSlot->pMethod->fire(pValue);
+        }
 
 #if ATHENA_CORE_SCRIPTING
         else if (pSlot->type == tInternalSlot::SLOT_JS_FUNCTION)
@@ -301,21 +301,21 @@ void Signal::fire(Variant* pValue)
 #endif
 
         iter.moveNext();
-	}
+    }
 
-	m_bFiring = false;
+    m_bFiring = false;
 
 
     // Disconnect the slots that asked for it during the signal firing
-	tSlotsIterator iter2(m_slotsToDisconnect);
-	while (iter2.hasMoreElements())
-	{
+    tSlotsIterator iter2(m_slotsToDisconnect);
+    while (iter2.hasMoreElements())
+    {
         tInternalSlot* pSlot = iter2.peekNextPtr();
 
-		if (pSlot->type == tInternalSlot::SLOT_FUNCTION)
-			disconnect(pSlot->pFunction);
-		else if (pSlot->type == tInternalSlot::SLOT_METHOD)
-			disconnect(pSlot->pMethod);
+        if (pSlot->type == tInternalSlot::SLOT_FUNCTION)
+            disconnect(pSlot->pFunction);
+        else if (pSlot->type == tInternalSlot::SLOT_METHOD)
+            disconnect(pSlot->pMethod);
 
 #if ATHENA_CORE_SCRIPTING
          else if (pSlot->type == tInternalSlot::SLOT_JS_FUNCTION)
@@ -325,17 +325,17 @@ void Signal::fire(Variant* pValue)
 #endif
 
         iter2.moveNext();
-	}
-	m_slotsToDisconnect.clear();
+    }
+    m_slotsToDisconnect.clear();
 
 
     // Connect the slots that asked for it during the signal firing
-	tSlotsIterator iter3(m_slotsToConnect);
-	while (iter3.hasMoreElements())
-	{
+    tSlotsIterator iter3(m_slotsToConnect);
+    while (iter3.hasMoreElements())
+    {
         tInternalSlot* pSlot = iter3.peekNextPtr();
-		m_slots.push_back(*pSlot);
+        m_slots.push_back(*pSlot);
         iter3.moveNext();
-	}
-	m_slotsToConnect.clear();
+    }
+    m_slotsToConnect.clear();
 }

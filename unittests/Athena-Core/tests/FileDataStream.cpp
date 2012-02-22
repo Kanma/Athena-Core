@@ -13,14 +13,14 @@ SUITE(FileDataStreamTests)
         FileDataStream stream(getFilePath("lines.txt"));
         CHECK(stream.isOpen());
         CHECK(!stream.eof());
-    }    
+    }
 
 
     TEST(OpenUnknownFile)
     {
         FileDataStream stream("unknown.txt");
         CHECK(!stream.isOpen());
-    }    
+    }
 
 
     TEST(GetLine)
@@ -35,15 +35,15 @@ SUITE(FileDataStreamTests)
 
         s = stream.getLine();
         CHECK_EQUAL("Line 3", s);
-        
+
         s = stream.getLine();
         CHECK_EQUAL("", s);
-        
+
         s = stream.getLine();
         CHECK_EQUAL("Line 5", s);
 
         CHECK(stream.eof());
-    }    
+    }
 
 
     TEST(ReadLine)
@@ -65,7 +65,7 @@ SUITE(FileDataStreamTests)
         c = stream.readLine(buf, 30, " ");
         CHECK_EQUAL(4, c);
         CHECK_EQUAL("Line", buf);
-    }    
+    }
 
 
     TEST(SkipLine)
@@ -83,7 +83,7 @@ SUITE(FileDataStreamTests)
 
         s = stream.getLine();
         CHECK_EQUAL("3", s);
-    }    
+    }
 
 
     TEST(Read)
@@ -106,9 +106,9 @@ SUITE(FileDataStreamTests)
         buf[c] = '\0';
         CHECK_EQUAL(8, c);
         CHECK_EQUAL("\n\nLine 5", buf);
- 
+
         CHECK(stream.eof());
-    }    
+    }
 
 
     TEST(Skip)
@@ -140,7 +140,7 @@ SUITE(FileDataStreamTests)
         c = stream.read(buf, 1);
         buf[c] = '\0';
         CHECK_EQUAL("1", buf);
-    }    
+    }
 
 
     TEST(Seek)
@@ -164,5 +164,5 @@ SUITE(FileDataStreamTests)
         c = stream.read(buf, 1);
         buf[c] = '\0';
         CHECK_EQUAL("1", buf);
-    }    
+    }
 }

@@ -1,7 +1,7 @@
-/**	@file	FileDataStream.cpp
-	@author	Philip Abbet
+/** @file   FileDataStream.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Data::FileDataStream'
+    Implementation of the class 'Athena::Data::FileDataStream'
 */
 
 #include <Athena-Core/Data/FileDataStream.h>
@@ -35,7 +35,7 @@ size_t FileDataStream::read(void* buf, size_t count)
     if ((m_mode & READ) == 0)
         return 0;
 
-	m_stream.read(static_cast<char*>(buf), static_cast<std::streamsize>(count));
+    m_stream.read(static_cast<char*>(buf), static_cast<std::streamsize>(count));
     return m_stream.gcount();
 }
 
@@ -46,32 +46,32 @@ size_t FileDataStream::write(const void* buf, size_t count)
     if ((m_mode & WRITE) == 0)
         return 0;
 
-	m_stream.write(static_cast<const char*>(buf), static_cast<std::streamsize>(count));
-	return count;
+    m_stream.write(static_cast<const char*>(buf), static_cast<std::streamsize>(count));
+    return count;
 }
 
 //-----------------------------------------------------------------------
 
 void FileDataStream::skip(long count)
 {
-	m_stream.clear();
-	m_stream.seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
+    m_stream.clear();
+    m_stream.seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
 }
 
 //-----------------------------------------------------------------------
 
 void FileDataStream::seek(size_t pos)
 {
-	m_stream.clear();
-	m_stream.seekg(static_cast<std::streamoff>(pos), std::ios::beg);
+    m_stream.clear();
+    m_stream.seekg(static_cast<std::streamoff>(pos), std::ios::beg);
 }
 
 //-----------------------------------------------------------------------
 
 size_t FileDataStream::tell()
 {
-	m_stream.clear();
-	return m_stream.tellg();
+    m_stream.clear();
+    return m_stream.tellg();
 }
 
 //-----------------------------------------------------------------------
