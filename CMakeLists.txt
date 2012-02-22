@@ -25,7 +25,7 @@ endif()
 set(ATHENA_CORE_VERSION_MAJOR 1)
 set(ATHENA_CORE_VERSION_MINOR 1)
 set(ATHENA_CORE_VERSION_PATCH 0)
-set(ATHENA_CORE_VERSION_SUFFIX " (Dev)")
+set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
 ##########################################################################################
