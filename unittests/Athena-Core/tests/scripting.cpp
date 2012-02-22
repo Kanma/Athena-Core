@@ -63,6 +63,20 @@ SUITE(Scripting_Signals_Signal)
 }
 
 
+SUITE(Scripting_Signals_SignalsList)
+{
+    JS_TEST(SignalsList_ConnectDisconnectFunctionSlot);
+    JS_TEST(SignalsList_FunctionSlot);
+    JS_TEST(SignalsList_TwoFunctionSlots);
+    JS_TEST(SignalsList_ConnectOnlyOnceFunctionSlot);
+    JS_TEST(SignalsList_ConnectDisconnectMethodSlot);
+    JS_TEST(SignalsList_MethodSlot);
+    JS_TEST(SignalsList_TwoMethodSlots);
+    JS_TEST(SignalsList_ConnectOnlyOneMethodSlot);
+    JS_TEST(SignalsList_TwoSignals);
+}
+
+
 SUITE(Scripting_Signals_SignalsUtils)
 {
     JS_TEST(SignalsUtils_CreateSignalID);

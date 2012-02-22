@@ -17,6 +17,7 @@ using namespace Athena::Scripting;
 // extern bool bind_Data_DataStream(Handle<Object> parent);
 
 extern bool bind_Signals_Signal(Handle<Object> parent);
+extern bool bind_Signals_SignalsList(Handle<Object> parent);
 extern bool bind_Signals_SignalsUtils(Handle<Object> parent);
 
 extern bool bind_Utils_Describable(Handle<Object> parent);
@@ -47,6 +48,7 @@ bool init_signals_submodule(Handle<Object> parent, const std::string& modulePath
     parent->Set(String::New("VERSION"), String::New(Athena::Core::VERSION));
 
     return bind_Signals_Signal(ns) &&
+           bind_Signals_SignalsList(ns) &&
            bind_Signals_SignalsUtils(ns);
 }
 
