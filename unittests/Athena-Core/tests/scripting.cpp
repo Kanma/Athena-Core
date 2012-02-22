@@ -61,3 +61,12 @@ SUITE(Scripting_Signals_Signal)
     JS_TEST(Signal_TwoMethodSlots);
     JS_TEST(Signal_ConnectOnlyOneMethodSlot);
 }
+
+
+SUITE(Scripting_Signals_SignalsUtils)
+{
+    JS_TEST(SignalsUtils_CreateSignalID);
+    JS_TEST(SignalsUtils_RetrieveSignalID);
+    JS_TEST(SignalsUtils_RetrieveSignalName);
+    JS_TEST(SignalsUtils_RetrieveInvalidSignalName);
+}

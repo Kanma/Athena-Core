@@ -5,6 +5,7 @@ xmake_import_search_paths(ATHENA_SCRIPTING)
 # List the source files
 set(SRCS module.cpp
          Signals/Signal.cpp
+         Signals/SignalsUtils.cpp
          Utils/Describable.cpp
          Utils/PropertiesList.cpp
          Utils/Timer.cpp
