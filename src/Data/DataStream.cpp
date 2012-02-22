@@ -1,7 +1,7 @@
-/**	@file	DataStream.cpp
-	@author	Philip Abbet
+/** @file   DataStream.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Data::DataStream'
+    Implementation of the class 'Athena::Data::DataStream'
 */
 
 #include <Athena-Core/Data/DataStream.h>
@@ -24,16 +24,16 @@ size_t DataStream::readLine(char* buf, size_t maxCount, const string& delim)
     if ((m_mode & READ) == 0)
         return 0;
 
-	// Deal with both Unix & Windows LFs
-	bool trimCR = false;
-	if (delim.find_first_of('\n') != string::npos)
-		trimCR = true;
+    // Deal with both Unix & Windows LFs
+    bool trimCR = false;
+    if (delim.find_first_of('\n') != string::npos)
+        trimCR = true;
 
     char tmpBuf[ATHENA_STREAM_TEMP_SIZE];
     size_t chunkSize = std::min(maxCount, (size_t) ATHENA_STREAM_TEMP_SIZE - 1);
     size_t totalCount = 0;
     size_t readCount;
-    
+
     while (chunkSize && (readCount = read(tmpBuf, chunkSize)) != 0)
     {
         // Terminate
@@ -82,7 +82,7 @@ string DataStream::getLine(bool trimAfter)
     char tmpBuf[ATHENA_STREAM_TEMP_SIZE];
     string retString;
     size_t readCount;
-    
+
     if ((m_mode & READ) == 0)
         return 0;
 
@@ -126,7 +126,7 @@ size_t DataStream::skipLine(const string& delim)
     char tmpBuf[ATHENA_STREAM_TEMP_SIZE];
     size_t total = 0;
     size_t readCount;
-    
+
     if ((m_mode & READ) == 0)
         return 0;
 

@@ -1,7 +1,7 @@
-/**	@file	Timer.h
-	@author	Philip Abbet
+/** @file   Timer.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Utils::Timer'
+    Declaration of the class 'Athena::Utils::Timer'
 
     @note   This file only includes a platform-specific header
 */

@@ -1,6 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                 Athena-Core                                  *
+*                                Version 1.1.0                                 *
 *                       http://github.com/Kanma/Athena-Core                    *
 *                                                                              *
 ********************************************************************************
@@ -14,6 +15,48 @@ Athena-Core is the base module of the Athena Game Framework, in the form
 of a library written in C++.
 
 The classes contained in that module are used by nearly all the other modules.
+
+This module can be used as a standalone library, or combined with the rest of
+the Athena Game Framework (http://github.com/Kanma/Athena-Framework).
+
+Additionally, when the Athena-Scripting (http://github.com/Kanma/Athena-Scripting)
+module is built alongside this one, Athena-Core will be usable from JavaScript.
+
+
+---------------------------------------
+- Dependencies
+---------------------------------------
+
+Athena-Core requires the following dependencies:
+
+   - XMake
+   - Athena-Math
+   - UnitTest++
+
+They are provided as GIT submodules of this repository and will be compiled
+automatically during the compilation of Athena-Core.
+
+To download them, do:
+
+    somewhere$ cd <path/to/the/source/of/Athena-Core>
+    Athena-Math$ git submodule init
+    Athena-Math$ git submodule update
+
+
+---------------------------------------
+- Compilation
+---------------------------------------
+
+(Note: you'll need to install CMake to compile Athena-Core)
+
+To compile Athena-Core (and all its dependencies), do:
+
+    somewhere$ mkdir build
+    somewhere$ cd build
+    build$ cmake <path/to/the/source/of/Athena-Core>
+    build$ make
+
+The library will be put in build/bin/
 
 
 ---------------------------------------

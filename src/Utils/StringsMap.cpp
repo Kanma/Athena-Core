@@ -1,7 +1,7 @@
-/**	@file	StringsMap.cpp
-	@author	Philip Abbet
+/** @file   StringsMap.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Utils::StringsMap'
+    Implementation of the class 'Athena::Utils::StringsMap'
 */
 
 #include <Athena-Core/Utils/StringsMap.h>
@@ -22,7 +22,7 @@ StringsMap::StringsMap()
 
 StringsMap::~StringsMap()
 {
-	m_strings.clear();
+    m_strings.clear();
 }
 
 
@@ -30,68 +30,68 @@ StringsMap::~StringsMap()
 
 bool StringsMap::registerString(tID id, const std::string& strValue)
 {
-	assert(id != 0);
+    assert(id != 0);
 
-	if (!getString(id).empty() || (getID(strValue) != 0))
-		return false;
+    if (!getString(id).empty() || (getID(strValue) != 0))
+        return false;
 
-	m_strings[id] = strValue;
+    m_strings[id] = strValue;
 
-	return true;
+    return true;
 }
 
 //-----------------------------------------------------------------------
 
 tID StringsMap::registerString(const std::string& strValue)
 {
-	// Declarations
-	tID id;
+    // Declarations
+    tID id;
 
-	if (getID(strValue) != 0)
-		return 0;
+    if (getID(strValue) != 0)
+        return 0;
 
-	if (!m_strings.empty())
-	{
-		id = m_strings.rbegin()->first;
-		while (!getString(id).empty())
-			++id;
-	}
-	else
-	{
-		id = 1;
-	}
+    if (!m_strings.empty())
+    {
+        id = m_strings.rbegin()->first;
+        while (!getString(id).empty())
+            ++id;
+    }
+    else
+    {
+        id = 1;
+    }
 
-	m_strings[id] = strValue;
+    m_strings[id] = strValue;
 
-	return id;
+    return id;
 }
 
 //-----------------------------------------------------------------------
 
 std::string StringsMap::getString(tID id)
 {
-	// Declarations
-	tStringsMapIterator iter;
+    // Declarations
+    tStringsMapIterator iter;
 
-	iter = m_strings.find(id);
-	if (iter != m_strings.end())
-		return iter->second;
+    iter = m_strings.find(id);
+    if (iter != m_strings.end())
+        return iter->second;
 
-	return "";
+    return "";
 }
 
 //-----------------------------------------------------------------------
 
 tID StringsMap::getID(const std::string& strValue)
 {
-	// Declarations
-	tStringsMapIterator iter, iterEnd;
+    // Declarations
+    tStringsMapIterator iter, iterEnd;
 
-	for (iter = m_strings.begin(), iterEnd = m_strings.end(); iter != iterEnd; ++iter)
-	{
-		if (iter->second == strValue)
-			return iter->first;
-	}
+    for (iter = m_strings.begin(), iterEnd = m_strings.end(); iter != iterEnd; ++iter)
+    {
+        if (iter->second == strValue)
+            return iter->first;
+    }
 
-	return 0;
+    return 0;
 }

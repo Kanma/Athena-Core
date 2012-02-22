@@ -1,5 +1,10 @@
+# File generation
+configure_file(${ATHENA_CORE_SOURCE_DIR}/src/module.cpp.in
+               ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp)
+
 # List the source files
-set(SRCS Data/ConfigFile.cpp
+set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp
+         Data/ConfigFile.cpp
          Data/DataStream.cpp
          Data/FileDataStream.cpp
          Log/LogManager.cpp
@@ -15,6 +20,13 @@ set(SRCS Data/ConfigFile.cpp
          Utils/StringConverter.cpp
          Utils/Variant.cpp
 )
+
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    set(SRCS ${SRCS}
+             Scripting.cpp
+    )
+endif()
+
 
 if (APPLE)
     set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
@@ -34,7 +46,10 @@ xmake_import_search_paths(ATHENA_MATH)
 
 # Declaration of the library
 if (NOT ATHENA_CORE_STATIC)
-    xmake_create_dynamic_library(ATHENA_CORE Athena-Core 1.0.0 1.0.0 ${SRCS} ${PLATFORM_SRCS})
+    xmake_create_dynamic_library(ATHENA_CORE Athena-Core
+                                "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
+                                "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
+                                 ${SRCS} ${PLATFORM_SRCS})
 else()
     xmake_create_static_library(ATHENA_CORE Athena-Core ${SRCS} ${PLATFORM_SRCS})
 endif()

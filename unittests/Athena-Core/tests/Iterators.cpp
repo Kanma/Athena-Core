@@ -11,13 +11,13 @@ SUITE(VectorIteratorTests)
     TEST(FullIteration)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
 
         VectorIterator<vector<int> > iter(v);
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(0, iter.getNext());
 
@@ -34,7 +34,7 @@ SUITE(VectorIteratorTests)
     TEST(PartialIteration)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
@@ -43,7 +43,7 @@ SUITE(VectorIteratorTests)
         ++start;
 
         VectorIterator<vector<int> > iter(start, v.end());
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(1, iter.getNext());
 
@@ -57,13 +57,13 @@ SUITE(VectorIteratorTests)
     TEST(FullConstantIteration)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
 
         ConstVectorIterator<vector<int> > iter(v);
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(0, iter.getNext());
 
@@ -80,7 +80,7 @@ SUITE(VectorIteratorTests)
     TEST(PartialConstantIteration)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
@@ -89,7 +89,7 @@ SUITE(VectorIteratorTests)
         ++start;
 
         ConstVectorIterator<vector<int> > iter(start, v.end());
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(1, iter.getNext());
 
@@ -103,13 +103,13 @@ SUITE(VectorIteratorTests)
     TEST(PeekDoesNotAdvanceCurrentElement)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
 
         VectorIterator<vector<int> > iter(v);
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(0, iter.peekNext());
 
@@ -121,17 +121,17 @@ SUITE(VectorIteratorTests)
     TEST(MoveNext)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
 
         VectorIterator<vector<int> > iter(v);
-        
+
         CHECK(iter.hasMoreElements());
-        
+
         iter.moveNext();
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(1, iter.getNext());
     }
@@ -140,19 +140,19 @@ SUITE(VectorIteratorTests)
     TEST(PeekNextPtr)
     {
         vector<int> v;
-        
+
         v.push_back(0);
         v.push_back(1);
         v.push_back(2);
 
         VectorIterator<vector<int> > iter(v);
-        
+
         int* p = iter.peekNextPtr();
         CHECK_EQUAL(0, *p);
         CHECK(iter.hasMoreElements());
-    
+
         *p = 4;
-    
+
         CHECK_EQUAL(4, iter.getNext());
     }
 }
@@ -163,15 +163,15 @@ SUITE(MapIteratorTests)
     TEST(FullIteration)
     {
         map<string, int> m;
-        
+
         m["first"] = 0;
         m["second"] = 1;
         m["third"] = 2;
 
         MapIterator<map<string, int> > iter(m);
-        
+
         CHECK(iter.hasMoreElements());
-        
+
         while (iter.hasMoreElements())
         {
             string key = iter.peekNextKey();
@@ -192,15 +192,15 @@ SUITE(MapIteratorTests)
     TEST(FullConstantIteration)
     {
         map<string, int> m;
-        
+
         m["first"] = 0;
         m["second"] = 1;
         m["third"] = 2;
 
         ConstMapIterator<map<string, int> > iter(m);
-        
+
         CHECK(iter.hasMoreElements());
-        
+
         while (iter.hasMoreElements())
         {
             string key = iter.peekNextKey();
@@ -221,15 +221,15 @@ SUITE(MapIteratorTests)
     TEST(PeekDoesNotAdvanceCurrentElement)
     {
         map<string, int> m;
-        
+
         m["first"] = 0;
         m["second"] = 1;
         m["third"] = 2;
 
         MapIterator<map<string, int> > iter(m);
-        
+
         int v = iter.peekNextValue();
-        
+
         CHECK(iter.hasMoreElements());
         CHECK_EQUAL(v, iter.getNext());
     }
@@ -238,13 +238,13 @@ SUITE(MapIteratorTests)
     TEST(MoveNext)
     {
         map<string, int> m;
-        
+
         m["first"] = 0;
         m["second"] = 1;
         m["third"] = 2;
 
         MapIterator<map<string, int> > iter(m);
-        
+
         CHECK(iter.hasMoreElements());
         iter.moveNext();
         CHECK(iter.hasMoreElements());
@@ -258,20 +258,20 @@ SUITE(MapIteratorTests)
     TEST(PeekNextPtr)
     {
         map<string, int> m;
-        
+
         m["first"] = 0;
         m["second"] = 1;
         m["third"] = 2;
 
         MapIterator<map<string, int> > iter(m);
-        
+
         string key = iter.peekNextKey();
         int* p = iter.peekNextValuePtr();
-        
+
         CHECK(iter.hasMoreElements());
-    
+
         *p = 4;
-    
+
         CHECK_EQUAL(4, m[key]);
     }
 }

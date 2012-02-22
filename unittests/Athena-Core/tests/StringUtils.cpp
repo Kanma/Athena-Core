@@ -14,7 +14,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "cd", "xy");
 
-    	CHECK_EQUAL("abxyefgh", s);
+        CHECK_EQUAL("abxyefgh", s);
     }
 
 
@@ -24,7 +24,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "ab", "xy");
 
-    	CHECK_EQUAL("xycdefgh", s);
+        CHECK_EQUAL("xycdefgh", s);
     }
 
 
@@ -34,7 +34,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "gh", "xy");
 
-    	CHECK_EQUAL("abcdefxy", s);
+        CHECK_EQUAL("abcdefxy", s);
     }
 
 
@@ -44,7 +44,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "mn", "xy");
 
-    	CHECK_EQUAL("abcdefgh", s);
+        CHECK_EQUAL("abcdefgh", s);
     }
 
 
@@ -54,7 +54,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "ab", "xy");
 
-    	CHECK_EQUAL("xycdxyefxyghxy", s);
+        CHECK_EQUAL("xycdxyefxyghxy", s);
     }
 
 
@@ -64,7 +64,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::replaceAll(s, "abcdefgh", "xy");
 
-    	CHECK_EQUAL("xy", s);
+        CHECK_EQUAL("xy", s);
     }
 
 
@@ -75,8 +75,8 @@ SUITE(StringUtilsTests)
         StringUtils::tStringsList result = StringUtils::split(s, ";");
 
         CHECK_EQUAL(2, result.size());
-    	CHECK_EQUAL("abcd", result[0]);
-    	CHECK_EQUAL("efgh", result[1]);
+        CHECK_EQUAL("abcd", result[0]);
+        CHECK_EQUAL("efgh", result[1]);
     }
 
 
@@ -87,8 +87,8 @@ SUITE(StringUtilsTests)
         StringUtils::tStringsList result = StringUtils::split(s, ";");
 
         CHECK_EQUAL(2, result.size());
-    	CHECK_EQUAL("", result[0]);
-    	CHECK_EQUAL("abcdefgh", result[1]);
+        CHECK_EQUAL("", result[0]);
+        CHECK_EQUAL("abcdefgh", result[1]);
     }
 
 
@@ -99,8 +99,8 @@ SUITE(StringUtilsTests)
         StringUtils::tStringsList result = StringUtils::split(s, ";");
 
         CHECK_EQUAL(2, result.size());
-    	CHECK_EQUAL("abcdefgh", result[0]);
-    	CHECK_EQUAL("", result[1]);
+        CHECK_EQUAL("abcdefgh", result[0]);
+        CHECK_EQUAL("", result[1]);
     }
 
 
@@ -111,7 +111,7 @@ SUITE(StringUtilsTests)
         StringUtils::tStringsList result = StringUtils::split(s, ";");
 
         CHECK_EQUAL(1, result.size());
-    	CHECK_EQUAL("abcdefgh", result[0]);
+        CHECK_EQUAL("abcdefgh", result[0]);
     }
 
 
@@ -122,12 +122,12 @@ SUITE(StringUtilsTests)
         StringUtils::tStringsList result = StringUtils::split(s, ";");
 
         CHECK_EQUAL(6, result.size());
-    	CHECK_EQUAL("", result[0]);
-    	CHECK_EQUAL("ab", result[1]);
-    	CHECK_EQUAL("cd", result[2]);
-    	CHECK_EQUAL("ef", result[3]);
-    	CHECK_EQUAL("gh", result[4]);
-    	CHECK_EQUAL("", result[5]);
+        CHECK_EQUAL("", result[0]);
+        CHECK_EQUAL("ab", result[1]);
+        CHECK_EQUAL("cd", result[2]);
+        CHECK_EQUAL("ef", result[3]);
+        CHECK_EQUAL("gh", result[4]);
+        CHECK_EQUAL("", result[5]);
     }
 
 
@@ -137,7 +137,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::trim(s);
 
-    	CHECK_EQUAL("ab c\td", s);
+        CHECK_EQUAL("ab c\td", s);
     }
 
 
@@ -147,7 +147,7 @@ SUITE(StringUtilsTests)
 
         StringUtils::trim(s, true, false);
 
-    	CHECK_EQUAL("ab c\td \t", s);
+        CHECK_EQUAL("ab c\td \t", s);
     }
 
 
@@ -157,6 +157,6 @@ SUITE(StringUtilsTests)
 
         StringUtils::trim(s, false);
 
-    	CHECK_EQUAL(" \tab c\td", s);
+        CHECK_EQUAL(" \tab c\td", s);
     }
 }

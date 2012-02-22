@@ -1,7 +1,7 @@
-/**	@file	SignalsList.h
-	@author	Philip Abbet
+/** @file   SignalsList.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Signals::SignalsList'
+    Declaration of the class 'Athena::Signals::SignalsList'
 */
 
 #ifndef _ATHENA_SIGNALS_SIGNALSLIST_H_
@@ -16,138 +16,169 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-/// @brief	Represents a list of signals, each identified by an ID
+/// @brief  Represents a list of signals, each identified by an ID
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL SignalsList
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     //------------------------------------------------------------------------------------
-	SignalsList();
+    SignalsList();
 
     //------------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
-	~SignalsList();
+    ~SignalsList();
 
 
-	//_____ Function slots management __________
+    //_____ Function slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Connect a function to a signal
+    /// @brief  Connect a function to a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
-	void connect(tSignalID id, tSlot* pSlot);
+    void connect(tSignalID id, tSlot* pSlot);
 
     //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a function form a signal
+    /// @brief  Disconnect a function form a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
-	void disconnect(tSignalID id, tSlot* pSlot);
+    void disconnect(tSignalID id, tSlot* pSlot);
 
 
-	//_____ Method slots management __________
+    //_____ Method slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Connect a method to a signal
+    /// @brief  Connect a method to a signal
     ///
     /// @param  id          ID of the signal
     /// @param  pObject     The object that is interested by the signal
     /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
-	template<typename T>
-	void connect(tSignalID id, T* pObject, void (T::*pMethod)(Utils::Variant*))
+    template<typename T>
+    void connect(tSignalID id, T* pObject, void (T::*pMethod)(Utils::Variant*))
     {
-		assert(pMethod);
-		assert(pObject);
+        assert(pMethod);
+        assert(pObject);
 
-		tSignalsNativeIterator iter = m_signals.find(id);
-		if (iter != m_signals.end())
-		{
-			iter->second->connect(pObject, pMethod);
-		}
-		else
-		{
-			Signal* pSignal = new Signal();
-			pSignal->connect(pObject, pMethod);
-			m_signals[id] = pSignal;
-		}
-	}
+        tSignalsNativeIterator iter = m_signals.find(id);
+        if (iter != m_signals.end())
+        {
+            iter->second->connect(pObject, pMethod);
+        }
+        else
+        {
+            Signal* pSignal = new Signal();
+            pSignal->connect(pObject, pMethod);
+            m_signals[id] = pSignal;
+        }
+    }
 
     //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a method from a signal
+    /// @brief  Disconnect a method from a signal
     ///
     /// @param  id          ID of the signal
     /// @param  pObject     The object that isn't interested by the signal anymore
     /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
-	template<typename T>
+    template<typename T>
     void disconnect(tSignalID id, T* pObject, void (T::*pMethod)(Utils::Variant*))
     {
-		assert(pMethod);
-		assert(pObject);
+        assert(pMethod);
+        assert(pObject);
 
-		tSignalsNativeIterator iter = m_signals.find(id);
-		if (iter != m_signals.end())
-		{
-			iter->second->disconnect(pObject, pMethod);
-			if (iter->second->isDisconnected())
-			{
-				delete iter->second;
-				m_signals.erase(iter);
-			}
-		}
-	}
-
-
-// #if ATHENA_CORE_SCRIPTING
-// 
-//  //_____ Python slots management __________
-// public:
-//  void connect(tSignalID id, void* pPythonCallable);
-//  void disconnect(tSignalID id, void* pPythonCallable);
-// 
-//  void connect(tSignalID id, void* pPythonObject, void* pMethod);
-//  void disconnect(tSignalID id, void* pPythonObject, void* pMethod);
-// 
-// #endif
+        tSignalsNativeIterator iter = m_signals.find(id);
+        if (iter != m_signals.end())
+        {
+            iter->second->disconnect(pObject, pMethod);
+            if (iter->second->isDisconnected())
+            {
+                delete iter->second;
+                m_signals.erase(iter);
+            }
+        }
+    }
 
 
-	//_____ Methods __________
+#if ATHENA_CORE_SCRIPTING
+
+    //_____ JavaScript slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Fire a signal
+    /// @brief   Connect a JavaScript function to the signal
+    ///
+    /// @param  id          ID of the signal
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(tSignalID id, v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript function form the signal
+    ///
+    /// @param  id          ID of the signal
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(tSignalID id, v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Connect a JavaScript method to the signal
+    ///
+    /// @param  id          ID of the signal
+    /// @param  object      The JavaScript object that is interested by the signal
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(tSignalID id, v8::Persistent<v8::Object> object,
+                 v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript method from the signal
+    ///
+    /// @param  id          ID of the signal
+    /// @param  object      The JavaScript object that isn't interested by the signal
+    ///                     anymore
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(tSignalID id, v8::Persistent<v8::Object> object,
+                    v8::Persistent<v8::Object> function);
+
+#endif
+
+
+    //_____ Methods __________
+public:
+    //------------------------------------------------------------------------------------
+    /// @brief  Fire a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pValue  Parameter of the signal, will be handed to the connected slots
     //------------------------------------------------------------------------------------
-	void fire(tSignalID id, Utils::Variant* pValue = 0) const;
+    void fire(tSignalID id, Utils::Variant* pValue = 0) const;
 
     //------------------------------------------------------------------------------------
-    /// @brief	Indicates if the list is empty (no signal)
+    /// @brief  Indicates if the list is empty (no signal)
     //------------------------------------------------------------------------------------
-	inline bool isEmpty() const
-	{
-		return m_signals.empty();
-	}
+    inline bool isEmpty() const
+    {
+        return m_signals.empty();
+    }
 
 
-	//_____ Internal types __________
+    //_____ Internal types __________
 private:
     typedef std::map<tSignalID, Signal*>        tSignalsList;
     typedef Utils::MapIterator<tSignalsList>    tSignalsIterator;
     typedef tSignalsList::iterator              tSignalsNativeIterator;
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 private:
-	tSignalsList m_signals;
+    tSignalsList m_signals;
 };
 
 }

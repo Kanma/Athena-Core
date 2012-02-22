@@ -1,7 +1,7 @@
-/**	@file	Signal.h
-	@author	Philip Abbet
+/** @file   Signal.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Signals::Signal'
+    Declaration of the class 'Athena::Signals::Signal'
 */
 
 #ifndef _ATHENA_SIGNALS_SIGNAL_H_
@@ -10,18 +10,23 @@
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Utils/Iterators.h>
 
+#if ATHENA_CORE_SCRIPTING
+    #include <v8.h>
+#endif
+
+
 namespace Athena {
 namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-/// @brief	Type of the function-slots
+/// @brief  Type of the function-slots
 //----------------------------------------------------------------------------------------
 typedef void tSlot(Utils::Variant*);
 
 
 //----------------------------------------------------------------------------------------
-/// @brief	Represents a signal
+/// @brief  Represents a signal
 ///
 /// Signals and slots are used for communication between objects. It's an alternative to
 /// the callback technique: a signal is fired when a particular event occurs, and a slot
@@ -38,244 +43,238 @@ typedef void tSlot(Utils::Variant*);
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL Signal
 {
-	//_____ Internal types __________
+    //_____ Internal types __________
 private:
-	class IMethodCallback
-	{
-	public:
-		virtual ~IMethodCallback() {}
-		virtual void fire(Utils::Variant* pValue) = 0;
-	};
+    class IMethodCallback
+    {
+    public:
+        virtual ~IMethodCallback() {}
+        virtual void fire(Utils::Variant* pValue) = 0;
+    };
 
-	template <class T> class MethodCallback: public IMethodCallback
-	{
-	public:
-		T* m_pInstance;
-		void (T::*m_callback)(Utils::Variant*);
+    template <class T> class MethodCallback: public IMethodCallback
+    {
+    public:
+        T* m_pInstance;
+        void (T::*m_callback)(Utils::Variant*);
 
-	public:
-		MethodCallback(T* pInstance, void (T::*callback)(Utils::Variant*))
-		: m_pInstance(pInstance), m_callback(callback)
-		{
-		}
+    public:
+        MethodCallback(T* pInstance, void (T::*callback)(Utils::Variant*))
+        : m_pInstance(pInstance), m_callback(callback)
+        {
+        }
 
-		virtual void fire(Utils::Variant* pValue)
-		{
-			(m_pInstance->*m_callback)(pValue);
-		}
-	};
+        virtual void fire(Utils::Variant* pValue)
+        {
+            (m_pInstance->*m_callback)(pValue);
+        }
+    };
 
 
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     //------------------------------------------------------------------------------------
-	Signal();
+    Signal();
 
     //------------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
-	~Signal();
+    ~Signal();
 
 
-	//_____ Function slots management __________
+    //_____ Function slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Connect a function to the signal
+    /// @brief  Connect a function to the signal
     ///
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
-	void connect(tSlot* pSlot);
+    void connect(tSlot* pSlot);
 
     //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a function form the signal
+    /// @brief  Disconnect a function form the signal
     ///
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
-	void disconnect(tSlot* pSlot);
+    void disconnect(tSlot* pSlot);
 
 
-	//_____ Method slots management __________
+    //_____ Method slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Connect a method to the signal
+    /// @brief  Connect a method to the signal
     ///
     /// @param  pObject     The object that is interested by the signal
     /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
-	template<typename T>
+    template<typename T>
     void connect(T* pObject, void (T::*pMethod)(Utils::Variant*))
     {
-		assert(pMethod);
-		assert(pObject);
+        assert(pMethod);
+        assert(pObject);
 
-		// Check that the slot isn't already in the list
-		tSlotsNativeIterator iter, iterEnd;
-		for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-		{
-			if (iter->type == tInternalSlot::SLOT_METHOD)
-			{
-				MethodCallback<T>* pIntSlot = dynamic_cast<MethodCallback<T>*>(iter->pMethod);
-				if (pIntSlot && (pIntSlot->m_pInstance == pObject) && (pIntSlot->m_callback == pMethod))
-					return;
-			}
-		}
+        // Check that the slot isn't already in the list
+        tSlotsNativeIterator iter, iterEnd;
+        for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+        {
+            if (iter->type == tInternalSlot::SLOT_METHOD)
+            {
+                MethodCallback<T>* pIntSlot = dynamic_cast<MethodCallback<T>*>(iter->pMethod);
+                if (pIntSlot && (pIntSlot->m_pInstance == pObject) && (pIntSlot->m_callback == pMethod))
+                    return;
+            }
+        }
 
-		tInternalSlot intSlot;
-		intSlot.type = tInternalSlot::SLOT_METHOD;
-		intSlot.pMethod = new MethodCallback<T>(pObject, pMethod);
+        tInternalSlot intSlot;
+        intSlot.type = tInternalSlot::SLOT_METHOD;
+        intSlot.pMethod = new MethodCallback<T>(pObject, pMethod);
 
-		if (!m_bFiring)
-			m_slots.push_back(intSlot);
-		else
-			m_slotsToConnect.push_back(intSlot);
-	}
+        if (!m_bFiring)
+            m_slots.push_back(intSlot);
+        else
+            m_slotsToConnect.push_back(intSlot);
+    }
 
     //------------------------------------------------------------------------------------
-    /// @brief	Disconnect a method from the signal
+    /// @brief  Disconnect a method from the signal
     ///
     /// @param  pObject     The object that isn't interested by the signal anymore
     /// @param  pMethod     The method representing the slot
     //------------------------------------------------------------------------------------
-	template<typename T>
+    template<typename T>
     void disconnect(T* pObject, void (T::*pMethod)(Utils::Variant*))
     {
-		assert(pMethod);
-		assert(pObject);
+        assert(pMethod);
+        assert(pObject);
 
-		tSlotsNativeIterator iter, iterEnd;
-		for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
-		{
-			if (iter->type == tInternalSlot::SLOT_METHOD)
-			{
-				MethodCallback<T>* pIntSlot = dynamic_cast<MethodCallback<T>*>(iter->pMethod);
-				if (pIntSlot && (pIntSlot->m_pInstance == pObject) && (pIntSlot->m_callback == pMethod))
-				{
-					if (!m_bFiring)
-					{
-						delete iter->pMethod;
-						m_slots.erase(iter);
-					}
-					else
-					{
-						tInternalSlot intSlot;
-						intSlot.type = tInternalSlot::SLOT_METHOD;
-						intSlot.pMethod = pIntSlot;
+        tSlotsNativeIterator iter, iterEnd;
+        for (iter = m_slots.begin(), iterEnd = m_slots.end(); iter != iterEnd; ++iter)
+        {
+            if (iter->type == tInternalSlot::SLOT_METHOD)
+            {
+                MethodCallback<T>* pIntSlot = dynamic_cast<MethodCallback<T>*>(iter->pMethod);
+                if (pIntSlot && (pIntSlot->m_pInstance == pObject) && (pIntSlot->m_callback == pMethod))
+                {
+                    if (!m_bFiring)
+                    {
+                        delete iter->pMethod;
+                        m_slots.erase(iter);
+                    }
+                    else
+                    {
+                        tInternalSlot intSlot;
+                        intSlot.type = tInternalSlot::SLOT_METHOD;
+                        intSlot.pMethod = pIntSlot;
 
-						m_slotsToDisconnect.push_back(intSlot);
-					}
-					return;
-				}
-			}
-		}
-	}
+                        m_slotsToDisconnect.push_back(intSlot);
+                    }
+                    return;
+                }
+            }
+        }
+    }
 
 private:
     void disconnect(IMethodCallback* pMethod);
 
 
-// #if ATHENA_CORE_SCRIPTING
-// 
-//  //_____ Python slots management __________
-// public:
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Connect a Python function to the signal
-//     ///
-//     /// @param  pSlot   The Python function representing the slot
-//     //------------------------------------------------------------------------------------
-//      void connect(void* pPythonFunction);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Disconnect a Python function form the signal
-//     ///
-//     /// @param  pSlot   The Python function representing the slot
-//     //------------------------------------------------------------------------------------
-//  void disconnect(void* pPythonFunction);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Connect a Python method to the signal
-//     ///
-//     /// @param  pObject   The Python object that is interested by the signal
-//     /// @param  pMethod   The Python method representing the slot
-//     //------------------------------------------------------------------------------------
-//  void connect(void* pPythonObject, void* pMethod);
-// 
-//     //------------------------------------------------------------------------------------
-//     /// @brief   Disconnect a Python method from the signal
-//     ///
-//     /// @param  pObject   The Python object that isn't interested by the signal anymore
-//     /// @param  pMethod   The Python method representing the slot
-//     //------------------------------------------------------------------------------------
-//  void disconnect(void* pPythonObject, void* pMethod);
-// 
-// #endif
+#if ATHENA_CORE_SCRIPTING
 
-
-	//_____ Methods __________
+ //_____ JavaScript slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief	Fire the signal
+    /// @brief   Connect a JavaScript function to the signal
+    ///
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript function form the signal
+    ///
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Connect a JavaScript method to the signal
+    ///
+    /// @param  object      The JavaScript object that is interested by the signal
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void connect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function);
+
+    //------------------------------------------------------------------------------------
+    /// @brief   Disconnect a JavaScript method from the signal
+    ///
+    /// @param  object      The JavaScript object that isn't interested by the signal
+    ///                     anymore
+    /// @param  function    The JavaScript function representing the slot
+    //------------------------------------------------------------------------------------
+    void disconnect(v8::Persistent<v8::Object> object, v8::Persistent<v8::Object> function);
+
+#endif
+
+
+    //_____ Methods __________
+public:
+    //------------------------------------------------------------------------------------
+    /// @brief  Fire the signal
     ///
     /// @param  pValue  Parameter of the signal, will be handed to the connected slots
     //------------------------------------------------------------------------------------
-	void fire(Utils::Variant* pValue = 0);
+    void fire(Utils::Variant* pValue = 0);
 
     //------------------------------------------------------------------------------------
-    /// @brief	Indicates if the signal isn't connected to any slot
+    /// @brief  Indicates if the signal isn't connected to any slot
     //------------------------------------------------------------------------------------
-	inline bool isDisconnected() const
-	{
-		return m_slots.empty();
-	}
-
-    //------------------------------------------------------------------------------------
-    /// @brief	Returns the parameter of the currently fired signal (only usefull for
-    ///         Python slots)
-    //------------------------------------------------------------------------------------
-	static Utils::Variant* _getCurrentValue();
+    inline bool isDisconnected() const
+    {
+        return m_slots.empty();
+    }
 
 
-	//_____ Internal types __________
+    //_____ Internal types __________
 private:
-	struct tInternalSlot
-	{
-		enum {
-		    SLOT_FUNCTION,
-		    SLOT_METHOD,
-// #if ATHENA_CORE_SCRIPTING
-//          SLOT_PYTHON_FUNCTION,
-//          SLOT_PYTHON_METHOD
-// #endif
-		} type;
+    struct tInternalSlot
+    {
+        enum {
+            SLOT_FUNCTION,
+            SLOT_METHOD,
+#if ATHENA_CORE_SCRIPTING
+            SLOT_JS_FUNCTION,
+            SLOT_JS_METHOD
+#endif
+        } type;
 
-		union
-		{
-			tSlot*				pFunction;
-			IMethodCallback*	pMethod;
-// #if ATHENA_CORE_SCRIPTING
-//          struct
-//          {
-//              void*           pCallable;
-//              void*           pObject;
-//          } python;
-// #endif
-		};
-	};
+        union
+        {
+            tSlot*             pFunction;
+            IMethodCallback* pMethod;
+        };
+
+#if ATHENA_CORE_SCRIPTING
+        struct
+        {
+            v8::Persistent<v8::Object> function;
+            v8::Persistent<v8::Object> object;
+        } js;
+#endif
+    };
 
     typedef std::vector<tInternalSlot>          tSlotsList;
     typedef Utils::VectorIterator<tSlotsList>   tSlotsIterator;
     typedef tSlotsList::iterator                tSlotsNativeIterator;
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 private:
-	tSlotsList	            m_slots;                ///< The slots connected to the signal
-	bool					m_bFiring;              ///< Indicates if the signal is currently fired
-	tSlotsList	            m_slotsToDisconnect;    ///< Slots to disconnect when all the slots triggered
-	tSlotsList	            m_slotsToConnect;       ///< Slots to connect when all the slots triggered
-
-	static Utils::Variant*	m_pCurrentValue;        ///< Parameter of the signal currently fired
+    tSlotsList  m_slots;                ///< The slots connected to the signal
+    bool        m_bFiring;              ///< Indicates if the signal is currently fired
+    tSlotsList  m_slotsToDisconnect;    ///< Slots to disconnect when all the slots triggered
+    tSlotsList  m_slotsToConnect;       ///< Slots to connect when all the slots triggered
 };
 
 }
