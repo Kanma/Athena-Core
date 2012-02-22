@@ -15,7 +15,7 @@ namespace Athena {
 namespace Data {
 
 //----------------------------------------------------------------------------------------
-/// @brief    Template for a DataStream implementation using any stream-like object
+/// @brief  Template for a DataStream implementation using any stream-like object
 //----------------------------------------------------------------------------------------
 template<typename T>
 class GenericDataStream: public DataStream
@@ -23,7 +23,7 @@ class GenericDataStream: public DataStream
     //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  strFileName     Path to the file
     /// @param  bReadOnly       Indicates if the file must be open in read-only mode
@@ -34,7 +34,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
     virtual ~GenericDataStream() {}
 
@@ -42,7 +42,7 @@ public:
     //_____ Implementation of DataStream __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Read the requisite number of bytes from the stream, stopping at the end of
+    /// @brief  Read the requisite number of bytes from the stream, stopping at the end of
     ///         the file
     ///
     /// @param  buf     Reference to a buffer pointer
@@ -55,7 +55,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Write the requisite number of bytes to the stream(only applicable to
+    /// @brief  Write the requisite number of bytes to the stream(only applicable to
     ///         streams that are not read-only)
     ///
     /// @param  buf     Pointer to a buffer containing the bytes to write
@@ -68,7 +68,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Skip a defined number of bytes. This can also be a negative value, in
+    /// @brief  Skip a defined number of bytes. This can also be a negative value, in
     ///         which case the file pointer rewinds a defined number of bytes.
     //------------------------------------------------------------------------------------
     virtual void skip(long count)
@@ -77,7 +77,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Repositions the read point to a specified byte
+    /// @brief  Repositions the read point to a specified byte
     //------------------------------------------------------------------------------------
     virtual void seek(size_t pos)
     {
@@ -85,7 +85,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the current byte offset from beginning
+    /// @brief  Returns the current byte offset from beginning
     //------------------------------------------------------------------------------------
     virtual size_t tell()
     {
@@ -93,7 +93,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Indicates if the stream has reached the end
+    /// @brief  Indicates if the stream has reached the end
     //------------------------------------------------------------------------------------
     virtual bool eof() const
     {
@@ -101,7 +101,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Close the stream; this makes further operations invalid.
+    /// @brief  Close the stream; this makes further operations invalid.
     //------------------------------------------------------------------------------------
     virtual void close()
     {

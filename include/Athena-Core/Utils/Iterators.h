@@ -48,7 +48,7 @@ public:
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -62,7 +62,7 @@ public:
     //_____ Methods __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Indicates if there are more items in the collection
+    /// @brief  Indicates if there are more items in the collection
     //-----------------------------------------------------------------------------------
     bool hasMoreElements() const
     {
@@ -70,7 +70,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns the next (=current) element in the collection, without advancing
+    /// @brief  Returns the next (=current) element in the collection, without advancing
     ///         to the next afterwards
     //-----------------------------------------------------------------------------------
     ValueType peekNext() const
@@ -79,7 +79,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns a pointer to the next (=current) element in the collection,
+    /// @brief  Returns a pointer to the next (=current) element in the collection,
     ///         without advancing to the next afterwards
     //-----------------------------------------------------------------------------------
     PointerType peekNextPtr() const
@@ -88,7 +88,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns the next (=current) value element in the collection, and advances
+    /// @brief  Returns the next (=current) value element in the collection, and advances
     ///         to the next
     //-----------------------------------------------------------------------------------
     ValueType getNext()
@@ -97,7 +97,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Moves the iterator of one element
+    /// @brief  Moves the iterator of one element
     //-----------------------------------------------------------------------------------
     void moveNext()
     {
@@ -126,7 +126,7 @@ class VectorIterator : public ValuesIterator<T, typename T::iterator>
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -137,7 +137,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  container   The container over which to iterate
     //-----------------------------------------------------------------------------------
@@ -162,7 +162,7 @@ class ConstVectorIterator : public ValuesIterator<T, typename T::const_iterator>
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -173,7 +173,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  container   The container over which to iterate
     //-----------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ public:
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -232,7 +232,7 @@ public:
     //_____ Methods __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Indicates if there are more items in the collection
+    /// @brief  Indicates if there are more items in the collection
     //-----------------------------------------------------------------------------------
     bool hasMoreElements() const
     {
@@ -240,7 +240,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns the next (=current) key element in the collection, without
+    /// @brief  Returns the next (=current) key element in the collection, without
     ///         advancing to the next afterwards
     //-----------------------------------------------------------------------------------
     KeyType peekNextKey() const
@@ -249,7 +249,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns the next (=current) value element in the collection, without
+    /// @brief  Returns the next (=current) value element in the collection, without
     ///         advancing to the next afterwards
     //-----------------------------------------------------------------------------------
     ValueType peekNextValue() const
@@ -258,7 +258,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns a pointer to the next (=current) value element in the collection,
+    /// @brief  Returns a pointer to the next (=current) value element in the collection,
     ///         without advancing to the next afterwards
     //-----------------------------------------------------------------------------------
     const PointerType peekNextValuePtr() const
@@ -267,7 +267,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Returns the next (=current) value element in the collection, and advances
+    /// @brief  Returns the next (=current) value element in the collection, and advances
     ///         to the next afterwards
     //-----------------------------------------------------------------------------------
     ValueType getNext()
@@ -276,7 +276,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Moves the iterator of one element
+    /// @brief  Moves the iterator of one element
     //-----------------------------------------------------------------------------------
     void moveNext()
     {
@@ -305,7 +305,7 @@ class MapIterator : public KeyValueIterator<T, typename T::iterator>
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -316,7 +316,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  container   The container over which to iterate
     //-----------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ class ConstMapIterator : public KeyValueIterator<T, typename T::const_iterator>
     //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  start   Where to start the iteration
     /// @param  end     Where to end the iteration
@@ -352,7 +352,7 @@ public:
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     ///
     /// @param  container   The container over which to iterate
     //-----------------------------------------------------------------------------------

@@ -20,13 +20,13 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-/// @brief    Type of the function-slots
+/// @brief  Type of the function-slots
 //----------------------------------------------------------------------------------------
 typedef void tSlot(Utils::Variant*);
 
 
 //----------------------------------------------------------------------------------------
-/// @brief    Represents a signal
+/// @brief  Represents a signal
 ///
 /// Signals and slots are used for communication between objects. It's an alternative to
 /// the callback technique: a signal is fired when a particular event occurs, and a slot
@@ -74,12 +74,12 @@ private:
     //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     //------------------------------------------------------------------------------------
     Signal();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
     ~Signal();
 
@@ -87,14 +87,14 @@ public:
     //_____ Function slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Connect a function to the signal
+    /// @brief  Connect a function to the signal
     ///
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
     void connect(tSlot* pSlot);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Disconnect a function form the signal
+    /// @brief  Disconnect a function form the signal
     ///
     /// @param  pSlot   The function representing the slot
     //------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ public:
     //_____ Method slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Connect a method to the signal
+    /// @brief  Connect a method to the signal
     ///
     /// @param  pObject     The object that is interested by the signal
     /// @param  pMethod     The method representing the slot
@@ -138,7 +138,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Disconnect a method from the signal
+    /// @brief  Disconnect a method from the signal
     ///
     /// @param  pObject     The object that isn't interested by the signal anymore
     /// @param  pMethod     The method representing the slot
@@ -221,14 +221,14 @@ public:
     //_____ Methods __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Fire the signal
+    /// @brief  Fire the signal
     ///
     /// @param  pValue  Parameter of the signal, will be handed to the connected slots
     //------------------------------------------------------------------------------------
     void fire(Utils::Variant* pValue = 0);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Indicates if the signal isn't connected to any slot
+    /// @brief  Indicates if the signal isn't connected to any slot
     //------------------------------------------------------------------------------------
     inline bool isDisconnected() const
     {

@@ -21,7 +21,7 @@ using namespace std;
 /****************************** CONSTRUCTION / DESTRUCTION *****************************/
 
 //---------------------------------------------------------------------------------------
-/// @brief    Constructor
+/// @brief  Constructor
 ///
 /// Construct a null variant of no type
 //---------------------------------------------------------------------------------------
@@ -33,10 +33,10 @@ Variant::Variant()
 
 
 //---------------------------------------------------------------------------------------
-/// @brief    Constructor
+/// @brief  Constructor
 ///
 /// Construct a null variant of the specified type
-///    @param    type    The type of the variant
+/// @param  type    The type of the variant
 //---------------------------------------------------------------------------------------
 Variant::Variant(tType type)
 : m_type(type), m_bNull(true)
@@ -52,9 +52,9 @@ Variant::Variant(tType type)
 
 
 //---------------------------------------------------------------------------------------
-/// @brief    Copy constructor
+/// @brief  Copy constructor
 ///
-///    @param    value    The variant to copy
+/// @param  value   The variant to copy
 //---------------------------------------------------------------------------------------
 Variant::Variant(const Variant& value)
 : m_type(NONE), m_bNull(true)
@@ -214,7 +214,7 @@ Variant::Variant(const char* strValue)
 
 
 //---------------------------------------------------------------------------------------
-/// @brief    Destructor
+/// @brief  Destructor
 //---------------------------------------------------------------------------------------
 Variant::~Variant()
 {

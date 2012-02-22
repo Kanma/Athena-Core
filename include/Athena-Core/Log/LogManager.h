@@ -18,7 +18,7 @@ namespace Athena {
 namespace Log {
 
 //----------------------------------------------------------------------------------------
-/// @brief    This class is used to log messages
+/// @brief  This class is used to log messages
 ///
 /// The messages are sent to the registered listeners
 ///
@@ -29,24 +29,24 @@ class ATHENA_SYMBOL LogManager: public Utils::Singleton<LogManager>
     //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     //------------------------------------------------------------------------------------
     LogManager();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
     ~LogManager();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns a reference to the instance of the log manager
-    /// @return    A reference to the manager
+    /// @brief  Returns a reference to the instance of the log manager
+    /// @return A reference to the manager
     //------------------------------------------------------------------------------------
     static LogManager& getSingleton();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns a pointer to the instance of the log manager
-    /// @return    A pointer to the manager
+    /// @brief  Returns a pointer to the instance of the log manager
+    /// @return A pointer to the manager
     //------------------------------------------------------------------------------------
     static LogManager* getSingletonPtr();
 
@@ -54,43 +54,43 @@ public:
     //_____ Methods __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Add a listener to the list
+    /// @brief  Add a listener to the list
     ///
-    ///    @param    pListener            The listener
-    ///    @param    bManageDestruction    Indicates if the manager can destroy the listener or
-    ///                             not
+    /// @param  pListener             The listener
+    /// @param  bManageDestruction    Indicates if the manager can destroy the listener or
+    ///                               not
     //------------------------------------------------------------------------------------
     void addListener(ILogListener* pListener, bool bManageDestruction = false);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Remove a listener from the list
+    /// @brief  Remove a listener from the list
     ///
-    ///    @param    pListener    The listener
+    /// @param  pListener  The listener
     //------------------------------------------------------------------------------------
     void removeListener(ILogListener* pListener);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Log a message in the file
+    /// @brief  Log a message in the file
     ///
-    /// @param    type            Type of the message
-    /// @param    strContext        Context of the message
-    /// @param    strMessage        The message
-    /// @param    strFileName        The name of the file in which the call is made
-    /// @param    strFunction        The name of the function in which the call is made
-    /// @param    uiLine            The line in the file in which the call is made
+    /// @param  type          Type of the message
+    /// @param  strContext    Context of the message
+    /// @param  strMessage    The message
+    /// @param  strFileName   The name of the file in which the call is made
+    /// @param  strFunction   The name of the function in which the call is made
+    /// @param  uiLine        The line in the file in which the call is made
     //------------------------------------------------------------------------------------
     void log(tMessageType type, const char* strContext, const std::string& strMessage,
              const char* strFileName, const char* strFunction, unsigned int uiLine);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Log a message in the file
+    /// @brief  Log a message in the file
     ///
-    /// @param    type            Type of the message
-    /// @param    strContext        Context of the message
-    /// @param    strMessage        The message
-    /// @param    strFileName        The name of the file in which the call is made
-    /// @param    strFunction        The name of the function in which the call is made
-    /// @param    uiLine            The line in the file in which the call is made
+    /// @param  type          Type of the message
+    /// @param  strContext    Context of the message
+    /// @param  strMessage    The message
+    /// @param  strFileName   The name of the file in which the call is made
+    /// @param  strFunction   The name of the function in which the call is made
+    /// @param  uiLine        The line in the file in which the call is made
     //------------------------------------------------------------------------------------
     inline static void Log(tMessageType type, const char* strContext,
                            const std::string& strMessage, const char* strFileName,
@@ -114,7 +114,7 @@ public:
 private:
     struct tListener
     {
-        ILogListener*    pListener;
+        ILogListener*   pListener;
         bool            bManageDestruction;
     };
 
@@ -126,7 +126,7 @@ private:
     //_____ Attributes __________
 private:
     tListenersList  m_listeners;        ///< The listeners
-    time_t            m_startTimestamp;    ///< Timestamp at which the log manager was created
+    time_t          m_startTimestamp;   ///< Timestamp at which the log manager was created
 };
 
 }

@@ -17,13 +17,13 @@
 
 
 //---------------------------------------------------------------------------------------
-/// @brief    Main namespace. All the components of the Athena engine belongs to this
-///            namespace
+/// @brief  Main namespace. All the components of the Athena engine belongs to this
+///         namespace
 //---------------------------------------------------------------------------------------
 namespace Athena
 {
     //-----------------------------------------------------------------------------------
-    /// @brief    Contains all the data-related classes
+    /// @brief  Contains all the data-related classes
     //-----------------------------------------------------------------------------------
     namespace Data
     {
@@ -33,7 +33,7 @@ namespace Athena
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Contains all the logging-related classes
+    /// @brief  Contains all the logging-related classes
     //-----------------------------------------------------------------------------------
     namespace Log
     {
@@ -43,7 +43,7 @@ namespace Athena
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Contains all the signals-related classes
+    /// @brief  Contains all the signals-related classes
     //-----------------------------------------------------------------------------------
     namespace Signals
     {
@@ -54,7 +54,7 @@ namespace Athena
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Contains all the utility classes
+    /// @brief  Contains all the utility classes
     //-----------------------------------------------------------------------------------
     namespace Utils
     {
@@ -71,7 +71,7 @@ namespace Athena
     }
 
     //-----------------------------------------------------------------------------------
-    /// @brief    Contains all the core declarations
+    /// @brief  Contains all the core declarations
     //-----------------------------------------------------------------------------------
     namespace Core
     {

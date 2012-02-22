@@ -14,14 +14,14 @@ namespace Athena {
 namespace Utils {
 
 //-----------------------------------------------------------------------------------
-/// @brief    Acts like a union of several data types
+/// @brief  Acts like a union of several data types
 //-----------------------------------------------------------------------------------
 class ATHENA_SYMBOL Variant
 {
     //_____ Internal types __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief    Enumerates the possible type of data contained in a Variant object
+    /// @brief  Enumerates the possible type of data contained in a Variant object
     //-----------------------------------------------------------------------------------
     enum tType
     {

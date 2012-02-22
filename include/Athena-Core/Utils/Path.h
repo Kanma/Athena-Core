@@ -13,7 +13,7 @@ namespace Athena {
 namespace Utils {
 
 //---------------------------------------------------------------------------------------
-/// @brief    Contains utility methods to manipulate file paths
+/// @brief  Contains utility methods to manipulate file paths
 //---------------------------------------------------------------------------------------
 class ATHENA_SYMBOL Path
 {

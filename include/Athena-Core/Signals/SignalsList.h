@@ -16,19 +16,19 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-/// @brief    Represents a list of signals, each identified by an ID
+/// @brief  Represents a list of signals, each identified by an ID
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL SignalsList
 {
     //_____ Construction / Destruction __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Constructor
+    /// @brief  Constructor
     //------------------------------------------------------------------------------------
     SignalsList();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Destructor
+    /// @brief  Destructor
     //------------------------------------------------------------------------------------
     ~SignalsList();
 
@@ -36,7 +36,7 @@ public:
     //_____ Function slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Connect a function to a signal
+    /// @brief  Connect a function to a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pSlot   The function representing the slot
@@ -44,7 +44,7 @@ public:
     void connect(tSignalID id, tSlot* pSlot);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Disconnect a function form a signal
+    /// @brief  Disconnect a function form a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pSlot   The function representing the slot
@@ -55,7 +55,7 @@ public:
     //_____ Method slots management __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Connect a method to a signal
+    /// @brief  Connect a method to a signal
     ///
     /// @param  id          ID of the signal
     /// @param  pObject     The object that is interested by the signal
@@ -81,7 +81,7 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Disconnect a method from a signal
+    /// @brief  Disconnect a method from a signal
     ///
     /// @param  id          ID of the signal
     /// @param  pObject     The object that isn't interested by the signal anymore
@@ -153,7 +153,7 @@ public:
     //_____ Methods __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Fire a signal
+    /// @brief  Fire a signal
     ///
     /// @param  id      ID of the signal
     /// @param  pValue  Parameter of the signal, will be handed to the connected slots
@@ -161,7 +161,7 @@ public:
     void fire(tSignalID id, Utils::Variant* pValue = 0) const;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Indicates if the list is empty (no signal)
+    /// @brief  Indicates if the list is empty (no signal)
     //------------------------------------------------------------------------------------
     inline bool isEmpty() const
     {

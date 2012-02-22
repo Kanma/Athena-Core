@@ -16,7 +16,7 @@ namespace Athena {
 namespace Utils {
 
 //----------------------------------------------------------------------------------------
-/// @brief    Represents a timer
+/// @brief  Represents a timer
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL Timer
 {
@@ -29,33 +29,33 @@ public:
     //_____ Management of the timer __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Resets the timer
+    /// @brief  Resets the timer
     //------------------------------------------------------------------------------------
     void reset();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the number of milliseconds elapsed since the last reset
-    /// @return    The number of milliseconds
+    /// @brief  Returns the number of milliseconds elapsed since the last reset
+    /// @return The number of milliseconds
     //------------------------------------------------------------------------------------
     unsigned long getMilliseconds();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the number of microseconds elapsed since the last reset
-    /// @return    The number of microseconds
+    /// @brief  Returns the number of microseconds elapsed since the last reset
+    /// @return The number of microseconds
     //------------------------------------------------------------------------------------
     unsigned long getMicroseconds();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the number of milliseconds elapsed since the last reset, only CPU
+    /// @brief  Returns the number of milliseconds elapsed since the last reset, only CPU
     ///         time measured
-    /// @return    The number of milliseconds
+    /// @return The number of milliseconds
     //------------------------------------------------------------------------------------
     unsigned long getMillisecondsCPU();
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the number of microseconds elapsed since the last reset, only CPU
+    /// @brief  Returns the number of microseconds elapsed since the last reset, only CPU
     ///         time measured
-    /// @return    The number of milliseconds
+    /// @return The number of milliseconds
     //------------------------------------------------------------------------------------
     unsigned long getMicrosecondsCPU();
 

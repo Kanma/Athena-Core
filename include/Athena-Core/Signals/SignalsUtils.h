@@ -1,5 +1,5 @@
-/**    @file    SignalsUtils.h
-    @author    Philip Abbet
+/** @file   SignalsUtils.h
+    @author Philip Abbet
 
     Declaration of the class 'Athena::Signals::SignalsUtils'
 */
@@ -15,10 +15,10 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-///    @brief    Used to convert a signal name (in string form) to a signal ID (usable with
-///            the SignalsList class)
+/// @brief  Used to convert a signal name (in string form) to a signal ID (usable with
+///         the SignalsList class)
 ///
-///    @remark All the methods of this class are static
+/// @remark All the methods of this class are static
 //----------------------------------------------------------------------------------------
 class ATHENA_SYMBOL SignalsUtils
 {

@@ -1,4 +1,4 @@
-/**    @file    Declarations.h
+/** @file    Declarations.h
     @author    Philip Abbet
 
     Declaration of the base signal IDs
@@ -12,7 +12,7 @@ namespace Signals {
 
 
 //----------------------------------------------------------------------------------------
-/// @brief    Enumeration of the reserved signal IDs ranges
+/// @brief  Enumeration of the reserved signal IDs ranges
 //----------------------------------------------------------------------------------------
 enum tSignals
 {

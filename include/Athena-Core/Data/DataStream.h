@@ -14,7 +14,7 @@ namespace Athena {
 namespace Data {
 
 //----------------------------------------------------------------------------------------
-/// @brief    Base class for an object used to read and write data
+/// @brief  Base class for an object used to read and write data
 ///
 /// This class provides basically the same methods than std::basic_istream, except that it
 /// does not have any formatting capabilities, and is designed to be subclassed to receive
@@ -51,7 +51,7 @@ public:
     //_____ Methods to implement __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Read the requisite number of bytes from the stream, stopping at the end of
+    /// @brief  Read the requisite number of bytes from the stream, stopping at the end of
     ///         the file
     ///
     /// @param  buf     Reference to a buffer pointer
@@ -61,7 +61,7 @@ public:
     virtual size_t read(void* buf, size_t count) = 0;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Write the requisite number of bytes to the stream(only applicable to
+    /// @brief  Write the requisite number of bytes to the stream(only applicable to
     ///         streams that are not read-only)
     ///
     /// @param  buf     Pointer to a buffer containing the bytes to write
@@ -75,28 +75,28 @@ public:
     }
 
     //------------------------------------------------------------------------------------
-    /// @brief    Skip a defined number of bytes. This can also be a negative value, in
+    /// @brief  Skip a defined number of bytes. This can also be a negative value, in
     ///         which case the file pointer rewinds a defined number of bytes.
     //------------------------------------------------------------------------------------
     virtual void skip(long count) = 0;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Repositions the read point to a specified byte
+    /// @brief  Repositions the read point to a specified byte
     //------------------------------------------------------------------------------------
     virtual void seek(size_t pos) = 0;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the current byte offset from beginning
+    /// @brief  Returns the current byte offset from beginning
     //------------------------------------------------------------------------------------
     virtual size_t tell() = 0;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Indicates if the stream has reached the end
+    /// @brief  Indicates if the stream has reached the end
     //------------------------------------------------------------------------------------
     virtual bool eof() const = 0;
 
     //------------------------------------------------------------------------------------
-    /// @brief    Close the stream; this makes further operations invalid.
+    /// @brief  Close the stream; this makes further operations invalid.
     //------------------------------------------------------------------------------------
     virtual void close() = 0;
 
@@ -104,7 +104,7 @@ public:
     //_____ Methods __________
 public:
     //------------------------------------------------------------------------------------
-    /// @brief    Get a single line from the stream
+    /// @brief  Get a single line from the stream
     ///
     /// @remark The delimiter character is not included in the data returned, and it is
     ///         skipped over so the next read will occur after it. The buffer contents
@@ -122,7 +122,7 @@ public:
     virtual size_t readLine(char* buf, size_t maxCount, const std::string& delim = "\n");
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns a string containing the next line of data, optionally trimmed for
+    /// @brief  Returns a string containing the next line of data, optionally trimmed for
     ///         whitespace
     ///
     /// @remark This is a convenience method for text streams only, allowing you to
@@ -138,7 +138,7 @@ public:
     virtual std::string getLine(bool trimAfter = true);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Skip a single line from the stream
+    /// @brief  Skip a single line from the stream
     ///
     /// @remark To use this function, you <b>must</b> open the stream in <b>binary
     ///         mode</b>, otherwise, it'll produce unexpected results.
@@ -149,12 +149,12 @@ public:
     virtual size_t skipLine(const std::string& delim = "\n");
 
     //------------------------------------------------------------------------------------
-    /// @brief    Streaming operators
+    /// @brief  Streaming operators
     //------------------------------------------------------------------------------------
     template<typename T> DataStream& operator>>(T& val);
 
     //------------------------------------------------------------------------------------
-    /// @brief    Returns the mode of the stream
+    /// @brief  Returns the mode of the stream
     //------------------------------------------------------------------------------------
     inline tMode getMode() const
     {

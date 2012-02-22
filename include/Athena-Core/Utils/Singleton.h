@@ -31,7 +31,7 @@ namespace Utils {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief    Template class for creating single-instance global classes
+/// @brief  Template class for creating single-instance global classes
 //---------------------------------------------------------------------------------------
 template <typename T> class Singleton
 {
