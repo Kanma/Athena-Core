@@ -24,6 +24,7 @@ xmake_create_dynamic_library(ATHENA_CORE_SCRIPTING_MODULE Athena-Core-Scripting-
 
 xmake_project_link(ATHENA_CORE_SCRIPTING_MODULE ATHENA_SCRIPTING V8)
 set_target_properties(Athena-Core-Scripting-module PROPERTIES OUTPUT_NAME "Core"
+                                                              PREFIX ""
                                                               LIBRARY_OUTPUT_DIRECTORY "${XMAKE_BINARY_DIR}/bin/modules/Athena")
 
 # Copy of the JavaScript files
