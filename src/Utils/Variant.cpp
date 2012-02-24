@@ -168,38 +168,38 @@ void Variant::clear()
 }
 
 
-#define DECLARE_CONSTRUCTOR(TYPE, TYPEID, MEMBER)    \
+#define DECLARE_CONSTRUCTOR(TYPE, TYPEID, MEMBER)                   \
     Variant::Variant(TYPE value)                                    \
     : m_type(TYPEID), m_bNull(false)                                \
-    {                                                                \
-        m_value.MEMBER = value;                                        \
+    {                                                               \
+        m_value.MEMBER = value;                                     \
     }
 
 
-#define DECLARE_CONSTRUCTOR_FOR_CLASS(TYPE, TYPEID)                    \
-    Variant::Variant(const TYPE& value)                            \
+#define DECLARE_CONSTRUCTOR_FOR_CLASS(TYPE, TYPEID)                 \
+    Variant::Variant(const TYPE& value)                             \
     : m_type(TYPEID), m_bNull(false)                                \
-    {                                                                \
-        m_value._others = new TYPE(value);                            \
+    {                                                               \
+        m_value._others = new TYPE(value);                          \
     }
 
 
-DECLARE_CONSTRUCTOR(int,            INTEGER,            _int)
-DECLARE_CONSTRUCTOR(short,            SHORT,                _short)
-DECLARE_CONSTRUCTOR(char,            CHAR,                _char)
-DECLARE_CONSTRUCTOR(unsigned int,    UNSIGNED_INTEGER,    _uint)
-DECLARE_CONSTRUCTOR(unsigned short,    UNSIGNED_SHORT,        _ushort)
-DECLARE_CONSTRUCTOR(unsigned char,    UNSIGNED_CHAR,        _uchar)
-DECLARE_CONSTRUCTOR(float,            FLOAT,                _float)
-DECLARE_CONSTRUCTOR(double,            DOUBLE,                _double)
-DECLARE_CONSTRUCTOR(bool,            BOOLEAN,            _bool)
+DECLARE_CONSTRUCTOR(int,            INTEGER,          _int)
+DECLARE_CONSTRUCTOR(short,          SHORT,            _short)
+DECLARE_CONSTRUCTOR(char,           CHAR,             _char)
+DECLARE_CONSTRUCTOR(unsigned int,   UNSIGNED_INTEGER, _uint)
+DECLARE_CONSTRUCTOR(unsigned short, UNSIGNED_SHORT,   _ushort)
+DECLARE_CONSTRUCTOR(unsigned char,  UNSIGNED_CHAR,    _uchar)
+DECLARE_CONSTRUCTOR(float,          FLOAT,            _float)
+DECLARE_CONSTRUCTOR(double,         DOUBLE,           _double)
+DECLARE_CONSTRUCTOR(bool,           BOOLEAN,          _bool)
 
-DECLARE_CONSTRUCTOR_FOR_CLASS(string,        STRING)
-DECLARE_CONSTRUCTOR_FOR_CLASS(Vector3,        VECTOR3)
-DECLARE_CONSTRUCTOR_FOR_CLASS(Quaternion,    QUATERNION)
+DECLARE_CONSTRUCTOR_FOR_CLASS(string,       STRING)
+DECLARE_CONSTRUCTOR_FOR_CLASS(Vector3,      VECTOR3)
+DECLARE_CONSTRUCTOR_FOR_CLASS(Quaternion,   QUATERNION)
 DECLARE_CONSTRUCTOR_FOR_CLASS(Color,        COLOR)
-DECLARE_CONSTRUCTOR_FOR_CLASS(Radian,        RADIAN)
-DECLARE_CONSTRUCTOR_FOR_CLASS(Degree,        DEGREE)
+DECLARE_CONSTRUCTOR_FOR_CLASS(Radian,       RADIAN)
+DECLARE_CONSTRUCTOR_FOR_CLASS(Degree,       DEGREE)
 
 
 Variant::Variant(const char* strValue)
@@ -224,60 +224,60 @@ Variant::~Variant()
 
 /******************************* RETRIEVAL OF THE VALUE ********************************/
 
-#define DECLARE_GETTER(TYPE, TYPEID, METHODNAME, MEMBER, DEFAULTVALUE)                    \
-    TYPE Variant::METHODNAME() const                                                    \
-    {                                                                                    \
-        if (m_type == TYPEID)                                                            \
-        {                                                                                \
-            if (m_bNull)                                                                \
-                return DEFAULTVALUE;                                                    \
-                                                                                        \
-            return m_value.MEMBER;                                                        \
-        }                                                                                \
-                                                                                        \
-        Variant v(*this);                                                                \
-        if (v.convertTo(TYPEID))                                                        \
-            return v.METHODNAME();                                                        \
-                                                                                        \
-        return DEFAULTVALUE;                                                            \
+#define DECLARE_GETTER(TYPE, TYPEID, METHODNAME, MEMBER, DEFAULTVALUE)          \
+    TYPE Variant::METHODNAME() const                                            \
+    {                                                                           \
+        if (m_type == TYPEID)                                                   \
+        {                                                                       \
+            if (m_bNull)                                                        \
+                return DEFAULTVALUE;                                            \
+                                                                                \
+            return m_value.MEMBER;                                              \
+        }                                                                       \
+                                                                                \
+        Variant v(*this);                                                       \
+        if (v.convertTo(TYPEID))                                                \
+            return v.METHODNAME();                                              \
+                                                                                \
+        return DEFAULTVALUE;                                                    \
     }
 
-#define DECLARE_GETTER_FOR_CLASS(TYPE, TYPEID, METHODNAME, DEFAULTVALUE)                \
-    TYPE Variant::METHODNAME() const                                                    \
-    {                                                                                    \
-        if (m_type == TYPEID)                                                            \
-        {                                                                                \
-            if (m_bNull)                                                                \
-                return DEFAULTVALUE;                                                    \
-                                                                                        \
-            assert(m_value._others);                                                    \
-            return *(static_cast<TYPE*>(m_value._others));                                \
-        }                                                                                \
-                                                                                        \
-        Variant v(*this);                                                                \
-        if (v.convertTo(TYPEID))                                                        \
-            return v.METHODNAME();                                                        \
-                                                                                        \
-        return DEFAULTVALUE;                                                            \
+#define DECLARE_GETTER_FOR_CLASS(TYPE, TYPEID, METHODNAME, DEFAULTVALUE)        \
+    TYPE Variant::METHODNAME() const                                            \
+    {                                                                           \
+        if (m_type == TYPEID)                                                   \
+        {                                                                       \
+            if (m_bNull)                                                        \
+                return DEFAULTVALUE;                                            \
+                                                                                \
+            assert(m_value._others);                                            \
+            return *(static_cast<TYPE*>(m_value._others));                      \
+        }                                                                       \
+                                                                                \
+        Variant v(*this);                                                       \
+        if (v.convertTo(TYPEID))                                                \
+            return v.METHODNAME();                                              \
+                                                                                \
+        return DEFAULTVALUE;                                                    \
     }
 
 
-DECLARE_GETTER(int,                INTEGER,            toInt,        _int,        0)
-DECLARE_GETTER(short,            SHORT,                toShort,    _short,        0)
-DECLARE_GETTER(char,            CHAR,                toChar,        _char,        0)
-DECLARE_GETTER(unsigned int,    UNSIGNED_INTEGER,    toUInt,        _uint,        0)
-DECLARE_GETTER(unsigned short,    UNSIGNED_SHORT,        toUShort,    _ushort,    0)
-DECLARE_GETTER(unsigned char,    UNSIGNED_CHAR,        toUChar,    _uchar,        0)
-DECLARE_GETTER(float,            FLOAT,                toFloat,    _float,        0.0f)
-DECLARE_GETTER(double,            DOUBLE,                toDouble,    _double,    0.0)
-DECLARE_GETTER(bool,            BOOLEAN,            toBool,        _bool,        false)
+DECLARE_GETTER(int,             INTEGER,            toInt,       _int,      0)
+DECLARE_GETTER(short,           SHORT,              toShort,     _short,    0)
+DECLARE_GETTER(char,            CHAR,               toChar,      _char,     0)
+DECLARE_GETTER(unsigned int,    UNSIGNED_INTEGER,   toUInt,      _uint,     0)
+DECLARE_GETTER(unsigned short,  UNSIGNED_SHORT,     toUShort,    _ushort,   0)
+DECLARE_GETTER(unsigned char,   UNSIGNED_CHAR,      toUChar,     _uchar,    0)
+DECLARE_GETTER(float,           FLOAT,              toFloat,     _float,    0.0f)
+DECLARE_GETTER(double,          DOUBLE,             toDouble,    _double,   0.0)
+DECLARE_GETTER(bool,            BOOLEAN,            toBool,      _bool,     false)
 
-DECLARE_GETTER_FOR_CLASS(string,        STRING,        toString,        "")
-DECLARE_GETTER_FOR_CLASS(Vector3,        VECTOR3,    toVector3,        Vector3::ZERO)
-DECLARE_GETTER_FOR_CLASS(Quaternion,    QUATERNION,    toQuaternion,    Quaternion::ZERO)
-DECLARE_GETTER_FOR_CLASS(Color,            COLOR,        toColor,        Color::ZERO)
-DECLARE_GETTER_FOR_CLASS(Radian,        RADIAN,        toRadian,        Radian(0.0f))
-DECLARE_GETTER_FOR_CLASS(Degree,        DEGREE,        toDegree,        Degree(0.0f))
+DECLARE_GETTER_FOR_CLASS(string,        STRING,     toString,       "")
+DECLARE_GETTER_FOR_CLASS(Vector3,       VECTOR3,    toVector3,      Vector3::ZERO)
+DECLARE_GETTER_FOR_CLASS(Quaternion,    QUATERNION, toQuaternion,   Quaternion::ZERO)
+DECLARE_GETTER_FOR_CLASS(Color,         COLOR,      toColor,        Color::ZERO)
+DECLARE_GETTER_FOR_CLASS(Radian,        RADIAN,     toRadian,       Radian(0.0f))
+DECLARE_GETTER_FOR_CLASS(Degree,        DEGREE,     toDegree,       Degree(0.0f))
 
 
 #undef DECLARE_GETTER_FOR_MEMBER
@@ -345,64 +345,64 @@ Variant::tFieldsIterator Variant::getFieldsIterator()
 
 /********************************** TYPE CONVERSION ************************************/
 
-#define DECLARE_CONVERSION_FROM_STRING(DST_TYPEID, DST_MEMBER)                        \
-    case DST_TYPEID:                                                                \
-    {                                                                                \
-        string* p = static_cast<string*>(m_value._others);                \
-        std::istringstream str(*p);                                                    \
-        str >> m_value.DST_MEMBER;                                                    \
-                                                                                    \
-        if (str.fail())                                                                \
-        {                                                                            \
-            m_value._others = p;                                                    \
-            return false;                                                            \
-        }                                                                            \
-                                                                                    \
-        delete p;                                                                    \
-        m_type = type;                                                                \
-        return true;                                                                \
+#define DECLARE_CONVERSION_FROM_STRING(DST_TYPEID, DST_MEMBER)                  \
+    case DST_TYPEID:                                                            \
+    {                                                                           \
+        string* p = static_cast<string*>(m_value._others);                      \
+        std::istringstream str(*p);                                             \
+        str >> m_value.DST_MEMBER;                                              \
+                                                                                \
+        if (str.fail())                                                         \
+        {                                                                       \
+            m_value._others = p;                                                \
+            return false;                                                       \
+        }                                                                       \
+                                                                                \
+        delete p;                                                               \
+        m_type = type;                                                          \
+        return true;                                                            \
     }
 
 
-#define DECLARE_CONVERSION_TO_STRING(SRC_MEMBER)                                    \
-    case STRING:                                                                    \
-        {                                                                            \
-            m_type = type;                                                            \
-            string* p = new string();                                    \
-            *p = StringConverter::toString(m_value.SRC_MEMBER);                        \
-            m_value._others = p;                                                    \
-            return true;                                                            \
+#define DECLARE_CONVERSION_TO_STRING(SRC_MEMBER)                                \
+    case STRING:                                                                \
+        {                                                                       \
+            m_type = type;                                                      \
+            string* p = new string();                                           \
+            *p = StringConverter::toString(m_value.SRC_MEMBER);                 \
+            m_value._others = p;                                                \
+            return true;                                                        \
         }
 
 
-#define DECLARE_CONVERSION_TO_STRING_WITH_CAST(SRC_MEMBER, TYPE)                    \
-    case STRING:                                                                    \
-        {                                                                            \
-            m_type = type;                                                            \
-            string* p = new string();                                    \
-            *p = StringConverter::toString((TYPE) m_value.SRC_MEMBER);                \
-            m_value._others = p;                                                    \
-            return true;                                                            \
+#define DECLARE_CONVERSION_TO_STRING_WITH_CAST(SRC_MEMBER, TYPE)                \
+    case STRING:                                                                \
+        {                                                                       \
+            m_type = type;                                                      \
+            string* p = new string();                                           \
+            *p = StringConverter::toString((TYPE) m_value.SRC_MEMBER);          \
+            m_value._others = p;                                                \
+            return true;                                                        \
         }
 
 
 #define DECLARE_CONVERSION_BY_CAST(SRC_MEMBER, DST_TYPE, DST_TYPEID, DST_MEMBER)    \
     case DST_TYPEID:                                                                \
-        m_type = type;                                                                \
-        m_value.DST_MEMBER = (DST_TYPE) m_value.SRC_MEMBER;                            \
+        m_type = type;                                                              \
+        m_value.DST_MEMBER = (DST_TYPE) m_value.SRC_MEMBER;                         \
         return true;
 
 
-#define DECLARE_CONVERSION_TO_BOOLEAN(SRC_MEMBER)                                    \
-    case BOOLEAN:                                                                    \
-        m_type = type;                                                                \
-        m_value._bool = (m_value.SRC_MEMBER != 0);                                    \
+#define DECLARE_CONVERSION_TO_BOOLEAN(SRC_MEMBER)                                   \
+    case BOOLEAN:                                                                   \
+        m_type = type;                                                              \
+        m_value._bool = (m_value.SRC_MEMBER != 0);                                  \
         return true;
 
 
-#define DECLARE_CONVERSION_FROM_BOOLEAN(DST_TYPE, DST_TYPEID, DST_MEMBER)            \
+#define DECLARE_CONVERSION_FROM_BOOLEAN(DST_TYPE, DST_TYPEID, DST_MEMBER)           \
     case DST_TYPEID:                                                                \
-        m_type = type;                                                                \
+        m_type = type;                                                              \
         m_value.DST_MEMBER = (DST_TYPE) (m_value._bool ? 1 : 0);                    \
         return true;
 
@@ -430,12 +430,12 @@ bool Variant::convertTo(tType type)
 
         switch (type)
         {
-            DECLARE_CONVERSION_FROM_STRING(INTEGER,                _int)
-            DECLARE_CONVERSION_FROM_STRING(SHORT,                _short)
+            DECLARE_CONVERSION_FROM_STRING(INTEGER,             _int)
+            DECLARE_CONVERSION_FROM_STRING(SHORT,               _short)
             DECLARE_CONVERSION_FROM_STRING(UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_FROM_STRING(UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_FROM_STRING(FLOAT,                _float)
-            DECLARE_CONVERSION_FROM_STRING(DOUBLE,                _double)
+            DECLARE_CONVERSION_FROM_STRING(UNSIGNED_SHORT,      _ushort)
+            DECLARE_CONVERSION_FROM_STRING(FLOAT,               _float)
+            DECLARE_CONVERSION_FROM_STRING(DOUBLE,              _double)
 
 
         case CHAR:
@@ -593,13 +593,13 @@ bool Variant::convertTo(tType type)
         {
             DECLARE_CONVERSION_TO_STRING(_int)
 
-            DECLARE_CONVERSION_BY_CAST(_int, short,                SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_int, char,                CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_int, unsigned int,        UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_int, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_int, unsigned char,        UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_int, float,                FLOAT,                _float)
-            DECLARE_CONVERSION_BY_CAST(_int, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_int, short,             SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_int, char,              CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_int, unsigned int,      UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_int, unsigned short,    UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_int, unsigned char,     UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_int, float,             FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_int, double,            DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_int)
         }
         break;
@@ -611,13 +611,13 @@ bool Variant::convertTo(tType type)
         {
             DECLARE_CONVERSION_TO_STRING(_short)
 
-            DECLARE_CONVERSION_BY_CAST(_short, int,                INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_short, char,            CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_short, unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_short, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_short, unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_short, float,            FLOAT,                _float)
-            DECLARE_CONVERSION_BY_CAST(_short, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_short, int,             INTEGER,            _int)
+            DECLARE_CONVERSION_BY_CAST(_short, char,            CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_short, unsigned int,    UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_short, unsigned short,  UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_short, unsigned char,   UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_short, float,           FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_short, double,          DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_short)
         }
         break;
@@ -629,13 +629,13 @@ bool Variant::convertTo(tType type)
         {
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_char, int)
 
-            DECLARE_CONVERSION_BY_CAST(_char, int,                INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_char, short,            SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_char, unsigned int,        UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_char, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_char, unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_char, float,            FLOAT,                _float)
-            DECLARE_CONVERSION_BY_CAST(_char, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_char, int,              INTEGER,            _int)
+            DECLARE_CONVERSION_BY_CAST(_char, short,            SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_char, unsigned int,     UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_char, unsigned short,   UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_char, unsigned char,    UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_char, float,            FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_char, double,           DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_char)
         }
         break;
@@ -647,13 +647,13 @@ bool Variant::convertTo(tType type)
         {
             DECLARE_CONVERSION_TO_STRING(_uint)
 
-            DECLARE_CONVERSION_BY_CAST(_uint, int,                INTEGER,        _int)
-            DECLARE_CONVERSION_BY_CAST(_uint, short,            SHORT,            _short)
-            DECLARE_CONVERSION_BY_CAST(_uint, char,                CHAR,            _char)
-            DECLARE_CONVERSION_BY_CAST(_uint, unsigned short,    UNSIGNED_SHORT,    _ushort)
-            DECLARE_CONVERSION_BY_CAST(_uint, unsigned char,    UNSIGNED_CHAR,    _uchar)
-            DECLARE_CONVERSION_BY_CAST(_uint, float,            FLOAT,            _float)
-            DECLARE_CONVERSION_BY_CAST(_uint, double,            DOUBLE,            _double)
+            DECLARE_CONVERSION_BY_CAST(_uint, int,              INTEGER,            _int)
+            DECLARE_CONVERSION_BY_CAST(_uint, short,            SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_uint, char,             CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_uint, unsigned short,   UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_uint, unsigned char,    UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_uint, float,            FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_uint, double,           DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_uint)
         }
         break;
@@ -666,12 +666,12 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_TO_STRING(_ushort)
 
             DECLARE_CONVERSION_BY_CAST(_ushort, int,            INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_ushort, short,            SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_ushort, char,            CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_ushort, unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_ushort, unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_ushort, float,            FLOAT,                _float)
-            DECLARE_CONVERSION_BY_CAST(_ushort, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_ushort, short,          SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_ushort, char,           CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_ushort, unsigned int,   UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_ushort, unsigned char,  UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_ushort, float,          FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_ushort, double,         DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_ushort)
         }
         break;
@@ -683,13 +683,13 @@ bool Variant::convertTo(tType type)
         {
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_uchar, unsigned int)
 
-            DECLARE_CONVERSION_BY_CAST(_uchar, int,                INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_uchar, short,            SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_uchar, char,            CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_uchar, unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_uchar, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_uchar, float,            FLOAT,                _float)
-            DECLARE_CONVERSION_BY_CAST(_uchar, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_uchar, int,             INTEGER,            _int)
+            DECLARE_CONVERSION_BY_CAST(_uchar, short,           SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_uchar, char,            CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_uchar, unsigned int,    UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_uchar, unsigned short,  UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_uchar, float,           FLOAT,              _float)
+            DECLARE_CONVERSION_BY_CAST(_uchar, double,          DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_uchar)
         }
         break;
@@ -706,13 +706,13 @@ bool Variant::convertTo(tType type)
 
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_float, Real)
 
-            DECLARE_CONVERSION_BY_CAST(_float, int,                INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_float, short,            SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_float, char,            CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_float, unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_float, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_float, unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_float, double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_BY_CAST(_float, int,             INTEGER,            _int)
+            DECLARE_CONVERSION_BY_CAST(_float, short,           SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_float, char,            CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_float, unsigned int,    UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_float, unsigned short,  UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_float, unsigned char,   UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_float, double,          DOUBLE,             _double)
         }
         break;
 
@@ -729,12 +729,12 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_double, Real)
 
             DECLARE_CONVERSION_BY_CAST(_double, int,            INTEGER,            _int)
-            DECLARE_CONVERSION_BY_CAST(_double, short,            SHORT,                _short)
-            DECLARE_CONVERSION_BY_CAST(_double, char,            CHAR,                _char)
-            DECLARE_CONVERSION_BY_CAST(_double, unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_BY_CAST(_double, unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_BY_CAST(_double, unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_BY_CAST(_double, float,            FLOAT,                _float)
+            DECLARE_CONVERSION_BY_CAST(_double, short,          SHORT,              _short)
+            DECLARE_CONVERSION_BY_CAST(_double, char,           CHAR,               _char)
+            DECLARE_CONVERSION_BY_CAST(_double, unsigned int,   UNSIGNED_INTEGER,   _uint)
+            DECLARE_CONVERSION_BY_CAST(_double, unsigned short, UNSIGNED_SHORT,     _ushort)
+            DECLARE_CONVERSION_BY_CAST(_double, unsigned char,  UNSIGNED_CHAR,      _uchar)
+            DECLARE_CONVERSION_BY_CAST(_double, float,          FLOAT,              _float)
         }
         break;
 
@@ -752,14 +752,14 @@ bool Variant::convertTo(tType type)
                 return true;
             }
 
-            DECLARE_CONVERSION_FROM_BOOLEAN(int,            INTEGER,            _uint)
-            DECLARE_CONVERSION_FROM_BOOLEAN(short,            SHORT,                _short)
-            DECLARE_CONVERSION_FROM_BOOLEAN(char,            CHAR,                _char)
-            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned int,    UNSIGNED_INTEGER,    _uint)
-            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned short,    UNSIGNED_SHORT,        _ushort)
-            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned char,    UNSIGNED_CHAR,        _uchar)
-            DECLARE_CONVERSION_FROM_BOOLEAN(float,            FLOAT,                _float)
-            DECLARE_CONVERSION_FROM_BOOLEAN(double,            DOUBLE,                _double)
+            DECLARE_CONVERSION_FROM_BOOLEAN(int,            INTEGER,                _uint)
+            DECLARE_CONVERSION_FROM_BOOLEAN(short,          SHORT,                  _short)
+            DECLARE_CONVERSION_FROM_BOOLEAN(char,           CHAR,                   _char)
+            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned int,   UNSIGNED_INTEGER,       _uint)
+            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned short, UNSIGNED_SHORT,         _ushort)
+            DECLARE_CONVERSION_FROM_BOOLEAN(unsigned char,  UNSIGNED_CHAR,          _uchar)
+            DECLARE_CONVERSION_FROM_BOOLEAN(float,          FLOAT,                  _float)
+            DECLARE_CONVERSION_FROM_BOOLEAN(double,         DOUBLE,                 _double)
         }
         break;
 

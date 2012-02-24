@@ -133,10 +133,10 @@ unsigned long Timer::getMicroseconds()
     SetThreadAffinityMask(thread, oldMask);
 
     LONGLONG newTime = curTime.QuadPart - startTime.QuadPart;
-    
+
     // get milliseconds to check against GetTickCount
     unsigned long newTicks = (unsigned long) (1000 * newTime / frequency.QuadPart);
-    
+
     // detect and compensate for performance counter leaps
     // (surprisingly common, see Microsoft KB: Q274323)
     unsigned long check = GetTickCount() - startTick;

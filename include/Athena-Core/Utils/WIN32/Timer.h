@@ -16,7 +16,7 @@
 #  define WIN32_LEAN_AND_MEAN
 #endif
 #if !defined(NOMINMAX) && defined(_MSC_VER)
-#	define NOMINMAX // required to stop windows.h messing up std::min
+#   define NOMINMAX // required to stop windows.h messing up std::min
 #endif
 #include <windows.h>
 #include <time.h>
