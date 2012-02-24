@@ -24,7 +24,7 @@ namespace Log {
 ///
 /// @remark This class is a singleton.
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL LogManager: public Utils::Singleton<LogManager>
+class ATHENA_CORE_SYMBOL LogManager: public Utils::Singleton<LogManager>
 {
     //_____ Construction / Destruction __________
 public:

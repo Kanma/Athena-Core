@@ -24,7 +24,7 @@ std::string Path::getCurrentWorkingDirectory()
 
 #if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
     char currentPath[_MAX_PATH];
-    getcwd(currentPath, _MAX_PATH);
+    _getcwd(currentPath, _MAX_PATH);
 #else
     char currentPath[256];
     char* unused = getcwd(currentPath, 256);

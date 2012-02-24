@@ -16,6 +16,18 @@
 #include <list>
 
 
+/// Used to export symbols from the library
+#if (ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32) && !ATHENA_CORE_STATIC
+#    ifdef ATHENA_CORE_EXPORTS
+#        define ATHENA_CORE_SYMBOL  __declspec(dllexport)
+#    else
+#        define ATHENA_CORE_SYMBOL  __declspec(dllimport)
+#    endif
+#else
+#    define ATHENA_CORE_SYMBOL
+#endif
+
+
 //---------------------------------------------------------------------------------------
 /// @brief  Main namespace. All the components of the Athena engine belongs to this
 ///         namespace

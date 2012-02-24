@@ -18,7 +18,7 @@ namespace Utils {
 ///
 /// This class is used similarly than a hash-table. Each string is associated with an ID.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL StringsMap
+class ATHENA_CORE_SYMBOL StringsMap
 {
     //_____ Construction / Destruction __________
 public:

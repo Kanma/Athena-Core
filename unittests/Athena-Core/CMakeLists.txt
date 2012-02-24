@@ -21,6 +21,7 @@ set(SRCS main.cpp
          tests/SignalsUtils.cpp
          tests/StringsMap.cpp
          tests/StringUtils.cpp
+         tests/Timer.cpp
          tests/Variant.cpp
 )
 
@@ -49,6 +50,12 @@ if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
 endif()
 
 xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
+
+
+if (WIN32)
+    # Disable some warnings in Visual Studio
+    xmake_add_to_property(UNITTESTS_ATHENA_CORE COMPILE_FLAGS /wd4251)
+endif()
 
 
 # Run the unit tests

@@ -32,6 +32,8 @@ if (APPLE)
     set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
 elseif (UNIX)
     set(PLATFORM_SRCS Utils/OSX/Timer.cpp)
+elseif (WIN32)
+    set(PLATFORM_SRCS Utils/WIN32/Timer.cpp)
 endif()
 
 
@@ -50,13 +52,21 @@ if (NOT ATHENA_CORE_STATIC)
                                 "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
                                 "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
                                  ${SRCS} ${PLATFORM_SRCS})
+
+    xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_EXPORTS")
 else()
     xmake_create_static_library(ATHENA_CORE Athena-Core ${SRCS} ${PLATFORM_SRCS})
 endif()
 
 xmake_project_link(ATHENA_CORE ATHENA_MATH)
 
-xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_EXPORTS")
+
+if (WIN32)
+    # Disable some warnings in Visual Studio
+    xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    xmake_add_to_property(ATHENA_CORE COMPILE_FLAGS /wd4251)
+    xmake_add_to_property(ATHENA_CORE COMPILE_FLAGS /wd4661)
+endif()
 
 
 # Exportations

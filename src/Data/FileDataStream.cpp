@@ -15,9 +15,10 @@ using namespace std;
 FileDataStream::FileDataStream(const std::string& strFileName, tMode mode)
 : DataStream(mode)
 {
-    m_stream.open(strFileName.c_str(), (mode == READ ? ios_base::in :
-                                                       (mode == WRITE ? ios_base::out :
-                                                                        ios_base::in | ios_base::out)));
+    m_stream.open(strFileName.c_str(), ios::binary |
+                                       (mode == READ ? ios::in :
+                                                       (mode == WRITE ? ios::out :
+                                                                        ios::in | ios::out)));
 }
 
 //-----------------------------------------------------------------------
@@ -36,7 +37,7 @@ size_t FileDataStream::read(void* buf, size_t count)
         return 0;
 
     m_stream.read(static_cast<char*>(buf), static_cast<std::streamsize>(count));
-    return m_stream.gcount();
+    return (size_t) m_stream.gcount();
 }
 
 //-----------------------------------------------------------------------
@@ -71,7 +72,7 @@ void FileDataStream::seek(size_t pos)
 size_t FileDataStream::tell()
 {
     m_stream.clear();
-    return m_stream.tellg();
+    return (size_t) m_stream.tellg();
 }
 
 //-----------------------------------------------------------------------

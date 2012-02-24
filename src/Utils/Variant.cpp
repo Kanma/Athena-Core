@@ -723,7 +723,7 @@ bool Variant::convertTo(tType type)
         {
         case BOOLEAN:
             m_type = type;
-            m_value._bool = !MathUtils::RealEqual(m_value._double, 0.0);
+            m_value._bool = !MathUtils::RealEqual((Real) m_value._double, (Real) 0.0);
             return true;
 
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_double, Real)
