@@ -61,12 +61,10 @@ endif()
 xmake_project_link(ATHENA_CORE ATHENA_MATH)
 
 
-if (WIN32)
-    # Disable some warnings in Visual Studio
-    xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
-    xmake_add_to_property(ATHENA_CORE COMPILE_FLAGS /wd4251)
-    xmake_add_to_property(ATHENA_CORE COMPILE_FLAGS /wd4661)
-endif()
+# Disable some warnings in Visual Studio
+xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+xmake_disable_vs_warning(ATHENA_CORE 4251 YES)
+xmake_disable_vs_warning(ATHENA_CORE 4661 NO)
 
 
 # Exportations

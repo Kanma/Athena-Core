@@ -52,12 +52,6 @@ endif()
 xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
 
 
-if (WIN32)
-    # Disable some warnings in Visual Studio
-    xmake_add_to_property(UNITTESTS_ATHENA_CORE COMPILE_FLAGS /wd4251)
-endif()
-
-
 # Run the unit tests
 get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)
 add_custom_target(Run-UnitTests-Athena-Core ALL UnitTests-Athena-Core
