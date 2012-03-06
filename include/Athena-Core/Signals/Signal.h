@@ -41,7 +41,7 @@ typedef void tSlot(Utils::Variant*);
 /// can be created. Together, signals and slots make up a powerful component programming
 /// mechanism.
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Signal
+class ATHENA_CORE_SYMBOL Signal
 {
     //_____ Internal types __________
 private:

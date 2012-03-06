@@ -15,11 +15,11 @@
 namespace Athena {
 namespace Utils {
 
-    v8::Handle<v8::Value> toJS(Variant* pValue);
+    ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(Variant* pValue);
 
-    v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
+    ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
 
-    Variant* fromJS(v8::Handle<v8::Value> value);
+    ATHENA_CORE_SYMBOL Variant* fromJS(v8::Handle<v8::Value> value);
 
 }
 }

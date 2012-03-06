@@ -36,7 +36,7 @@ namespace Utils {
 /// if a category is known by one of the class in the inheritance tree of the object,
 /// all the following categories are known by this class or by one of its base ones).
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Describable
+class ATHENA_CORE_SYMBOL Describable
 {
     //_____ Construction / Destruction __________
 public:

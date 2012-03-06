@@ -74,12 +74,11 @@ bool ConfigFile::load(DataStream* pStream)
     assert(pStream);
 
     // Declarations
-    string            strLine;
-    tParameter        parameter;
-    size_t            offset;
-    tSection        section;
-    tSection*        pLastSection = 0;
-    char            pBuffer[255];
+    string      strLine;
+    tParameter  parameter;
+    size_t      offset;
+    tSection    section;
+    tSection*   pLastSection = 0;
 
     // Unload the config file first
     unload();

@@ -1,5 +1,6 @@
 # Setup the search paths
 xmake_import_search_paths(ATHENA_SCRIPTING)
+xmake_import_search_paths(ATHENA_CORE)
 
 
 # List the source files
@@ -23,10 +24,5 @@ xmake_create_dynamic_library(ATHENA_CORE_SCRIPTING_MODULE Athena-Core-Scripting-
                              ${SRCS})
 
 xmake_project_link(ATHENA_CORE_SCRIPTING_MODULE ATHENA_SCRIPTING V8)
-set_target_properties(Athena-Core-Scripting-module PROPERTIES OUTPUT_NAME "Core"
-                                                              LIBRARY_OUTPUT_DIRECTORY "${XMAKE_BINARY_DIR}/bin/modules/Athena")
 
-# Copy of the JavaScript files
-foreach (JS_SRC ${JS_SRCS})
-    configure_file(${JS_SRC} "${XMAKE_BINARY_DIR}/bin/modules/Athena/js/Core/${JS_SRC}" COPYONLY)
-endforeach()
+create_scripting_module(ATHENA_CORE_SCRIPTING_MODULE "Athena.Core" "${JS_SRCS}")

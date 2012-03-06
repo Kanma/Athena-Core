@@ -16,7 +16,7 @@ namespace Utils {
 //-----------------------------------------------------------------------------------
 /// @brief  Acts like a union of several data types
 //-----------------------------------------------------------------------------------
-class ATHENA_SYMBOL Variant
+class ATHENA_CORE_SYMBOL Variant
 {
     //_____ Internal types __________
 public:

@@ -14,8 +14,13 @@ set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 ##########################################################################################
 # Setup the dependencies
 
+set(COMPILE_AS_STATIC ON)
+if (WIN32)
+    set(COMPILE_AS_STATIC OFF)
+endif()
+
 if (NOT DEFINED ATHENA_MATH_STATIC)
-    set(ATHENA_MATH_STATIC ON)
+    set(ATHENA_MATH_STATIC ${COMPILE_AS_STATIC})
 endif()
 
 
@@ -24,7 +29,7 @@ endif()
 
 set(ATHENA_CORE_VERSION_MAJOR 1)
 set(ATHENA_CORE_VERSION_MINOR 1)
-set(ATHENA_CORE_VERSION_PATCH 0)
+set(ATHENA_CORE_VERSION_PATCH 1)
 set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
@@ -71,6 +76,8 @@ add_subdirectory(dependencies)
 
 if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
     set(ATHENA_CORE_SCRIPTING ON)
+else()
+    set(ATHENA_CORE_SCRIPTING OFF)
 endif()
 
 add_subdirectory(include)
