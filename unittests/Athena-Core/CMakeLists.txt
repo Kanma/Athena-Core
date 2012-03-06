@@ -53,9 +53,13 @@ xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_COR
 
 
 # Run the unit tests
-get_property(PATH TARGET UnitTests-Athena-Core PROPERTY RUNTIME_OUTPUT_DIRECTORY)
+set(WORKING_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+if (WIN32)
+    set(WORKING_DIRECTORY "${WORKING_DIRECTORY}/$(OutDir)")
+endif()
+
 add_custom_target(Run-UnitTests-Athena-Core ALL UnitTests-Athena-Core
                   DEPENDS UnitTests-Athena-Core
-                  WORKING_DIRECTORY ${PATH}
+                  WORKING_DIRECTORY ${WORKING_DIRECTORY}
                   COMMENT "Unit testing: Athena-Core..."
                   VERBATIM)

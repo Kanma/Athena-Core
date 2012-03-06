@@ -87,7 +87,7 @@ namespace Athena
     //-----------------------------------------------------------------------------------
     namespace Core
     {
-        extern const char* VERSION;
+        ATHENA_CORE_SYMBOL extern const char* VERSION;
     }
 }
 

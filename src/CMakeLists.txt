@@ -64,7 +64,7 @@ xmake_project_link(ATHENA_CORE ATHENA_MATH)
 # Disable some warnings in Visual Studio
 xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 xmake_disable_vs_warning(ATHENA_CORE 4251 YES)
-xmake_disable_vs_warning(ATHENA_CORE 4661 NO)
+xmake_disable_vs_warning(ATHENA_CORE 4661 YES)
 
 
 # Exportations
