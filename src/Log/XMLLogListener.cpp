@@ -28,7 +28,7 @@ XMLLogListener::XMLLogListener(const std::string& strFileName)
 
     // Declarations
     time_t  startTimestamp;
-    tm*        pCurrentTime;
+    tm*     pCurrentTime;
     char    strTime[9];
     char    strDate[30];
 
@@ -39,8 +39,8 @@ XMLLogListener::XMLLogListener(const std::string& strFileName)
     if (m_file.is_open())
     {
         // Retrieve the current time
-        startTimestamp        = time(0);
-        pCurrentTime        = gmtime(&startTimestamp);
+        startTimestamp  = time(0);
+        pCurrentTime    = gmtime(&startTimestamp);
         strftime(strTime, 9, "%H:%M:%S", pCurrentTime);
         strftime(strDate, 30, "%#x", pCurrentTime);
 
@@ -139,11 +139,11 @@ void XMLLogListener::log(const std::string& strTimestamp, tMessageType type,
            << "        <Type>";
     switch (type)
     {
-    case LOG_COMMENT:    m_file << "Comment"; break;
-    case LOG_DEBUG:        m_file << "Debug"; break;
-    case LOG_WARNING:    m_file << "Warning"; break;
-    case LOG_ERROR:        m_file << "Error"; break;
-    case LOG_EVENT:        m_file << "Event"; break;
+    case LOG_COMMENT: m_file << "Comment"; break;
+    case LOG_DEBUG:   m_file << "Debug"; break;
+    case LOG_WARNING: m_file << "Warning"; break;
+    case LOG_ERROR:   m_file << "Error"; break;
+    case LOG_EVENT:   m_file << "Event"; break;
     }
     m_file << "</Type>" << endl
            << "        <TimeIndex>" << strTimestamp << "</TimeIndex>" << endl

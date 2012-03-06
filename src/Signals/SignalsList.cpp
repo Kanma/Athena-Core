@@ -158,7 +158,7 @@ void SignalsList::disconnect(tSignalID id, Persistent<Object> object,
 
 /*************************************** METHODS ***************************************/
 
-void SignalsList::fire(tSignalID id, Utils::Variant* pValue) const
+void SignalsList::fire(tSignalID id, Variant* pValue) const
 {
     tSignalsList::const_iterator iter = m_signals.find(id);
     if (iter != m_signals.end())

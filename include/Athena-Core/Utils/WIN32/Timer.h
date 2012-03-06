@@ -1,16 +1,26 @@
 /** @file   Athena_Utils_Timer.h
     @author Philip Abbet
 
-    Declaration of the MacOS X-specific class 'Athena::Utils::Timer'
+    Declaration of the Windows-specific class 'Athena::Utils::Timer'
 
     @note   This is based on the corresponding class from
             <a href="http://www.ogre3d.org/">Ogre3D</a>.
 */
 
-#ifndef _ATHENA_UTILS_OSX_TIMER_H
-#define _ATHENA_UTILS_OSX_TIMER_H
+#ifndef _ATHENA_UTILS_WIN32_TIMER_H
+#define _ATHENA_UTILS_WIN32_TIMER_H
 
 #include <Athena-Core/Prerequisites.h>
+
+#ifndef WIN32_LEAN_AND_MEAN
+#  define WIN32_LEAN_AND_MEAN
+#endif
+#if !defined(NOMINMAX) && defined(_MSC_VER)
+#   define NOMINMAX // required to stop windows.h messing up std::min
+#endif
+#include <windows.h>
+#include <time.h>
+
 
 namespace Athena {
 namespace Utils {
@@ -62,8 +72,12 @@ public:
 
     //_____ Attributes __________
 private:
-    struct timeval  start;
     clock_t         zeroClock;
+    LARGE_INTEGER   startTime;
+    LARGE_INTEGER   frequency;
+    DWORD           startTick;
+    LONGLONG        lastTime;
+    DWORD_PTR       timerMask;
 };
 
 }

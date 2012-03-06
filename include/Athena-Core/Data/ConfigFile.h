@@ -26,7 +26,7 @@ namespace Data {
 /// section can be selected, from which all the unqualified parameters are retrieved.
 /// It is also possible to iterate through all the parameters and sections.
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL ConfigFile
+class ATHENA_CORE_SYMBOL ConfigFile
 {
     //_____ Construction / Destruction __________
 public:

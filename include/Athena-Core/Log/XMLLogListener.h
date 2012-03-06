@@ -18,7 +18,7 @@ namespace Log {
 //----------------------------------------------------------------------------------------
 /// @brief  A log listener that save the messages into a XML file
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL XMLLogListener: public ILogListener
+class ATHENA_CORE_SYMBOL XMLLogListener: public ILogListener
 {
     //_____ Construction / Destruction __________
 public:

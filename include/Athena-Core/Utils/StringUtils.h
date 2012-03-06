@@ -19,7 +19,7 @@ namespace Utils {
 //----------------------------------------------------------------------------------------
 /// @brief  Contains utility methods to manipulate strings
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL StringUtils
+class ATHENA_CORE_SYMBOL StringUtils
 {
     //_____ Public types __________
 public:
