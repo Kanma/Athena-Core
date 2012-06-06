@@ -127,11 +127,11 @@ Variant* Athena::Utils::fromJS(Handle<Value> value)
             std::string classname = *String::AsciiValue(prototype->Get(String::New("__classname__")));
 
             if (classname == "Athena.Math.Vector3")
-                return new Variant(fromJSVector3(value));
+                return new Variant(fromJSVector3Unsafe(value));
             else if (classname == "Athena.Math.Quaternion")
-                return new Variant(fromJSQuaternion(value));
+                return new Variant(fromJSQuaternionUnsafe(value));
             else if (classname == "Athena.Math.Color")
-                return new Variant(fromJSColor(value));
+                return new Variant(fromJSColorUnsafe(value));
         }
         else
         {
