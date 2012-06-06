@@ -13,15 +13,22 @@
 
 
 namespace Athena {
-namespace Utils {
 
-    ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(Variant* pValue);
+    namespace Signals {
+        
+        // Functions for SignalsList are implemented in Athena-Scripting (include
+        // Athena-Scripting/Conversions.h)
+    }
 
-    ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
+    namespace Utils {
 
-    ATHENA_CORE_SYMBOL Variant* fromJS(v8::Handle<v8::Value> value);
+        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(Variant* pValue);
 
-}
+        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
+
+        ATHENA_CORE_SYMBOL Variant* fromJS(v8::Handle<v8::Value> value);
+
+    }
 }
 
 #endif

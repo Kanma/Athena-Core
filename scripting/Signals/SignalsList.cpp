@@ -26,7 +26,23 @@ using namespace v8;
 // Constructor
 Handle<Value> SignalsList_New(const Arguments& args)
 {
-    return SetObjectPtr(args.This(), new SignalsList());
+    // New C++ list
+    if (args.Length() == 0)
+    {
+        return SetObjectPtr(args.This(), new SignalsList());
+    }
+
+    // Wrapper around an existing C++ list
+    else if ((args.Length() == 1) && args[0]->IsExternal())
+    {
+        SignalsList* pList = static_cast<SignalsList*>(External::Unwrap(args[0]));
+        return SetObjectPtr(args.This(), pList, &NoOpWeakCallback);
+    }
+
+    else
+    {
+        return ThrowException(String::New("Invalid parameters, valid syntax:\nSignalsList()\nSignalsList(<C++ signals list>)"));
+    }
 }
 
 
