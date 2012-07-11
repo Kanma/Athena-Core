@@ -26,7 +26,36 @@ using namespace v8;
 // Constructor
 Handle<Value> SignalsList_New(const Arguments& args)
 {
-    return SetObjectPtr(args.This(), new SignalsList());
+    // New C++ list
+    if (args.Length() == 0)
+    {
+        return SetObjectPtr(args.This(), new SignalsList());
+    }
+
+    // Wrapper around an existing C++ list
+    else if ((args.Length() == 1) && args[0]->IsExternal())
+    {
+        SignalsList* pList = static_cast<SignalsList*>(External::Unwrap(args[0]));
+        return SetObjectPtr(args.This(), pList, &NoOpWeakCallback);
+    }
+
+    else
+    {
+        return ThrowException(String::New("Invalid parameters, valid syntax:\nSignalsList()\nSignalsList(<C++ signals list>)"));
+    }
+}
+
+
+/************************************** PROPERTIES *************************************/
+
+Handle<Value> SignalsList_IsEmpty(Local<String> property, const AccessorInfo &info)
+{
+    HandleScope handle_scope;
+
+    SignalsList* self = GetObjectPtr(info.This());
+    assert(self);
+
+    return handle_scope.Close(Boolean::New(self->isEmpty()));
 }
 
 
@@ -104,23 +133,11 @@ Handle<Value> SignalsList_Fire(const Arguments& args)
         return ThrowException(String::New("Invalid parameters, valid syntax:\nfire(id, value)\nfire(id)"));
 
     if (args.Length() == 2)
-        pValue = fromJS(args[1]);
+        pValue = fromJSVariant(args[1]);
 
     self->fire(id, pValue);
 
     return Handle<Value>();
-}
-
-//-----------------------------------------------------------------------
-
-Handle<Value> SignalsList_IsEmpty(const Arguments& args)
-{
-    HandleScope handle_scope;
-
-    SignalsList* self = GetObjectPtr(args.This());
-    assert(self);
-
-    return handle_scope.Close(Boolean::New(self->isEmpty()));
 }
 
 
@@ -138,11 +155,13 @@ bool bind_Signals_SignalsList(Handle<Object> parent)
         signalsList = FunctionTemplate::New(SignalsList_New);
         signalsList->InstanceTemplate()->SetInternalFieldCount(1);
 
+        // Attributes
+        AddAttribute(signalsList, "empty",   SignalsList_IsEmpty, 0);
+
         // Methods
         AddMethod(signalsList, "connect",    SignalsList_Connect);
         AddMethod(signalsList, "disconnect", SignalsList_Disconnect);
         AddMethod(signalsList, "fire",       SignalsList_Fire);
-        AddMethod(signalsList, "isEmpty",    SignalsList_IsEmpty);
 
         pManager->declareClassTemplate("Athena.Signals.SignalsList", signalsList);
     }

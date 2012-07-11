@@ -13,7 +13,7 @@ delayedProperties = desc.setProperties(properties);
 CHECK(delayedProperties === undefined, "delayedProperties === undefined");
 
 
-CHECK(desc.unknownProperties() === undefined, "desc.unknownProperties() === undefined");
+CHECK(desc.unknownProperties === undefined, "desc.unknownProperties === undefined");
 
 CHECK_EQUAL("hello", desc.name);
 CHECK_EQUAL(200, desc.index);

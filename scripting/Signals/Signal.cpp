@@ -18,7 +18,7 @@ using namespace v8;
 
 /**************************************** MACROS ***************************************/
 
-#define GetObjectPtr(HANDLE) GetObjectPtr<Signal>(HANDLE)
+#define GetPtr(HANDLE) GetObjectPtr<Signal>(HANDLE)
 
 
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
@@ -26,7 +26,31 @@ using namespace v8;
 // Constructor
 Handle<Value> Signal_New(const Arguments& args)
 {
-    return SetObjectPtr(args.This(), new Signal());
+    // Wrapper around an existing C++ entity
+    if ((args.Length() == 1) && args[0]->IsExternal())
+    {
+        Signal* pSignal = static_cast<Signal*>(External::Unwrap(args[0]));
+        return SetObjectPtr(args.This(), pSignal, &NoOpWeakCallback);
+    }
+    else if (args.Length() == 0)
+    {
+        return SetObjectPtr(args.This(), new Signal());
+    }
+
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nSignal()\nSignal(<C++ signal>)"));
+}
+
+
+/************************************** PROPERTIES *************************************/
+
+Handle<Value> Signal_IsDisconnected(Local<String> property, const AccessorInfo &info)
+{
+    HandleScope handle_scope;
+
+    Signal* self = GetPtr(info.This());
+    assert(self);
+
+    return handle_scope.Close(Boolean::New(self->isDisconnected()));
 }
 
 
@@ -36,7 +60,7 @@ Handle<Value> Signal_Connect(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    Signal* self = GetObjectPtr(args.This());
+    Signal* self = GetPtr(args.This());
     assert(self);
 
     if ((args.Length() == 2) && args[0]->IsObject() && args[1]->IsFunction())
@@ -62,7 +86,7 @@ Handle<Value> Signal_Disconnect(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    Signal* self = GetObjectPtr(args.This());
+    Signal* self = GetPtr(args.This());
     assert(self);
 
     if ((args.Length() == 2) && args[0]->IsObject() && args[1]->IsFunction())
@@ -88,29 +112,17 @@ Handle<Value> Signal_Fire(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    Signal* self = GetObjectPtr(args.This());
+    Signal* self = GetPtr(args.This());
     assert(self);
 
     Variant* pValue = 0;
 
     if (args.Length() == 1)
-        pValue = fromJS(args[0]);
+        pValue = fromJSVariant(args[0]);
 
     self->fire(pValue);
 
     return Handle<Value>();
-}
-
-//-----------------------------------------------------------------------
-
-Handle<Value> Signal_IsDisconnected(const Arguments& args)
-{
-    HandleScope handle_scope;
-
-    Signal* self = GetObjectPtr(args.This());
-    assert(self);
-
-    return handle_scope.Close(Boolean::New(self->isDisconnected()));
 }
 
 
@@ -128,11 +140,13 @@ bool bind_Signals_Signal(Handle<Object> parent)
         signal = FunctionTemplate::New(Signal_New);
         signal->InstanceTemplate()->SetInternalFieldCount(1);
 
+        // Attributes
+        AddAttribute(signal, "disconnected", Signal_IsDisconnected, 0);
+
         // Methods
-        AddMethod(signal, "connect",        Signal_Connect);
-        AddMethod(signal, "disconnect",     Signal_Disconnect);
-        AddMethod(signal, "fire",           Signal_Fire);
-        AddMethod(signal, "isDisconnected", Signal_IsDisconnected);
+        AddMethod(signal, "connect",         Signal_Connect);
+        AddMethod(signal, "disconnect",      Signal_Disconnect);
+        AddMethod(signal, "fire",            Signal_Fire);
 
         pManager->declareClassTemplate("Athena.Signals.Signal", signal);
     }

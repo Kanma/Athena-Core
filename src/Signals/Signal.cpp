@@ -277,7 +277,7 @@ void Signal::fire(Variant* pValue)
             if (pValue)
             {
                 HandleScope handle_scope;
-                Handle<Value> value = toJS(pValue);
+                Handle<Value> value = toJavaScript(pValue);
                 Function::Cast(*pSlot->js.function)->Call(pSlot->js.function, 1, &value);
             }
             else
@@ -290,7 +290,7 @@ void Signal::fire(Variant* pValue)
             if (pValue)
             {
                 HandleScope handle_scope;
-                Handle<Value> value = toJS(pValue);
+                Handle<Value> value = toJavaScript(pValue);
                 Function::Cast(*pSlot->js.function)->Call(pSlot->js.object, 1,  &value);
             }
             else

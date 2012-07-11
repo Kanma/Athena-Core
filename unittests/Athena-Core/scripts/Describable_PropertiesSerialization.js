@@ -1,9 +1,8 @@
 desc = new Tests.MockDescribable2();
 
-properties = desc.properties();
-CHECK(properties !== undefined, 'properties !== undefined');
+CHECK(desc.properties !== undefined, 'desc.properties !== undefined');
 
-categories = properties.toArray();
+categories = desc.properties.toArray();
 
 CHECK_EQUAL(2, categories.length);
 

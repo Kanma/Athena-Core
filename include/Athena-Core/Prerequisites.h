@@ -70,6 +70,7 @@ namespace Athena
     //-----------------------------------------------------------------------------------
     namespace Utils
     {
+        class Describable;
         class Path;
         class PropertiesList;
         class StringsMap;

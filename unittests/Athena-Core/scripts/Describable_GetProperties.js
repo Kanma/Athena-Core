@@ -1,7 +1,6 @@
 desc = new Tests.MockDescribable2();
 
-properties = desc.properties();
-CHECK(properties !== undefined, 'properties !== undefined');
+CHECK(desc.properties !== undefined, 'desc.properties !== undefined');
 
-CHECK_EQUAL(desc.index, properties.get("Cat2", "index"));
-CHECK_EQUAL(desc.name, properties.get("Cat1", "name"));
+CHECK_EQUAL(desc.index, desc.properties.get("Cat2", "index"));
+CHECK_EQUAL(desc.name, desc.properties.get("Cat1", "name"));

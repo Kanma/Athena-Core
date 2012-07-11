@@ -63,10 +63,13 @@ extern "C" {
     {
         HandleScope handle_scope;
 
-        parent->Set(String::New("VERSION"), String::New(Athena::Core::VERSION));
-
         Handle<Context> context = parent->CreationContext();
         Handle<Object> ns = context->Global()->Get(String::New("Athena"))->ToObject();
+
+        if (ns->Get(String::New("Math"))->IsUndefined())
+            ScriptingManager::getSingletonPtr()->import("Athena.Math", Context::GetCurrent());
+
+        parent->Set(String::New("VERSION"), String::New(Athena::Core::VERSION));
 
         return init_signals_submodule(ns, modulePath) &&
                init_utils_submodule(ns, modulePath);

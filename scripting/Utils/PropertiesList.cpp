@@ -17,7 +17,7 @@ using namespace v8;
 
 /**************************************** MACROS ***************************************/
 
-#define GetObjectPtr(HANDLE) GetObjectPtr<PropertiesList>(HANDLE)
+#define GetPtr(HANDLE) GetObjectPtr<PropertiesList>(HANDLE)
 
 
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
@@ -25,7 +25,18 @@ using namespace v8;
 // Constructor
 Handle<Value> PropertiesList_New(const Arguments& args)
 {
-    return SetObjectPtr(args.This(), new PropertiesList());
+    // Wrapper around an existing C++ properties list
+    if ((args.Length() == 1) && args[0]->IsExternal())
+    {
+        PropertiesList* pList = static_cast<PropertiesList*>(External::Unwrap(args[0]));
+        return SetObjectPtr(args.This(), pList, &NoOpWeakCallback);
+    }
+    else if (args.Length() == 0)
+    {
+        return SetObjectPtr(args.This(), new PropertiesList());
+    }
+
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nPropertiesList()\nPropertiesList(<C++ properties list>)"));
 }
 
 
@@ -35,7 +46,7 @@ Handle<Value> PropertiesList_ToArray(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     Handle<Array> jsCategories = Array::New();
@@ -45,7 +56,7 @@ Handle<Value> PropertiesList_ToArray(const Arguments& args)
     {
         PropertiesList::tCategory* category = catIter.peekNextPtr();
 
-        Handle<Value> jsProperties = toJS(
+        Handle<Value> jsProperties = toJavaScript(
                     PropertiesList::tPropertiesIterator(category->values.begin(),
                                                          category->values.end()));
 
@@ -67,7 +78,7 @@ Handle<Value> PropertiesList_SelectCategory(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     if ((args.Length() == 2) && args[0]->IsString() && args[1]->IsBoolean())
@@ -92,18 +103,18 @@ Handle<Value> PropertiesList_Set(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     if ((args.Length() == 3) && args[0]->IsString() && args[1]->IsString())
     {
         self->set(*String::AsciiValue(args[0]->ToString()),
                   *String::AsciiValue(args[1]->ToString()),
-                  fromJS(args[2]));
+                  fromJSVariant(args[2]));
     }
     else if ((args.Length() == 2) && args[0]->IsString())
     {
-        self->set(*String::AsciiValue(args[0]->ToString()), fromJS(args[1]));
+        self->set(*String::AsciiValue(args[0]->ToString()), fromJSVariant(args[1]));
     }
     else
     {
@@ -119,7 +130,7 @@ Handle<Value> PropertiesList_Get(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     Variant* pValue = 0;
@@ -141,7 +152,7 @@ Handle<Value> PropertiesList_Get(const Arguments& args)
     if (!pValue)
         return Handle<Value>();
 
-    return handle_scope.Close(toJS(pValue));
+    return handle_scope.Close(toJavaScript(pValue));
 }
 
 //-----------------------------------------------------------------------
@@ -150,18 +161,18 @@ Handle<Value> PropertiesList_GetProperties(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     Handle<Value> jsProperties;
 
     if ((args.Length() == 1) && args[0]->IsString())
     {
-        jsProperties = toJS(self->getPropertiesIterator(*String::AsciiValue(args[0]->ToString())));
+        jsProperties = toJavaScript(self->getPropertiesIterator(*String::AsciiValue(args[0]->ToString())));
     }
     else if (args.Length() == 0)
     {
-        jsProperties = toJS(self->getPropertiesIterator());
+        jsProperties = toJavaScript(self->getPropertiesIterator());
     }
     else
     {
@@ -177,13 +188,13 @@ Handle<Value> PropertiesList_Append(const Arguments& args)
 {
     HandleScope handle_scope;
 
-    PropertiesList* self = GetObjectPtr(args.This());
+    PropertiesList* self = GetPtr(args.This());
     assert(self);
 
     PropertiesList* list2 = 0;
 
     if ((args.Length() >= 1) && args[0]->IsObject())
-        list2 = GetObjectPtr(args[0]);
+        list2 = GetPtr(args[0]);
 
     if (list2 && (args.Length() == 2) && args[1]->IsBoolean())
     {

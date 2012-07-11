@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                 Athena-Core                                  *
-*                                Version 1.1.1                                 *
+*                                Version 1.1.2                                 *
 *                       http://github.com/Kanma/Athena-Core                    *
 *                                                                              *
 ********************************************************************************
@@ -39,8 +39,8 @@ automatically during the compilation of Athena-Core.
 To download them, do:
 
     somewhere$ cd <path/to/the/source/of/Athena-Core>
-    Athena-Math$ git submodule init
-    Athena-Math$ git submodule update
+    Athena-Core$ git submodule init
+    Athena-Core$ git submodule update
 
 
 ---------------------------------------
@@ -75,7 +75,7 @@ The license of OGRE is contained in the file 'docs/LICENSE-OGRE'.
 - License
 ---------------------------------------
 
-Athena-Core is is made available under the MIT License. The text of the license
+Athena-Core is made available under the MIT License. The text of the license
 is in the file 'LICENSE'.
 
 Under the MIT License you may use Athena-Core for any purpose you wish, without
