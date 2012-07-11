@@ -18,7 +18,7 @@ slot = new Slot();
 signal.connect(slot, slot.fired);
 signal.connect(slot, slot.fired);
 
-CHECK(!signal.isDisconnected(), "!signal.isDisconnected()");
+CHECK(!signal.disconnected, "!signal.disconnected");
 CHECK_EQUAL(0, nbCalls);
 CHECK_EQUAL(0, slot.nbCalls);
 
@@ -29,4 +29,4 @@ CHECK_EQUAL(1, slot.nbCalls);
 
 signal.disconnect(slot, slot.fired);
 
-CHECK(signal.isDisconnected(), "signal.isDisconnected()");
+CHECK(signal.disconnected, "signal.disconnected");

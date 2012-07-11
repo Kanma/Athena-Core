@@ -15,8 +15,8 @@
 namespace Athena {
 
     namespace Signals {
-        
-        // Functions for SignalsList are implemented in Athena-Scripting (include
+
+        // The conversion functions are implemented in Athena-Scripting (include
         // Athena-Scripting/Conversions.h)
     }
 
