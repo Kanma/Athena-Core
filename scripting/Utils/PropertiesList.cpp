@@ -56,7 +56,7 @@ Handle<Value> PropertiesList_ToArray(const Arguments& args)
     {
         PropertiesList::tCategory* category = catIter.peekNextPtr();
 
-        Handle<Value> jsProperties = toJS(
+        Handle<Value> jsProperties = toJavaScript(
                     PropertiesList::tPropertiesIterator(category->values.begin(),
                                                          category->values.end()));
 
@@ -110,11 +110,11 @@ Handle<Value> PropertiesList_Set(const Arguments& args)
     {
         self->set(*String::AsciiValue(args[0]->ToString()),
                   *String::AsciiValue(args[1]->ToString()),
-                  fromJS(args[2]));
+                  fromJSVariant(args[2]));
     }
     else if ((args.Length() == 2) && args[0]->IsString())
     {
-        self->set(*String::AsciiValue(args[0]->ToString()), fromJS(args[1]));
+        self->set(*String::AsciiValue(args[0]->ToString()), fromJSVariant(args[1]));
     }
     else
     {
@@ -152,7 +152,7 @@ Handle<Value> PropertiesList_Get(const Arguments& args)
     if (!pValue)
         return Handle<Value>();
 
-    return handle_scope.Close(toJS(pValue));
+    return handle_scope.Close(toJavaScript(pValue));
 }
 
 //-----------------------------------------------------------------------
@@ -168,11 +168,11 @@ Handle<Value> PropertiesList_GetProperties(const Arguments& args)
 
     if ((args.Length() == 1) && args[0]->IsString())
     {
-        jsProperties = toJS(self->getPropertiesIterator(*String::AsciiValue(args[0]->ToString())));
+        jsProperties = toJavaScript(self->getPropertiesIterator(*String::AsciiValue(args[0]->ToString())));
     }
     else if (args.Length() == 0)
     {
-        jsProperties = toJS(self->getPropertiesIterator());
+        jsProperties = toJavaScript(self->getPropertiesIterator());
     }
     else
     {

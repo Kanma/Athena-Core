@@ -118,7 +118,7 @@ Handle<Value> Signal_Fire(const Arguments& args)
     Variant* pValue = 0;
 
     if (args.Length() == 1)
-        pValue = fromJS(args[0]);
+        pValue = fromJSVariant(args[0]);
 
     self->fire(pValue);
 

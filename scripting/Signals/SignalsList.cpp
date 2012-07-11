@@ -133,7 +133,7 @@ Handle<Value> SignalsList_Fire(const Arguments& args)
         return ThrowException(String::New("Invalid parameters, valid syntax:\nfire(id, value)\nfire(id)"));
 
     if (args.Length() == 2)
-        pValue = fromJS(args[1]);
+        pValue = fromJSVariant(args[1]);
 
     self->fire(id, pValue);
 

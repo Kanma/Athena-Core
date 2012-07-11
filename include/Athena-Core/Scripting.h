@@ -25,11 +25,11 @@ namespace Athena {
         // Some conversion functions are implemented in Athena-Scripting (include
         // Athena-Scripting/Conversions.h)
 
-        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(Variant* pValue);
+        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJavaScript(Variant* pValue);
 
-        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
+        ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJavaScript(PropertiesList::tPropertiesIterator propIter);
 
-        ATHENA_CORE_SYMBOL Variant* fromJS(v8::Handle<v8::Value> value);
+        ATHENA_CORE_SYMBOL Variant* fromJSVariant(v8::Handle<v8::Value> value);
 
     }
 }

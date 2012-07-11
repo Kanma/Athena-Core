@@ -14,42 +14,44 @@ using namespace Athena::Math;
 using namespace v8;
 
 
-Handle<Value> Athena::Utils::toJS(Variant* pValue)
+Handle<Value> Athena::Utils::toJavaScript(Variant* pValue)
 {
+    HandleScope handle_scope;
+
     switch (pValue->getType())
     {
         case Variant::STRING:
-            return String::New(pValue->toString().c_str());
+            return handle_scope.Close(String::New(pValue->toString().c_str()));
 
         case Variant::INTEGER:
         case Variant::SHORT:
         case Variant::CHAR:
-            return Int32::New(pValue->toInt());
+            return handle_scope.Close(Int32::New(pValue->toInt()));
 
         case Variant::UNSIGNED_INTEGER:
         case Variant::UNSIGNED_SHORT:
         case Variant::UNSIGNED_CHAR:
-            return Uint32::New(pValue->toUInt());
+            return handle_scope.Close(Uint32::New(pValue->toUInt()));
 
         case Variant::FLOAT:
         case Variant::DOUBLE:
-            return Number::New(pValue->toFloat());
+            return handle_scope.Close(Number::New(pValue->toFloat()));
 
         case Variant::BOOLEAN:
-            return Boolean::New(pValue->toBool());
+            return handle_scope.Close(Boolean::New(pValue->toBool()));
 
         case Variant::VECTOR3:
-            return toJavaScript(pValue->toVector3());
+            return handle_scope.Close(toJavaScript(pValue->toVector3()));
 
         case Variant::QUATERNION:
-            return toJavaScript(pValue->toQuaternion());
+            return handle_scope.Close(toJavaScript(pValue->toQuaternion()));
 
         case Variant::COLOR:
-            return toJavaScript(pValue->toColor());
+            return handle_scope.Close(toJavaScript(pValue->toColor()));
 
         case Variant::RADIAN:
         case Variant::DEGREE:
-            return Number::New(pValue->toRadian().valueRadians());
+            return handle_scope.Close(Number::New(pValue->toRadian().valueRadians()));
 
         case Variant::STRUCT:
         {
@@ -58,11 +60,11 @@ Handle<Value> Athena::Utils::toJS(Variant* pValue)
             Variant::tFieldsIterator iter = pValue->getFieldsIterator();
             while (iter.hasMoreElements())
             {
-                obj->Set(String::New(iter.peekNextKey().c_str()), toJS(iter.peekNextValue()));
+                obj->Set(String::New(iter.peekNextKey().c_str()), toJavaScript(iter.peekNextValue()));
                 iter.moveNext();
             }
 
-            return obj;
+            return handle_scope.Close(obj);
         }
     }
 
@@ -71,7 +73,7 @@ Handle<Value> Athena::Utils::toJS(Variant* pValue)
 
 //-----------------------------------------------------------------------
 
-Handle<Value> Athena::Utils::toJS(PropertiesList::tPropertiesIterator propIter)
+Handle<Value> Athena::Utils::toJavaScript(PropertiesList::tPropertiesIterator propIter)
 {
     HandleScope handle_scope;
 
@@ -83,7 +85,7 @@ Handle<Value> Athena::Utils::toJS(PropertiesList::tPropertiesIterator propIter)
 
         Handle<Object> jsProperty = Object::New();
         jsProperty->Set(String::New("name"), String::New(property->strName.c_str()));
-        jsProperty->Set(String::New("value"), toJS(property->pValue));
+        jsProperty->Set(String::New("value"), toJavaScript(property->pValue));
 
         jsProperties->Set(jsProperties->Length(), jsProperty);
 
@@ -95,8 +97,10 @@ Handle<Value> Athena::Utils::toJS(PropertiesList::tPropertiesIterator propIter)
 
 //-----------------------------------------------------------------------
 
-Variant* Athena::Utils::fromJS(Handle<Value> value)
+Variant* Athena::Utils::fromJSVariant(Handle<Value> value)
 {
+    HandleScope handle_scope;
+
     if (value->IsString())
     {
         return new Variant(*String::AsciiValue(value->ToString()));
@@ -141,7 +145,7 @@ Variant* Athena::Utils::fromJS(Handle<Value> value)
             for (unsigned int i = 0; i < names->Length(); ++i)
             {
                 Handle<String> name = names->Get(i)->ToString();
-                Variant* pValue = fromJS(object->Get(name));
+                Variant* pValue = fromJSVariant(object->Get(name));
                 if (pValue)
                     pStruct->setField(*String::AsciiValue(name), pValue);
             }
