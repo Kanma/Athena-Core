@@ -18,7 +18,7 @@ slot = new Slot();
 signals.connect(1, slot, slot.fired);
 signals.connect(1, slot, slot.fired);
 
-CHECK(!signals.isEmpty(), "!signals.isEmpty()");
+CHECK(!signals.empty, "!signals.empty");
 CHECK_EQUAL(0, nbCalls);
 CHECK_EQUAL(0, slot.nbCalls);
 
@@ -29,4 +29,4 @@ CHECK_EQUAL(1, slot.nbCalls);
 
 signals.disconnect(1, slot, slot.fired);
 
-CHECK(signals.isEmpty(), "signals.isEmpty()");
+CHECK(signals.empty, "signals.empty");

@@ -46,6 +46,19 @@ Handle<Value> SignalsList_New(const Arguments& args)
 }
 
 
+/************************************** PROPERTIES *************************************/
+
+Handle<Value> SignalsList_IsEmpty(Local<String> property, const AccessorInfo &info)
+{
+    HandleScope handle_scope;
+
+    SignalsList* self = GetObjectPtr(info.This());
+    assert(self);
+
+    return handle_scope.Close(Boolean::New(self->isEmpty()));
+}
+
+
 /**************************************** METHODS ***************************************/
 
 Handle<Value> SignalsList_Connect(const Arguments& args)
@@ -127,18 +140,6 @@ Handle<Value> SignalsList_Fire(const Arguments& args)
     return Handle<Value>();
 }
 
-//-----------------------------------------------------------------------
-
-Handle<Value> SignalsList_IsEmpty(const Arguments& args)
-{
-    HandleScope handle_scope;
-
-    SignalsList* self = GetObjectPtr(args.This());
-    assert(self);
-
-    return handle_scope.Close(Boolean::New(self->isEmpty()));
-}
-
 
 /************************************ BINDING FUNCTION **********************************/
 
@@ -154,11 +155,13 @@ bool bind_Signals_SignalsList(Handle<Object> parent)
         signalsList = FunctionTemplate::New(SignalsList_New);
         signalsList->InstanceTemplate()->SetInternalFieldCount(1);
 
+        // Attributes
+        AddAttribute(signalsList, "empty",   SignalsList_IsEmpty, 0);
+
         // Methods
         AddMethod(signalsList, "connect",    SignalsList_Connect);
         AddMethod(signalsList, "disconnect", SignalsList_Disconnect);
         AddMethod(signalsList, "fire",       SignalsList_Fire);
-        AddMethod(signalsList, "isEmpty",    SignalsList_IsEmpty);
 
         pManager->declareClassTemplate("Athena.Signals.SignalsList", signalsList);
     }
