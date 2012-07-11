@@ -11,6 +11,7 @@
 #include <Athena-Math/Scripting.h>
 #include <Athena-Scripting/Utils.h>
 #include <Athena-Scripting/ScriptingManager.h>
+#include <Athena-Scripting/Conversions.h>
 #include <v8.h>
 
 using namespace Athena::Utils;
@@ -29,82 +30,86 @@ using namespace v8;
 // Constructor
 Handle<Value> Describable_New(const Arguments& args)
 {
-    return SetObjectPtr(args.This(), new Describable());
+    // Wrapper around an existing C++ describable
+    if ((args.Length() == 1) && args[0]->IsExternal())
+    {
+        Describable* pDescribable = static_cast<Describable*>(External::Unwrap(args[0]));
+        return SetObjectPtr(args.This(), pDescribable, &NoOpWeakCallback);
+    }
+    else if (args.Length() == 0)
+    {
+        return SetObjectPtr(args.This(), new Describable());
+    }
+
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nDescribable()\nDescribable(<C++ describable>)"));
 }
 
 
 /**************************************** METHODS ***************************************/
 
-Handle<Value> Describable_GetProperties(const Arguments& args)
+Handle<Value> Describable_GetProperties(Local<String> property, const AccessorInfo &info)
 {
     HandleScope handle_scope;
 
-    Describable* self = GetPtr(args.This());
+    Describable* self = GetPtr(info.This());
     assert(self);
 
-    Handle<FunctionTemplate> func = ScriptingManager::getSingletonPtr()->getClassTemplate("Athena.Utils.PropertiesList");
-
-    Handle<Object> jsList = func->GetFunction()->NewInstance();
-    SetObjectPtr(jsList, self->getProperties());
-
-    return handle_scope.Close(jsList);
+    return handle_scope.Close(toJavaScript(self->getProperties()));
 }
 
 //-----------------------------------------------------------------------
 
-Handle<Value> Describable_SetProperties(const Arguments& args)
+void Describable_SetProperties(Local<String> property, Local<Value> value, const AccessorInfo& info)
 {
     HandleScope handle_scope;
 
-    Describable* self = GetPtr(args.This());
+    Describable* self = GetPtr(info.This());
     assert(self);
 
-    PropertiesList* pProperties = 0;
+    PropertiesList* pProperties = fromJSPropertiesList(value);
 
-    if (args.Length() == 1)
-        GetObjectPtr(args[0], &pProperties);
-
-    if (!pProperties)
-        return ThrowException(String::New("Invalid parameter, valid syntax:\nsetProperties(list)"));
-
-    PropertiesList* pDelayedProperties = new PropertiesList();
-    self->setProperties(pProperties, pDelayedProperties);
-
-    if (pDelayedProperties->getCategoriesIterator().hasMoreElements())
-    {
-        Handle<FunctionTemplate> func = ScriptingManager::getSingletonPtr()->getClassTemplate("Athena.Utils.PropertiesList");
-
-        Handle<Object> jsList = func->GetFunction()->NewInstance();
-        SetObjectPtr(jsList, pDelayedProperties);
-
-        return handle_scope.Close(jsList);
-    }
-
-    delete pDelayedProperties;
-
-    return Handle<Value>();
+    self->setProperties(pProperties);
 }
 
 //-----------------------------------------------------------------------
 
-Handle<Value> Describable_GetUnknownProperties(const Arguments& args)
+Handle<Value> Describable_GetUnknownProperties(Local<String> property, const AccessorInfo &info)
 {
     HandleScope handle_scope;
 
-    Describable* self = GetPtr(args.This());
+    Describable* self = GetPtr(info.This());
     assert(self);
 
     PropertiesList* pProperties = self->getUnknownProperties();
 
     if (pProperties)
-    {
-        Handle<FunctionTemplate> func = ScriptingManager::getSingletonPtr()->getClassTemplate("Athena.Utils.PropertiesList");
+        return handle_scope.Close(toJavaScript(pProperties));
 
-        Handle<Object> jsList = func->GetFunction()->NewInstance();
-        SetObjectPtr(jsList, pProperties);
+    return Handle<Value>();
+}
 
-        return handle_scope.Close(jsList);
-    }
+
+/**************************************** METHODS ***************************************/
+
+Handle<Value> Describable_SetPropertiesEx(const Arguments& args)
+{
+    HandleScope handle_scope;
+
+    Describable* self = GetPtr(args.This());
+    assert(self);
+
+    if ((args.Length() != 1) || !args[0]->IsObject())
+        return ThrowException(String::New("Invalid parameters, valid syntax:\nsetProperties(properties_list)"));
+
+    PropertiesList* pProperties = fromJSPropertiesList(args[0]);
+
+    Handle<Object> jsDelayedProperties = createJSPropertiesList();
+    PropertiesList* pDelayedProperties = fromJSPropertiesList(jsDelayedProperties);
+
+    self->setProperties(pProperties, pDelayedProperties);
+
+    if (pDelayedProperties->getCategoriesIterator().hasMoreElements())
+        return handle_scope.Close(jsDelayedProperties);
 
     return Handle<Value>();
 }
@@ -124,10 +129,12 @@ bool bind_Utils_Describable(Handle<Object> parent)
         describable = FunctionTemplate::New(Describable_New);
         describable->InstanceTemplate()->SetInternalFieldCount(1);
 
+        // Attributes
+        AddAttribute(describable, "properties",         Describable_GetProperties, Describable_SetProperties);
+        AddAttribute(describable, "unknownProperties",  Describable_GetUnknownProperties, 0);
+
         // Methods
-        AddMethod(describable, "properties",        Describable_GetProperties);
-        AddMethod(describable, "setProperties",     Describable_SetProperties);
-        AddMethod(describable, "unknownProperties", Describable_GetUnknownProperties);
+        AddMethod(describable, "setProperties",         Describable_SetPropertiesEx);
 
         pManager->declareClassTemplate("Athena.Utils.Describable", describable);
     }
