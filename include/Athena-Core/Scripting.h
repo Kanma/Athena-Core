@@ -22,6 +22,9 @@ namespace Athena {
 
     namespace Utils {
 
+        // Some conversion functions are implemented in Athena-Scripting (include
+        // Athena-Scripting/Conversions.h)
+
         ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(Variant* pValue);
 
         ATHENA_CORE_SYMBOL v8::Handle<v8::Value> toJS(PropertiesList::tPropertiesIterator propIter);
