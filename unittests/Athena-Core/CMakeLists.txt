@@ -7,6 +7,13 @@ if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
 endif()
 
 
+# List the header files
+set(HEADERS Utils.h
+            mocks/Describable.h
+            mocks/LogListener.h
+)
+
+
 # List the source files
 set(SRCS main.cpp
          Utils.cpp
@@ -27,6 +34,8 @@ set(SRCS main.cpp
 
 
 if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    set(HEADERS ${HEADERS} environments/ScriptingTestEnvironment.h)
+
     set(SRCS ${SRCS}
              module/module.cpp
              module/Describable.cpp
@@ -36,7 +45,7 @@ endif()
 
 
 # Declaration of the executable
-xmake_create_executable(UNITTESTS_ATHENA_CORE UnitTests-Athena-Core ${SRCS})
+xmake_create_executable(UNITTESTS_ATHENA_CORE UnitTests-Athena-Core ${HEADERS} ${SRCS})
 
 xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_SCRIPTS_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/Athena-Core/scripts/\";ATHENA_SCRIPTING_JS_TEST_RUNNER_PATH=\"${ATHENA_SCRIPTING_SOURCE_DIR}/unittests/js-test-runner/\"")
 
