@@ -4,10 +4,6 @@ project(ATHENA_CORE)
 ##########################################################################################
 # Settings
 
-if (NOT DEFINED ATHENA_CORE_STATIC)
-    set(ATHENA_CORE_STATIC OFF CACHE BOOL "Build Athena-Core as a static library")
-endif()
-
 set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 
 

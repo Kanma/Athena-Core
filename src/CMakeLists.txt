@@ -76,16 +76,12 @@ xmake_import_search_paths(ATHENA_MATH)
 
 
 # Declaration of the library
-if (NOT ATHENA_CORE_STATIC)
-    xmake_create_dynamic_library(ATHENA_CORE Athena-Core
-                                 "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
-                                 "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
-                                 ${HEADERS} ${SRCS} ${PLATFORM_HEADERS} ${PLATFORM_SRCS})
+xmake_create_dynamic_library(ATHENA_CORE Athena-Core
+                             "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
+                             "${ATHENA_CORE_VERSION_MAJOR}.${ATHENA_CORE_VERSION_MINOR}.${ATHENA_CORE_VERSION_PATCH}"
+                             ${HEADERS} ${SRCS} ${PLATFORM_HEADERS} ${PLATFORM_SRCS})
 
-    xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_EXPORTS")
-else()
-    xmake_create_static_library(ATHENA_CORE Athena-Core ${HEADERS} ${SRCS} ${PLATFORM_HEADERS} ${PLATFORM_SRCS})
-endif()
+xmake_add_to_list_property(ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_EXPORTS")
 
 xmake_project_link(ATHENA_CORE ATHENA_MATH)
 

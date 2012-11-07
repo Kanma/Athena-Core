@@ -13,9 +13,6 @@
 #   define OFF 0
 #endif
 
-// Athena-Core compiled as a static library
-#define ATHENA_CORE_STATIC @ATHENA_CORE_STATIC@
-
 // Support for scripting
 #define ATHENA_CORE_SCRIPTING @ATHENA_CORE_SCRIPTING@
 
