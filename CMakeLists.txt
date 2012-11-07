@@ -4,24 +4,7 @@ project(ATHENA_CORE)
 ##########################################################################################
 # Settings
 
-if (NOT DEFINED ATHENA_CORE_STATIC)
-    set(ATHENA_CORE_STATIC OFF CACHE BOOL "Build Athena-Core as a static library")
-endif()
-
 set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
-
-
-##########################################################################################
-# Setup the dependencies
-
-set(COMPILE_AS_STATIC ON)
-if (WIN32)
-    set(COMPILE_AS_STATIC OFF)
-endif()
-
-if (NOT DEFINED ATHENA_MATH_STATIC)
-    set(ATHENA_MATH_STATIC ${COMPILE_AS_STATIC})
-endif()
 
 
 ##########################################################################################
@@ -29,7 +12,7 @@ endif()
 
 set(ATHENA_CORE_VERSION_MAJOR 1)
 set(ATHENA_CORE_VERSION_MINOR 1)
-set(ATHENA_CORE_VERSION_PATCH 3)
+set(ATHENA_CORE_VERSION_PATCH 4)
 set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
