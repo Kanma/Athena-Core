@@ -95,7 +95,7 @@ public:
 
     //_____ Attributes __________
 private:
-    tGroupsMap m_groups;        ///< The gorups
+    tGroupsMap m_groups;        ///< The groups
 };
 
 }
