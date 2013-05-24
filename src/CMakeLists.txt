@@ -12,6 +12,7 @@ set(HEADERS ${XMAKE_BINARY_DIR}/include/Athena-Core/Config.h
             ../include/Athena-Core/Log/Declarations.h
             ../include/Athena-Core/Log/ILogListener.h
             ../include/Athena-Core/Log/LogManager.h
+            ../include/Athena-Core/Log/ConsoleLogListener.h
             ../include/Athena-Core/Log/XMLLogListener.h
             ../include/Athena-Core/Signals/Declarations.h
             ../include/Athena-Core/Signals/Signal.h
@@ -35,6 +36,7 @@ set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp
          Data/DataStream.cpp
          Data/FileDataStream.cpp
          Log/LogManager.cpp
+         Log/ConsoleLogListener.cpp
          Log/XMLLogListener.cpp
          Signals/Signal.cpp
          Signals/SignalsList.cpp

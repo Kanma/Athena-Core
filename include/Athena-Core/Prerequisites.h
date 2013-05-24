@@ -51,6 +51,7 @@ namespace Athena
     {
         class LogManager;
         class ILogListener;
+        class ConsoleLogListener;
         class XMLLogListener;
     }
 
