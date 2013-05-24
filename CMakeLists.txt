@@ -43,6 +43,7 @@ Athena-Core requires the following dependencies:
    - XMake
    - Athena-Math
    - UnitTest++
+   - rapidjson
 They are provided as GIT submodules of this repository.
 Did you forgot to execute the following commands?
    git submodule init
