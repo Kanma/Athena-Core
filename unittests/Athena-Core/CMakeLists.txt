@@ -21,6 +21,7 @@ set(SRCS main.cpp
          tests/Describable.cpp
          tests/FileDataStream.cpp
          tests/Iterators.cpp
+         tests/LocationManager.cpp
          tests/LogManager.cpp
          tests/PropertiesList.cpp
          tests/Signal.cpp

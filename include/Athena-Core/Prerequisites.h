@@ -42,6 +42,7 @@ namespace Athena
         class ConfigFile;
         class DataStream;
         class FileDataStream;
+        class LocationManager;
     }
 
     //-----------------------------------------------------------------------------------
