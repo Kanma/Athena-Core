@@ -138,6 +138,26 @@ SUITE(DescribableTests)
 
 SUITE(DescribableJSONSerialization)
 {
+    TEST(SerializationToObject)
+    {
+        MockDescribable2 desc;
+
+        rapidjson::Document document;
+
+        toJSON(&desc, document, document.GetAllocator());
+
+        CHECK(document.IsArray());
+        CHECK_EQUAL(2, document.Size());
+
+        CHECK(document[(rapidjson::SizeType) 0].IsObject());
+        CHECK_EQUAL("Cat2", document[(rapidjson::SizeType) 0]["__category__"].GetString());
+        CHECK_EQUAL(10, document[(rapidjson::SizeType) 0]["index"].GetInt());
+
+        CHECK(document[1].IsObject());
+        CHECK_EQUAL("Cat1", document[1]["__category__"].GetString());
+        CHECK_EQUAL("test", document[1]["name"].GetString());
+    }
+
     TEST(SerializationToString)
     {
         MockDescribable2 desc;

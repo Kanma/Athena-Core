@@ -28,8 +28,20 @@ namespace Data {
 
 
     //------------------------------------------------------------------------------------
-    /// @brief Returns the JSON representation of a describable object (@see
+    /// @brief Returns the rapidjson representation of a describable object (@see
     /// Athena::Utils::Describable)
+    ///
+    /// @param  pDescribable        The describable
+    /// @retval json_describable    The resulting rapidjson representation
+    /// @param  allocator           The memory allocator to use
+    //------------------------------------------------------------------------------------
+    ATHENA_CORE_SYMBOL void toJSON(Utils::Describable* pDescribable,
+                                   rapidjson::Value &json_describable,
+                                   rapidjson::Value::AllocatorType &allocator);
+
+    //------------------------------------------------------------------------------------
+    /// @brief Returns the JSON representation of a describable object (@see
+    /// Athena::Utils::Describable) as a string
     //------------------------------------------------------------------------------------
     ATHENA_CORE_SYMBOL std::string toJSON(Utils::Describable* pDescribable);
 

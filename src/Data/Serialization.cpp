@@ -32,7 +32,7 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
     switch (pVariant->getType())
     {
         case Variant::STRING:
-            value.SetString(pVariant->toString().c_str());
+            value.SetString(pVariant->toString().c_str(), allocator);
             break;
 
         case Variant::INTEGER:
@@ -123,6 +123,7 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
 
         case Variant::STRUCT:
         {
+            Value name;
             Value field;
 
             value.SetObject();
@@ -131,7 +132,8 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
             while (iter.hasMoreElements())
             {
                 toJSON(iter.peekNextValue(), field, allocator);
-                value.AddMember(iter.peekNextKey().c_str(), field, allocator);
+                name.SetString(iter.peekNextKey().c_str(), allocator);
+                value.AddMember(name, field, allocator);
                 iter.moveNext();
             }
 
@@ -142,7 +144,8 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
 
 //-----------------------------------------------------------------------
 
-std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
+void Athena::Data::toJSON(Utils::Describable* pDescribable, rapidjson::Value &json_describable,
+                          rapidjson::Value::AllocatorType &allocator)
 {
     // Assertions
     assert(pDescribable);
@@ -155,10 +158,10 @@ std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
         pProperties->append(pUnknownProperties, false);
 
     // Create the JSON representation
-    Document document;
-    document.SetArray();
+    json_describable.SetArray();
 
     PropertiesList::tCategoriesIterator categIter = pProperties->getCategoriesIterator();
+    Value name;
     Value value;
     while (categIter.hasMoreElements())
     {
@@ -167,31 +170,46 @@ std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
         Value category;
         category.SetObject();
 
-        value.SetString(pCategory->strName.c_str());
-        category.AddMember("__category__", value, document.GetAllocator());
+        value.SetString(pCategory->strName.c_str(), allocator);
+        category.AddMember("__category__", value, allocator);
 
-        PropertiesList::tPropertiesIterator propIter(pCategory->values.begin(), pCategory->values.end());
+        PropertiesList::tPropertiesIterator propIter(pCategory->values.begin(),
+                                                     pCategory->values.end());
         while (propIter.hasMoreElements())
         {
             PropertiesList::tProperty* pProperty = propIter.peekNextPtr();
 
-            toJSON(pProperty->pValue, value, document.GetAllocator());
-            category.AddMember(pProperty->strName.c_str(), value, document.GetAllocator());
+            toJSON(pProperty->pValue, value, allocator);
+
+            name.SetString(pProperty->strName.c_str(), allocator);
+            category.AddMember(name, value, allocator);
 
             propIter.moveNext();
         }
 
-        document.PushBack(category, document.GetAllocator());
+        json_describable.PushBack(category, allocator);
 
         categIter.moveNext();
     }
+
+    delete pProperties;
+}
+
+//-----------------------------------------------------------------------
+
+std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
+{
+    // Assertions
+    assert(pDescribable);
+
+    // Retrieve the JSON representation
+    Document document;
+    toJSON(pDescribable, document, document.GetAllocator());
 
     // Convert it to string
     StringBuffer s;
     PrettyWriter<StringBuffer> writer(s);
     document.Accept(writer);
-
-    delete pProperties;
 
     return s.GetString();
 }
