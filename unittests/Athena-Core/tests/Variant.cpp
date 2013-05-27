@@ -3,9 +3,11 @@
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Color.h>
+#include <Athena-Core/Data/Serialization.h>
 
 using namespace Athena::Utils;
 using namespace Athena::Math;
+using namespace Athena::Data;
 using namespace std;
 
 
@@ -804,3 +806,115 @@ SUITE(VariantImplicitConversionsSuite)
 #undef DECLARE_TEST_VALID_CONVERSION
 #undef DECLARE_TEST_VALID_CONVERSION_N
 #undef DECLARE_TEST_INVALID_CONVERSION
+
+
+#define DECLARE_TEST_VALID_SERIALIZATION(SRC_TYPE, SRC_TYPE_ID, SRC_VALUE, DST_TYPE_CHECKER, DST_GETTER, DST_VALUE)    \
+    TEST(ValidSerializationFrom##SRC_TYPE_ID)                                            \
+    {                                                                                    \
+        SRC_TYPE val = SRC_VALUE;                                                        \
+        Variant v(val);                                                                  \
+                                                                                         \
+        rapidjson::Document document;                                                    \
+        rapidjson::Value value;                                                          \
+        toJSON(&v, value, document.GetAllocator());                                      \
+                                                                                         \
+        CHECK(value.DST_TYPE_CHECKER());                                                 \
+                                                                                         \
+        CHECK(DST_VALUE == value.DST_GETTER());                                          \
+    }
+
+
+SUITE(VariantSerializationSuite)
+{
+    DECLARE_TEST_VALID_SERIALIZATION(string,         STRING,            "test",       IsString,   GetString,   string("test"))
+    DECLARE_TEST_VALID_SERIALIZATION(int,            INTEGER,           10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(short,          SHORT,             10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(char,           CHAR,              10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned int,   UNSIGNED_INTEGER,  10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned short, UNSIGNED_SHORT,    10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned char,  UNSIGNED_CHAR,     10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(float,          FLOAT,             10.0f,        IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(double,         DOUBLE,            10.0,         IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(bool,           BOOLEAN,           true,         IsBool,     GetBool,     true)
+    DECLARE_TEST_VALID_SERIALIZATION(Radian,         RADIAN,            Radian(10.0), IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(Degree,         Degree,            Degree(10.0), IsDouble,   GetDouble,   Degree(10.0).valueRadians())
+
+    TEST(ValidSerializationFromVector3)
+    {
+        Vector3 val(1.0f, 2.0f, 3.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(1.0, value["x"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(2.0, value["y"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(3.0, value["z"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromQuaternion)
+    {
+        Quaternion val(1.0f, 2.0f, 3.0f, 4.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(1.0, value["w"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(2.0, value["x"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(3.0, value["y"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(4.0, value["z"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromColor)
+    {
+        Color val(0.0f, 0.2f, 0.5f, 1.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(0.0, value["r"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(0.2, value["g"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(0.5, value["b"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(1.0, value["a"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromStruct)
+    {
+        Variant v(Variant::STRUCT);
+        v.setField("field1", new Variant(10));
+        v.setField("field2", new Variant("test"));
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_EQUAL(10, value["field1"].GetInt());
+        CHECK_EQUAL("test", value["field2"].GetString());
+    }
+
+    TEST(ValidSerializationFromNull)
+    {
+        Variant v;
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsNull());
+    }
+}
+
+#undef DECLARE_TEST_VALID_SERIALIZATION

@@ -1,9 +1,11 @@
 #include <UnitTest++.h>
 #include <Athena-Core/Utils/Describable.h>
+#include <Athena-Core/Data/Serialization.h>
 #include "../mocks/Describable.h"
 
 using namespace Athena;
 using namespace Athena::Utils;
+using namespace Athena::Data;
 
 
 SUITE(DescribableTests)
@@ -130,5 +132,18 @@ SUITE(DescribableTests)
         CHECK(!catIter.hasMoreElements());
 
         delete pDelayedProperties;
+    }
+}
+
+
+SUITE(DescribableJSONSerialization)
+{
+    TEST(SerializationToString)
+    {
+        MockDescribable2 desc;
+
+        std::string json = toJSON(&desc);
+
+        CHECK_EQUAL("[\n    {\n        \"__category__\": \"Cat2\",\n        \"index\": 10\n    },\n    {\n        \"__category__\": \"Cat1\",\n        \"name\": \"test\"\n    }\n]", json);
     }
 }
