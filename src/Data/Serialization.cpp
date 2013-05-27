@@ -273,6 +273,46 @@ void Athena::Data::toJSON(Utils::Describable* pDescribable, rapidjson::Value &js
 
 //-----------------------------------------------------------------------
 
+void Athena::Data::fromJSON(const rapidjson::Value& json_describable,
+                            Utils::Describable* pDescribable,
+                            PropertiesList* pDelayedProperties)
+{
+    // Assertions
+    assert(pDescribable);
+
+    if (!json_describable.IsArray())
+        return;
+
+    // Create the properties of the describable
+    PropertiesList* pProperties = new PropertiesList();
+
+    Value::ConstValueIterator iter, iterEnd;
+    for (iter = json_describable.Begin(), iterEnd = json_describable.End();
+         iter != iterEnd; ++iter)
+    {
+        pProperties->selectCategory((*iter)["__category__"].GetString());
+
+        Value::ConstMemberIterator iter2, iterEnd2;
+        for (iter2 = iter->MemberBegin(), iterEnd2 = iter->MemberEnd();
+             iter2 != iterEnd2; ++iter2)
+        {
+            if (iter2->name.GetString() == std::string("__category__"))
+                continue;
+
+            Variant* pField = new Variant();
+            fromJSON(iter2->value, pField);
+            pProperties->set(iter2->name.GetString(), pField);
+        }
+    }
+
+    // Assign the properties to the describable
+    pDescribable->setProperties(pProperties, pDelayedProperties);
+
+    delete pProperties;
+}
+
+//-----------------------------------------------------------------------
+
 std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
 {
     // Assertions

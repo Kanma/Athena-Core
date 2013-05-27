@@ -167,3 +167,152 @@ SUITE(DescribableJSONSerialization)
         CHECK_EQUAL("[\n    {\n        \"__category__\": \"Cat2\",\n        \"index\": 10\n    },\n    {\n        \"__category__\": \"Cat1\",\n        \"name\": \"test\"\n    }\n]", json);
     }
 }
+
+
+SUITE(DescribableJSONDeserialization)
+{
+    TEST(DeserializationFromObject)
+    {
+        MockDescribable2 desc;
+
+        rapidjson::Document document;
+        document.SetArray();
+
+        rapidjson::Value entry;
+        rapidjson::Value field;
+
+        entry.SetObject();
+
+        field.SetString("Cat2");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetUint(100);
+        entry.AddMember("index", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+        entry.SetObject();
+
+        field.SetString("Cat1");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetString("test2");
+        entry.AddMember("name", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+
+        fromJSON(document, &desc);
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+        CHECK(!desc.getUnknownProperties());
+    }
+
+
+    TEST(DeserializationFromObjectWithUnknownProperties)
+    {
+        MockDescribable2 desc;
+
+        rapidjson::Document document;
+        document.SetArray();
+
+        rapidjson::Value entry;
+        rapidjson::Value field;
+
+        entry.SetObject();
+
+        field.SetString("Cat3");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetUint(20);
+        entry.AddMember("unknown", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+        entry.SetObject();
+
+        field.SetString("Cat2");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetUint(100);
+        entry.AddMember("index", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+        entry.SetObject();
+
+        field.SetString("Cat1");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetString("test2");
+        entry.AddMember("name", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+
+        fromJSON(document, &desc);
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+
+        PropertiesList* pUnknownProperties = desc.getUnknownProperties();
+        CHECK(pUnknownProperties);
+
+        Variant* pUnknownValue = pUnknownProperties->get("Cat3", "unknown");
+
+        CHECK(pUnknownValue);
+        CHECK_EQUAL(20, pUnknownValue->toInt());
+    }
+
+
+    TEST(DeserializationFromObjectWithDelayedProperties)
+    {
+        MockDescribable2 desc;
+
+        rapidjson::Document document;
+        document.SetArray();
+
+        rapidjson::Value entry;
+        rapidjson::Value field;
+
+        entry.SetObject();
+
+        field.SetString("Cat2");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetUint(100);
+        entry.AddMember("index", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+        entry.SetObject();
+
+        field.SetString("Cat1");
+        entry.AddMember("__category__", field, document.GetAllocator());
+
+        field.SetString("test2");
+        entry.AddMember("name", field, document.GetAllocator());
+
+        field.SetString("unused");
+        entry.AddMember("delayed", field, document.GetAllocator());
+
+        document.PushBack(entry, document.GetAllocator());
+
+        PropertiesList* pDelayedProperties = new PropertiesList();
+
+        fromJSON(document, &desc, pDelayedProperties);
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+        Variant* pDelayedValue = pDelayedProperties->get("Cat1", "delayed");
+
+        CHECK(pDelayedValue);
+        CHECK_EQUAL("unused", pDelayedValue->toString());
+
+        delete pDelayedProperties;
+    }
+}
