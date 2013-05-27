@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                 Athena-Core                                  *
-*                              Version 1.2.0 (Dev)                             *
+*                                Version 1.2.0                                 *
 *                       http://github.com/Kanma/Athena-Core                    *
 *                                                                              *
 ********************************************************************************
@@ -68,7 +68,7 @@ Some classes of this module are based on the corresponding classes of OGRE 1.7
 engine, released under the MIT License. OGRE is the 3D engine used by the Athena
 Game Framework.
 
-The license of OGRE is contained in the file 'docs/LICENSE-OGRE'. 
+The license of OGRE is contained in the file 'docs/LICENSE-OGRE'.
 
 
 ---------------------------------------
