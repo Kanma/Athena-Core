@@ -3,21 +3,23 @@
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Color.h>
+#include <Athena-Core/Data/Serialization.h>
 
 using namespace Athena::Utils;
 using namespace Athena::Math;
+using namespace Athena::Data;
 using namespace std;
 
 
 #define DECLARE_TEST_VARIANT_INITIALIZATION(SRC_TYPE, SRC_TYPE_ID, SRC_VALUE, GETTER)    \
-    TEST(VariantContains##SRC_TYPE_ID)                                                    \
+    TEST(VariantContains##SRC_TYPE_ID)                                                   \
     {                                                                                    \
         SRC_TYPE val = SRC_VALUE;                                                        \
-        Variant v(val);                                                                    \
-        CHECK_EQUAL(Variant::SRC_TYPE_ID, v.getType());                                    \
-        CHECK(v.hasType(Variant::SRC_TYPE_ID));                                            \
-        CHECK(!v.isNull());                                                                \
-        CHECK(SRC_VALUE == v.GETTER());                                                    \
+        Variant v(val);                                                                  \
+        CHECK_EQUAL(Variant::SRC_TYPE_ID, v.getType());                                  \
+        CHECK(v.hasType(Variant::SRC_TYPE_ID));                                          \
+        CHECK(!v.isNull());                                                              \
+        CHECK(SRC_VALUE == v.GETTER());                                                  \
     }
 
 
@@ -32,20 +34,20 @@ SUITE(VariantInitializationSuite)
     }
 
 
-    DECLARE_TEST_VARIANT_INITIALIZATION(string,            STRING,                "test",    toString)
-    DECLARE_TEST_VARIANT_INITIALIZATION(int,            INTEGER,            10,        toInt)
-    DECLARE_TEST_VARIANT_INITIALIZATION(short,            SHORT,                10,        toShort)
-    DECLARE_TEST_VARIANT_INITIALIZATION(char,            CHAR,                10,        toChar)
-    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned int,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned short,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned char,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VARIANT_INITIALIZATION(float,            FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VARIANT_INITIALIZATION(double,            DOUBLE,                10.0,    toDouble)
-    DECLARE_TEST_VARIANT_INITIALIZATION(bool,            BOOLEAN,            true,    toBool)
+    DECLARE_TEST_VARIANT_INITIALIZATION(string,         STRING,           "test",  toString)
+    DECLARE_TEST_VARIANT_INITIALIZATION(int,            INTEGER,          10,      toInt)
+    DECLARE_TEST_VARIANT_INITIALIZATION(short,          SHORT,            10,      toShort)
+    DECLARE_TEST_VARIANT_INITIALIZATION(char,           CHAR,             10,      toChar)
+    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned int,   UNSIGNED_INTEGER, 10,      toUInt)
+    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned short, UNSIGNED_SHORT,   10,      toUShort)
+    DECLARE_TEST_VARIANT_INITIALIZATION(unsigned char,  UNSIGNED_CHAR,    10,      toUChar)
+    DECLARE_TEST_VARIANT_INITIALIZATION(float,          FLOAT,            10.0f,   toFloat)
+    DECLARE_TEST_VARIANT_INITIALIZATION(double,         DOUBLE,           10.0,    toDouble)
+    DECLARE_TEST_VARIANT_INITIALIZATION(bool,           BOOLEAN,          true,    toBool)
 
     DECLARE_TEST_VARIANT_INITIALIZATION(Vector3,        VECTOR3,    Vector3(10.0f, 20.0f, 30.0f),            toVector3)
-    DECLARE_TEST_VARIANT_INITIALIZATION(Quaternion,        QUATERNION,    Quaternion(10.0f, 20.0f, 30.0f, 40.0f),    toQuaternion)
-    DECLARE_TEST_VARIANT_INITIALIZATION(Color,            COLOR,        Color(10.0f, 20.0f, 30.0f, 40.0f),        toColor)
+    DECLARE_TEST_VARIANT_INITIALIZATION(Quaternion,     QUATERNION, Quaternion(10.0f, 20.0f, 30.0f, 40.0f),    toQuaternion)
+    DECLARE_TEST_VARIANT_INITIALIZATION(Color,          COLOR,      Color(10.0f, 20.0f, 30.0f, 40.0f),        toColor)
 
     TEST(VariantContainsRadian)
     {
@@ -85,19 +87,19 @@ SUITE(VariantInitializationSuite)
 
 SUITE(NullVariantSuite)
 {
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(STRING,                "",                    toString)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(INTEGER,            0,                    toInt)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(SHORT,                0,                    toShort)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(CHAR,                0,                    toChar)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_INTEGER,    0,                    toUInt)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_SHORT,        0,                    toUShort)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_CHAR,        0,                    toUChar)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(FLOAT,                0.0f,                toFloat)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(DOUBLE,                0.0,                toDouble)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(BOOLEAN,            false,                toBool)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(VECTOR3,            Vector3::ZERO,        toVector3)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(QUATERNION,            Quaternion::ZERO,    toQuaternion)
-    DECLARE_TEST_NULL_VARIANT_INITALIZATION(COLOR,                Color::ZERO,        toColor)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(STRING,           "",               toString)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(INTEGER,          0,                toInt)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(SHORT,            0,                toShort)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(CHAR,             0,                toChar)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_INTEGER, 0,                toUInt)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_SHORT,   0,                toUShort)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(UNSIGNED_CHAR,    0,                toUChar)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(FLOAT,            0.0f,             toFloat)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(DOUBLE,           0.0,              toDouble)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(BOOLEAN,          false,            toBool)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(VECTOR3,          Vector3::ZERO,    toVector3)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(QUATERNION,       Quaternion::ZERO, toQuaternion)
+    DECLARE_TEST_NULL_VARIANT_INITALIZATION(COLOR,            Color::ZERO,      toColor)
 
     TEST(NullVariantInitializedAsRadian)
     {
@@ -122,38 +124,38 @@ SUITE(NullVariantSuite)
 
 
 
-#define DECLARE_TEST_VARIANT_COPY(TYPE, TYPE_ID, VALUE, GETTER)                            \
-    TEST(VariantCopy##TYPE_ID)                                                            \
+#define DECLARE_TEST_VARIANT_COPY(TYPE, TYPE_ID, VALUE, GETTER)                          \
+    TEST(VariantCopy##TYPE_ID)                                                           \
     {                                                                                    \
-        Variant v;                                                                        \
+        Variant v;                                                                       \
         {                                                                                \
             TYPE val = VALUE;                                                            \
-            Variant v2(val);                                                            \
-            v = v2;                                                                        \
+            Variant v2(val);                                                             \
+            v = v2;                                                                      \
         }                                                                                \
-        CHECK_EQUAL(Variant::TYPE_ID, v.getType());                                        \
-        CHECK(v.hasType(Variant::TYPE_ID));                                                \
-        CHECK(!v.isNull());                                                                \
-        CHECK(VALUE == v.GETTER());                                                        \
+        CHECK_EQUAL(Variant::TYPE_ID, v.getType());                                      \
+        CHECK(v.hasType(Variant::TYPE_ID));                                              \
+        CHECK(!v.isNull());                                                              \
+        CHECK(VALUE == v.GETTER());                                                      \
     }
 
 
 SUITE(VariantCopySuite)
 {
-    DECLARE_TEST_VARIANT_COPY(string,            STRING,                "test",    toString)
-    DECLARE_TEST_VARIANT_COPY(int,                INTEGER,            10,        toInt)
-    DECLARE_TEST_VARIANT_COPY(short,            SHORT,                10,        toShort)
-    DECLARE_TEST_VARIANT_COPY(char,                CHAR,                10,        toChar)
-    DECLARE_TEST_VARIANT_COPY(unsigned int,        UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VARIANT_COPY(unsigned short,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VARIANT_COPY(unsigned char,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VARIANT_COPY(float,            FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VARIANT_COPY(double,            DOUBLE,                10.0,    toDouble)
-    DECLARE_TEST_VARIANT_COPY(bool,                BOOLEAN,            true,    toBool)
+    DECLARE_TEST_VARIANT_COPY(string,         STRING,           "test", toString)
+    DECLARE_TEST_VARIANT_COPY(int,            INTEGER,          10,     toInt)
+    DECLARE_TEST_VARIANT_COPY(short,          SHORT,            10,     toShort)
+    DECLARE_TEST_VARIANT_COPY(char,           CHAR,             10,     toChar)
+    DECLARE_TEST_VARIANT_COPY(unsigned int,   UNSIGNED_INTEGER, 10,     toUInt)
+    DECLARE_TEST_VARIANT_COPY(unsigned short, UNSIGNED_SHORT,   10,     toUShort)
+    DECLARE_TEST_VARIANT_COPY(unsigned char,  UNSIGNED_CHAR,    10,     toUChar)
+    DECLARE_TEST_VARIANT_COPY(float,          FLOAT,            10.0f,  toFloat)
+    DECLARE_TEST_VARIANT_COPY(double,         DOUBLE,           10.0,   toDouble)
+    DECLARE_TEST_VARIANT_COPY(bool,           BOOLEAN,          true,   toBool)
 
-    DECLARE_TEST_VARIANT_COPY(Vector3,        VECTOR3,    Vector3(10.0f, 20.0f, 30.0f),            toVector3)
-    DECLARE_TEST_VARIANT_COPY(Quaternion,    QUATERNION,    Quaternion(10.0f, 20.0f, 30.0f, 40.0f),    toQuaternion)
-    DECLARE_TEST_VARIANT_COPY(Color,        COLOR,        Color(10.0f, 20.0f, 30.0f, 40.0f),        toColor)
+    DECLARE_TEST_VARIANT_COPY(Vector3,        VECTOR3,    Vector3(10.0f, 20.0f, 30.0f),           toVector3)
+    DECLARE_TEST_VARIANT_COPY(Quaternion,     QUATERNION, Quaternion(10.0f, 20.0f, 30.0f, 40.0f), toQuaternion)
+    DECLARE_TEST_VARIANT_COPY(Color,          COLOR,      Color(10.0f, 20.0f, 30.0f, 40.0f),      toColor)
 
     TEST(VariantCopyRadian)
     {
@@ -330,24 +332,24 @@ SUITE(VariantExplicitConversionsSuite)
 
 
     // Valid conversion: from string to ...
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "test",    STRING,                "test",    toString)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "test", STRING,           "test", toString)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   INTEGER,          10,     toInt)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   SHORT,            10,     toShort)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   CHAR,             10,     toChar)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   UNSIGNED_INTEGER, 10,     toUInt)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   UNSIGNED_SHORT,   10,     toUShort)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",   UNSIGNED_CHAR,    10,     toUChar)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0", FLOAT,            10.0f,  toFloat)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0", DOUBLE,            10.0,  toDouble)
 
-    DECLARE_TEST_VALID_CONVERSION_N(0, string, STRING, "True",    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, string, STRING, "true",    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(2, string, STRING, "TRUE",    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(3, string, STRING, "False",    BOOLEAN, false,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(4, string, STRING, "false",    BOOLEAN, false,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(5, string, STRING, "FALSE",    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(0, string, STRING, "True",  BOOLEAN, true,  toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, string, STRING, "true",  BOOLEAN, true,  toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(2, string, STRING, "TRUE",  BOOLEAN, true,  toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(3, string, STRING, "False", BOOLEAN, false, toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(4, string, STRING, "false", BOOLEAN, false, toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(5, string, STRING, "FALSE", BOOLEAN, false, toBool)
 
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0)",    VECTOR3, Vector3(10.0f, 20.0f, 30.0f), toVector3)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0)",       VECTOR3, Vector3(10.0f, 20.0f, 30.0f), toVector3)
     DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0, 40.0)", QUATERNION, Quaternion(10.0f, 20.0f, 30.0f, 40.0f), toQuaternion)
     DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0, 40.0)", COLOR, Color(10.0f, 20.0f, 30.0f, 40.0f), toColor)
 
@@ -381,139 +383,139 @@ SUITE(VariantExplicitConversionsSuite)
     DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", BOOLEAN)
 
     // From integer to ...
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    STRING,           "10",  toString)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    INTEGER,          10,    toInt)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    SHORT,            10,    toShort)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    CHAR,             10,    toChar)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_INTEGER, 10,    toUInt)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_SHORT,   10,    toUShort)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_CHAR,    10,    toUChar)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    FLOAT,            10.0f, toFloat)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    DOUBLE,           10.0,  toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, int, INTEGER, 1,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, int, INTEGER, 0,    BOOLEAN, false,    toBool)
 
     // From short to ...
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, short, SHORT, 1,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, short, SHORT, 0,    BOOLEAN, false,    toBool)
 
     // From char to ...
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, char, CHAR, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, char, CHAR, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, char, CHAR, 0,    BOOLEAN, false,   toBool)
 
     // From unsigned integer to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned int, UNSIGNED_INTEGER, 1,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, unsigned int, UNSIGNED_INTEGER, 0,    BOOLEAN, false,    toBool)
 
     // From unsigned short to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned short, UNSIGNED_SHORT, 1,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, unsigned short, UNSIGNED_SHORT, 0,    BOOLEAN, false,    toBool)
 
     // From unsigned char to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned char, UNSIGNED_CHAR, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned char, UNSIGNED_CHAR, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned char, UNSIGNED_CHAR, 0,    BOOLEAN, false,   toBool)
 
     // From float to ...
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    STRING,                "10.5",    toString)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    FLOAT,                10.5f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    DOUBLE,                10.5,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    STRING,             "10.5",  toString)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    FLOAT,              10.5f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    DOUBLE,             10.5,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, float, FLOAT, 1.0f,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, float, FLOAT, 0.0f,    BOOLEAN, false,    toBool)
 
     // From double to ...
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    STRING,                "10.5",    toString)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    FLOAT,                10.5f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    DOUBLE,                10.5,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    STRING,             "10.5", toString)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    INTEGER,            10,     toInt)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    SHORT,              10,     toShort)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    CHAR,               10,     toChar)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_INTEGER,   10,     toUInt)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_SHORT,     10,     toUShort)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_CHAR,      10,     toUChar)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    FLOAT,              10.5f,  toFloat)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    DOUBLE,             10.5,   toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, double, DOUBLE, 1.0,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, double, DOUBLE, 0.0,    BOOLEAN, false,    toBool)
 
     // From boolean to ...
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    STRING,                "True",    toString)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    INTEGER,            1,        toInt)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    SHORT,                1,        toShort)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    CHAR,                1,        toChar)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_INTEGER,    1,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_SHORT,        1,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_CHAR,        1,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    FLOAT,                1.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    DOUBLE,                1.0,    toDouble)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    BOOLEAN,            true,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    STRING,             "True", toString)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    INTEGER,            1,      toInt)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    SHORT,              1,      toShort)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    CHAR,               1,      toChar)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_INTEGER,   1,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_SHORT,     1,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_CHAR,      1,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    FLOAT,              1.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    DOUBLE,             1.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    BOOLEAN,            true,   toBool)
 
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    STRING,                "False",    toString)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    INTEGER,            0,            toInt)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    SHORT,                0,            toShort)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    CHAR,                0,            toChar)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_INTEGER,    0,            toUInt)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_SHORT,        0,            toUShort)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_CHAR,        0,            toUChar)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    FLOAT,                0.0f,        toFloat)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    DOUBLE,                0.0,        toDouble)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    BOOLEAN,            false,        toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    STRING,             "False",  toString)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    INTEGER,            0,        toInt)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    SHORT,              0,        toShort)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    CHAR,               0,        toChar)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_INTEGER,   0,        toUInt)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_SHORT,     0,        toUShort)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_CHAR,      0,        toUChar)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    FLOAT,              0.0f,     toFloat)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    DOUBLE,             0.0,      toDouble)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    BOOLEAN,            false,    toBool)
 
     // From Vector3 to ...
     DECLARE_TEST_VALID_CONVERSION(Vector3, VECTOR3, Vector3(10.5f, 20.5f, 30.5f), STRING, "(10.5, 20.5, 30.5)", toString)
@@ -588,22 +590,22 @@ SUITE(VariantExplicitConversionsSuite)
 SUITE(VariantImplicitConversionsSuite)
 {
     // Valid conversion: from string to ...
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "test",    STRING,                "test",    toString)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",        UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "test",    STRING,             "test",  toString)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10",      UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(string, STRING, "10.0",    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, string, STRING, "True",    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, string, STRING, "true",    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(2, string, STRING, "TRUE",    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(3, string, STRING, "False",    BOOLEAN, false,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(4, string, STRING, "false",    BOOLEAN, false,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(5, string, STRING, "FALSE",    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(3, string, STRING, "False",   BOOLEAN, false,   toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(4, string, STRING, "false",   BOOLEAN, false,   toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(5, string, STRING, "FALSE",   BOOLEAN, false,   toBool)
 
     DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0)",    VECTOR3, Vector3(10.0f, 20.0f, 30.0f), toVector3)
     DECLARE_TEST_VALID_CONVERSION(string, STRING, "(10.0, 20.0, 30.0, 40.0)", QUATERNION, Quaternion(10.0f, 20.0f, 30.0f, 40.0f), toQuaternion)
@@ -624,150 +626,150 @@ SUITE(VariantImplicitConversionsSuite)
     }
 
     // Invalid conversion: from string to ...
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", INTEGER,            0,        toInt)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", SHORT,                0,        toShort)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", CHAR,                0,        toChar)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_INTEGER,    0,        toUInt)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_SHORT,        0,        toUShort)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_CHAR,        0,        toUChar)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test",    FLOAT,                0.0f,    toFloat)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test",    DOUBLE,                0.0,    toDouble)
-    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test",    BOOLEAN,            false,    toBool)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", INTEGER,            0,      toInt)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", SHORT,              0,      toShort)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", CHAR,               0,      toChar)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_INTEGER,   0,      toUInt)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_SHORT,     0,      toUShort)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", UNSIGNED_CHAR,      0,      toUChar)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", FLOAT,              0.0f,   toFloat)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", DOUBLE,             0.0,    toDouble)
+    DECLARE_TEST_INVALID_CONVERSION(string, STRING, "test", BOOLEAN,            false,  toBool)
 
     // From integer to ...
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(int, INTEGER, 10, DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, int, INTEGER, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, int, INTEGER, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, int, INTEGER, 0,    BOOLEAN, false,   toBool)
 
     // From short to ...
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(short, SHORT, 10, DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, short, SHORT, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, short, SHORT, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, short, SHORT, 0,    BOOLEAN, false,   toBool)
 
     // From char to ...
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(char, CHAR, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, char, CHAR, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, char, CHAR, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, char, CHAR, 0,    BOOLEAN, false,   toBool)
 
     // From unsigned integer to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned int, UNSIGNED_INTEGER, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned int, UNSIGNED_INTEGER, 1,    BOOLEAN, true,    toBool)
     DECLARE_TEST_VALID_CONVERSION_N(1, unsigned int, UNSIGNED_INTEGER, 0,    BOOLEAN, false,    toBool)
 
     // From unsigned short to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned short, UNSIGNED_SHORT, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned short, UNSIGNED_SHORT, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned short, UNSIGNED_SHORT, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned short, UNSIGNED_SHORT, 0,    BOOLEAN, false,   toBool)
 
     // From unsigned char to ...
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    STRING,                "10",    toString)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    FLOAT,                10.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    DOUBLE,                10.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    STRING,             "10",    toString)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    FLOAT,              10.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(unsigned char, UNSIGNED_CHAR, 10,    DOUBLE,             10.0,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, unsigned char, UNSIGNED_CHAR, 1,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned char, UNSIGNED_CHAR, 0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, unsigned char, UNSIGNED_CHAR, 0,    BOOLEAN, false,   toBool)
 
     // From float to ...
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    STRING,                "10.5",    toString)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    FLOAT,                10.5f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    DOUBLE,                10.5,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    STRING,             "10.5",  toString)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    INTEGER,            10,      toInt)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    SHORT,              10,      toShort)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    CHAR,               10,      toChar)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_INTEGER,   10,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_SHORT,     10,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    UNSIGNED_CHAR,      10,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    FLOAT,              10.5f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION(float, FLOAT, 10.5f,    DOUBLE,             10.5,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, float, FLOAT, 1.0f,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, float, FLOAT, 0.0f,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, float, FLOAT, 0.0f,    BOOLEAN, false,   toBool)
 
     // From double to ...
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    STRING,                "10.5",    toString)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    INTEGER,            10,        toInt)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    SHORT,                10,        toShort)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    CHAR,                10,        toChar)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_INTEGER,    10,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_SHORT,        10,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_CHAR,        10,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    FLOAT,                10.5f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    DOUBLE,                10.5,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    STRING,             "10.5",   toString)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    INTEGER,            10,       toInt)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    SHORT,              10,       toShort)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    CHAR,               10,       toChar)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_INTEGER,   10,       toUInt)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_SHORT,     10,       toUShort)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    UNSIGNED_CHAR,      10,       toUChar)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    FLOAT,              10.5f,    toFloat)
+    DECLARE_TEST_VALID_CONVERSION(double, DOUBLE, 10.5,    DOUBLE,              10.5,    toDouble)
 
     DECLARE_TEST_VALID_CONVERSION_N(0, double, DOUBLE, 1.0,    BOOLEAN, true,    toBool)
-    DECLARE_TEST_VALID_CONVERSION_N(1, double, DOUBLE, 0.0,    BOOLEAN, false,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, double, DOUBLE, 0.0,    BOOLEAN, false,   toBool)
 
     // From boolean to ...
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    STRING,                "True",    toString)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    INTEGER,            1,        toInt)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    SHORT,                1,        toShort)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    CHAR,                1,        toChar)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_INTEGER,    1,        toUInt)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_SHORT,        1,        toUShort)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_CHAR,        1,        toUChar)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    FLOAT,                1.0f,    toFloat)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    DOUBLE,                1.0,    toDouble)
-    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    BOOLEAN,            true,    toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    STRING,             "True", toString)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    INTEGER,            1,      toInt)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    SHORT,              1,      toShort)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    CHAR,               1,      toChar)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_INTEGER,   1,      toUInt)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_SHORT,     1,      toUShort)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    UNSIGNED_CHAR,      1,      toUChar)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    FLOAT,              1.0f,   toFloat)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    DOUBLE,             1.0,    toDouble)
+    DECLARE_TEST_VALID_CONVERSION_N(0, bool, BOOLEAN, true,    BOOLEAN,            true,   toBool)
 
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    STRING,                "False",    toString)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    INTEGER,            0,            toInt)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    SHORT,                0,            toShort)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    CHAR,                0,            toChar)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_INTEGER,    0,            toUInt)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_SHORT,        0,            toUShort)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_CHAR,        0,            toUChar)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    FLOAT,                0.0f,        toFloat)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    DOUBLE,                0.0,        toDouble)
-    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    BOOLEAN,            false,        toBool)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    STRING,             "False",    toString)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    INTEGER,            0,          toInt)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    SHORT,              0,          toShort)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    CHAR,               0,          toChar)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_INTEGER,   0,          toUInt)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_SHORT,     0,          toUShort)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    UNSIGNED_CHAR,      0,          toUChar)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    FLOAT,              0.0f,       toFloat)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    DOUBLE,             0.0,        toDouble)
+    DECLARE_TEST_VALID_CONVERSION_N(1, bool, BOOLEAN, false,    BOOLEAN,            false,      toBool)
 
     // From Vector3 to ...
     DECLARE_TEST_VALID_CONVERSION(Vector3, VECTOR3, Vector3(10.5f, 20.5f, 30.5f), STRING, "(10.5, 20.5, 30.5)", toString)
@@ -804,3 +806,256 @@ SUITE(VariantImplicitConversionsSuite)
 #undef DECLARE_TEST_VALID_CONVERSION
 #undef DECLARE_TEST_VALID_CONVERSION_N
 #undef DECLARE_TEST_INVALID_CONVERSION
+
+
+#define DECLARE_TEST_VALID_SERIALIZATION(SRC_TYPE, SRC_TYPE_ID, SRC_VALUE, DST_TYPE_CHECKER, DST_GETTER, DST_VALUE)    \
+    TEST(ValidSerializationFrom##SRC_TYPE_ID)                                            \
+    {                                                                                    \
+        SRC_TYPE val = SRC_VALUE;                                                        \
+        Variant v(val);                                                                  \
+                                                                                         \
+        rapidjson::Document document;                                                    \
+        rapidjson::Value value;                                                          \
+        toJSON(&v, value, document.GetAllocator());                                      \
+                                                                                         \
+        CHECK(value.DST_TYPE_CHECKER());                                                 \
+                                                                                         \
+        CHECK(DST_VALUE == value.DST_GETTER());                                          \
+    }
+
+
+SUITE(VariantSerializationSuite)
+{
+    DECLARE_TEST_VALID_SERIALIZATION(string,         STRING,            "test",       IsString,   GetString,   string("test"))
+    DECLARE_TEST_VALID_SERIALIZATION(int,            INTEGER,           10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(short,          SHORT,             10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(char,           CHAR,              10,           IsInt,      GetInt,      10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned int,   UNSIGNED_INTEGER,  10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned short, UNSIGNED_SHORT,    10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(unsigned char,  UNSIGNED_CHAR,     10,           IsUint,     GetUint,     10)
+    DECLARE_TEST_VALID_SERIALIZATION(float,          FLOAT,             10.0f,        IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(double,         DOUBLE,            10.0,         IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(bool,           BOOLEAN,           true,         IsBool,     GetBool,     true)
+    DECLARE_TEST_VALID_SERIALIZATION(Radian,         RADIAN,            Radian(10.0), IsDouble,   GetDouble,   10.0)
+    DECLARE_TEST_VALID_SERIALIZATION(Degree,         Degree,            Degree(10.0), IsDouble,   GetDouble,   Degree(10.0).valueRadians())
+
+    TEST(ValidSerializationFromVector3)
+    {
+        Vector3 val(1.0f, 2.0f, 3.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(1.0, value["x"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(2.0, value["y"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(3.0, value["z"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromQuaternion)
+    {
+        Quaternion val(1.0f, 2.0f, 3.0f, 4.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(1.0, value["w"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(2.0, value["x"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(3.0, value["y"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(4.0, value["z"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromColor)
+    {
+        Color val(0.0f, 0.2f, 0.5f, 1.0f);
+        Variant v(val);
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_CLOSE(0.0, value["r"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(0.2, value["g"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(0.5, value["b"].GetDouble(), 1e-6f);
+        CHECK_CLOSE(1.0, value["a"].GetDouble(), 1e-6f);
+    }
+
+    TEST(ValidSerializationFromStruct)
+    {
+        Variant v(Variant::STRUCT);
+        v.setField("field1", new Variant(10));
+        v.setField("field2", new Variant("test"));
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsObject());
+
+        CHECK_EQUAL(10, value["field1"].GetInt());
+        CHECK_EQUAL("test", value["field2"].GetString());
+    }
+
+    TEST(ValidSerializationFromNull)
+    {
+        Variant v;
+
+        rapidjson::Document document;
+        rapidjson::Value value;
+        toJSON(&v, value, document.GetAllocator());
+
+        CHECK(value.IsNull());
+    }
+}
+
+#undef DECLARE_TEST_VALID_SERIALIZATION
+
+
+
+#define DECLARE_TEST_VALID_DESERIALIZATION(SRC_SETTER, SRC_VALUE, DST_TYPE_ID, DST_GETTER, DST_VALUE) \
+    TEST(ValidDeserializationTo##DST_TYPE_ID)                                            \
+    {                                                                                    \
+        rapidjson::Value value;                                                          \
+        Variant v;                                                                       \
+                                                                                         \
+        value.SRC_SETTER(SRC_VALUE);                                                     \
+                                                                                         \
+        fromJSON(value, &v);                                                             \
+                                                                                         \
+        CHECK(v.hasType(Variant::DST_TYPE_ID));                                                   \
+                                                                                         \
+        CHECK_EQUAL(DST_VALUE, v.DST_GETTER());                                          \
+    }
+
+
+SUITE(VariantDeserializationSuite)
+{
+    DECLARE_TEST_VALID_DESERIALIZATION(SetString, "test", STRING,           toString, "test")
+    DECLARE_TEST_VALID_DESERIALIZATION(SetInt,    -10,    INTEGER,          toInt,    -10)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetUint,   10,     UNSIGNED_INTEGER, toUInt,   10)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetDouble, 10.0,   DOUBLE,           toDouble, 10.0)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetBool,   true,   BOOLEAN,          toBool,   true)
+
+    TEST(ValidDeserializationToVector3)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("x", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("y", field, document.GetAllocator());
+
+        field.SetDouble(2.0f);
+        value.AddMember("z", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::VECTOR3));
+
+        CHECK_CLOSE(0.0f, v.toVector3().x, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toVector3().y, 1e-6f);
+        CHECK_CLOSE(2.0f, v.toVector3().z, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToQuaternion)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("x", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("y", field, document.GetAllocator());
+
+        field.SetDouble(2.0f);
+        value.AddMember("z", field, document.GetAllocator());
+
+        field.SetDouble(3.0f);
+        value.AddMember("w", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::QUATERNION));
+
+        CHECK_CLOSE(0.0f, v.toQuaternion().x, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toQuaternion().y, 1e-6f);
+        CHECK_CLOSE(2.0f, v.toQuaternion().z, 1e-6f);
+        CHECK_CLOSE(3.0f, v.toQuaternion().w, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToColor)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("r", field, document.GetAllocator());
+
+        field.SetDouble(0.2f);
+        value.AddMember("g", field, document.GetAllocator());
+
+        field.SetDouble(0.5f);
+        value.AddMember("b", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("a", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::COLOR));
+
+        CHECK_CLOSE(0.0f, v.toColor().r, 1e-6f);
+        CHECK_CLOSE(0.2f, v.toColor().g, 1e-6f);
+        CHECK_CLOSE(0.5f, v.toColor().b, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toColor().a, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToStruct)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetString("test");
+        value.AddMember("field1", field, document.GetAllocator());
+
+        field.SetUint(100);
+        value.AddMember("field2", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::STRUCT));
+
+        CHECK_EQUAL("test", v.getField("field1")->toString());
+        CHECK_EQUAL(100, v.getField("field2")->toUInt());
+    }
+}
+
+#undef DECLARE_TEST_VALID_DESERIALIZATION

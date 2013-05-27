@@ -11,8 +11,8 @@ set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 # Library version
 
 set(ATHENA_CORE_VERSION_MAJOR 1)
-set(ATHENA_CORE_VERSION_MINOR 1)
-set(ATHENA_CORE_VERSION_PATCH 4)
+set(ATHENA_CORE_VERSION_MINOR 2)
+set(ATHENA_CORE_VERSION_PATCH 0)
 set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
@@ -43,6 +43,7 @@ Athena-Core requires the following dependencies:
    - XMake
    - Athena-Math
    - UnitTest++
+   - rapidjson
 They are provided as GIT submodules of this repository.
 Did you forgot to execute the following commands?
    git submodule init

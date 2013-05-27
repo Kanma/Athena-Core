@@ -42,6 +42,7 @@ namespace Athena
         class ConfigFile;
         class DataStream;
         class FileDataStream;
+        class LocationManager;
     }
 
     //-----------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ namespace Athena
     {
         class LogManager;
         class ILogListener;
+        class ConsoleLogListener;
         class XMLLogListener;
     }
 

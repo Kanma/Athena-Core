@@ -31,18 +31,18 @@ public:
         Variant*    pValue;
     };
 
-    typedef std::vector<tProperty>            tPropertiesList;
+    typedef std::vector<tProperty>          tPropertiesList;
     typedef VectorIterator<tPropertiesList> tPropertiesIterator;
 
     // We don't use a map here because the order of the categories matters
     struct tCategory
     {
-        std::string        strName;
-        tPropertiesList    values;
+        std::string     strName;
+        tPropertiesList values;
     };
 
-    typedef std::vector<tCategory>            tCategoriesList;
-    typedef VectorIterator<tCategoriesList>    tCategoriesIterator;
+    typedef std::vector<tCategory>          tCategoriesList;
+    typedef VectorIterator<tCategoriesList> tCategoriesIterator;
 
 
     //_____ Construction / Destruction __________
@@ -115,21 +115,21 @@ public:
     ///
     /// @return The iterator
     //-----------------------------------------------------------------------------------
-    tCategoriesIterator    getCategoriesIterator();
+    tCategoriesIterator getCategoriesIterator();
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of a category
     ///
     /// @return The iterator
     //-----------------------------------------------------------------------------------
-    tPropertiesIterator    getPropertiesIterator(const std::string& strCategory);
+    tPropertiesIterator getPropertiesIterator(const std::string& strCategory);
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of the selected category
     ///
     /// @return The iterator
     //-----------------------------------------------------------------------------------
-    tPropertiesIterator    getPropertiesIterator();
+    tPropertiesIterator getPropertiesIterator();
 
     //-----------------------------------------------------------------------------------
     /// @brief  Append a properties list at the end (or the beginning) of this one

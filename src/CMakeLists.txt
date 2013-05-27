@@ -9,9 +9,12 @@ set(HEADERS ${XMAKE_BINARY_DIR}/include/Athena-Core/Config.h
             ../include/Athena-Core/Data/DataStream.h
             ../include/Athena-Core/Data/FileDataStream.h
             ../include/Athena-Core/Data/GenericDataStream.h
+            ../include/Athena-Core/Data/LocationManager.h
+            ../include/Athena-Core/Data/Serialization.h
             ../include/Athena-Core/Log/Declarations.h
             ../include/Athena-Core/Log/ILogListener.h
             ../include/Athena-Core/Log/LogManager.h
+            ../include/Athena-Core/Log/ConsoleLogListener.h
             ../include/Athena-Core/Log/XMLLogListener.h
             ../include/Athena-Core/Signals/Declarations.h
             ../include/Athena-Core/Signals/Signal.h
@@ -34,7 +37,10 @@ set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp
          Data/ConfigFile.cpp
          Data/DataStream.cpp
          Data/FileDataStream.cpp
+         Data/LocationManager.cpp
+         Data/Serialization.cpp
          Log/LogManager.cpp
+         Log/ConsoleLogListener.cpp
          Log/XMLLogListener.cpp
          Signals/Signal.cpp
          Signals/SignalsList.cpp
@@ -68,7 +74,9 @@ endif()
 
 # List the include paths
 set(INCLUDE_PATHS "${ATHENA_CORE_SOURCE_DIR}/include"
-                  "${XMAKE_BINARY_DIR}/include")
+                  "${XMAKE_BINARY_DIR}/include"
+                  "${XMAKE_DEPENDENCIES_DIR}"
+)
 
 include_directories(${INCLUDE_PATHS})
 

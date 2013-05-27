@@ -46,6 +46,7 @@ public:
 
     typedef std::map<std::string, Variant*>    tFieldsMap;
     typedef MapIterator<tFieldsMap>            tFieldsIterator;
+    typedef ConstMapIterator<tFieldsMap>       tConstFieldsIterator;
 
 
     //_____ Construction / Destruction __________
@@ -98,21 +99,21 @@ public:
     }
 
 
-    int                    toInt() const;
-    short                toShort() const;
-    char                toChar() const;
-    unsigned int        toUInt() const;
-    unsigned short        toUShort() const;
-    unsigned char        toUChar() const;
-    float                toFloat() const;
-    double                toDouble() const;
-    bool                toBool() const;
-    std::string            toString() const;
-    Math::Vector3        toVector3() const;
-    Math::Quaternion    toQuaternion() const;
-    Math::Color            toColor() const;
-    Math::Radian        toRadian() const;
-    Math::Degree        toDegree() const;
+    int              toInt() const;
+    short            toShort() const;
+    char             toChar() const;
+    unsigned int     toUInt() const;
+    unsigned short   toUShort() const;
+    unsigned char    toUChar() const;
+    float            toFloat() const;
+    double           toDouble() const;
+    bool             toBool() const;
+    std::string      toString() const;
+    Math::Vector3    toVector3() const;
+    Math::Quaternion toQuaternion() const;
+    Math::Color      toColor() const;
+    Math::Radian     toRadian() const;
+    Math::Degree     toDegree() const;
 
 
     //_____ Struct-related methods __________
@@ -129,21 +130,21 @@ public:
 
     //_____ Attributes __________
 private:
-    tType    m_type;
+    tType   m_type;
     bool    m_bNull;
 
     union
     {
-        int                _int;
-        short            _short;
-        char            _char;
-        unsigned int    _uint;
-        unsigned short    _ushort;
-        unsigned char    _uchar;
-        float            _float;
-        double            _double;
-        bool            _bool;
-        void*            _others;
+        int            _int;
+        short          _short;
+        char           _char;
+        unsigned int   _uint;
+        unsigned short _ushort;
+        unsigned char  _uchar;
+        float          _float;
+        double         _double;
+        bool           _bool;
+        void*          _others;
     } m_value;
 };
 
