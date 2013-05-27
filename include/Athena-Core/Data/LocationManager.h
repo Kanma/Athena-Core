@@ -4,8 +4,8 @@
     Declaration of the class 'Athena::Data::LocationManager'
 */
 
-#ifndef _ATHENA_LOG_LOGMANAGER_H_
-#define _ATHENA_LOG_LOGMANAGER_H_
+#ifndef _ATHENA_DATA_LOCATIONMANAGER_H_
+#define _ATHENA_DATA_LOCATIONMANAGER_H_
 
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Utils/Iterators.h>
