@@ -28,6 +28,17 @@ namespace Data {
 
 
     //------------------------------------------------------------------------------------
+    /// @brief Returns the rapidjson representation of a Variant (@see
+    /// Athena::Utils::Variant)
+    ///
+    /// @param  pVariant    The variant
+    /// @retval value       The resulting rapidjson representation
+    /// @param  allocator   The memory allocator to use
+    //------------------------------------------------------------------------------------
+    ATHENA_CORE_SYMBOL void fromJSON(const rapidjson::Value& value, Utils::Variant* pVariant);
+
+
+    //------------------------------------------------------------------------------------
     /// @brief Returns the rapidjson representation of a describable object (@see
     /// Athena::Utils::Describable)
     ///
@@ -38,6 +49,7 @@ namespace Data {
     ATHENA_CORE_SYMBOL void toJSON(Utils::Describable* pDescribable,
                                    rapidjson::Value &json_describable,
                                    rapidjson::Value::AllocatorType &allocator);
+
 
     //------------------------------------------------------------------------------------
     /// @brief Returns the JSON representation of a describable object (@see

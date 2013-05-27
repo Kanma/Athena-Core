@@ -918,3 +918,144 @@ SUITE(VariantSerializationSuite)
 }
 
 #undef DECLARE_TEST_VALID_SERIALIZATION
+
+
+
+#define DECLARE_TEST_VALID_DESERIALIZATION(SRC_SETTER, SRC_VALUE, DST_TYPE_ID, DST_GETTER, DST_VALUE) \
+    TEST(ValidDeserializationTo##DST_TYPE_ID)                                            \
+    {                                                                                    \
+        rapidjson::Value value;                                                          \
+        Variant v;                                                                       \
+                                                                                         \
+        value.SRC_SETTER(SRC_VALUE);                                                     \
+                                                                                         \
+        fromJSON(value, &v);                                                             \
+                                                                                         \
+        CHECK(v.hasType(Variant::DST_TYPE_ID));                                                   \
+                                                                                         \
+        CHECK_EQUAL(DST_VALUE, v.DST_GETTER());                                          \
+    }
+
+
+SUITE(VariantDeserializationSuite)
+{
+    DECLARE_TEST_VALID_DESERIALIZATION(SetString, "test", STRING,           toString, "test")
+    DECLARE_TEST_VALID_DESERIALIZATION(SetInt,    -10,    INTEGER,          toInt,    -10)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetUint,   10,     UNSIGNED_INTEGER, toUInt,   10)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetDouble, 10.0,   DOUBLE,           toDouble, 10.0)
+    DECLARE_TEST_VALID_DESERIALIZATION(SetBool,   true,   BOOLEAN,          toBool,   true)
+
+    TEST(ValidDeserializationToVector3)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("x", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("y", field, document.GetAllocator());
+
+        field.SetDouble(2.0f);
+        value.AddMember("z", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::VECTOR3));
+
+        CHECK_CLOSE(0.0f, v.toVector3().x, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toVector3().y, 1e-6f);
+        CHECK_CLOSE(2.0f, v.toVector3().z, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToQuaternion)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("x", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("y", field, document.GetAllocator());
+
+        field.SetDouble(2.0f);
+        value.AddMember("z", field, document.GetAllocator());
+
+        field.SetDouble(3.0f);
+        value.AddMember("w", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::QUATERNION));
+
+        CHECK_CLOSE(0.0f, v.toQuaternion().x, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toQuaternion().y, 1e-6f);
+        CHECK_CLOSE(2.0f, v.toQuaternion().z, 1e-6f);
+        CHECK_CLOSE(3.0f, v.toQuaternion().w, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToColor)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetDouble(0.0f);
+        value.AddMember("r", field, document.GetAllocator());
+
+        field.SetDouble(0.2f);
+        value.AddMember("g", field, document.GetAllocator());
+
+        field.SetDouble(0.5f);
+        value.AddMember("b", field, document.GetAllocator());
+
+        field.SetDouble(1.0f);
+        value.AddMember("a", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::COLOR));
+
+        CHECK_CLOSE(0.0f, v.toColor().r, 1e-6f);
+        CHECK_CLOSE(0.2f, v.toColor().g, 1e-6f);
+        CHECK_CLOSE(0.5f, v.toColor().b, 1e-6f);
+        CHECK_CLOSE(1.0f, v.toColor().a, 1e-6f);
+    }
+
+    TEST(ValidDeserializationToStruct)
+    {
+        rapidjson::Document document;
+        rapidjson::Value value;
+        rapidjson::Value field;
+        Variant v;
+
+        value.SetObject();
+
+        field.SetString("test");
+        value.AddMember("field1", field, document.GetAllocator());
+
+        field.SetUint(100);
+        value.AddMember("field2", field, document.GetAllocator());
+
+        fromJSON(value, &v);
+
+        CHECK(v.hasType(Variant::STRUCT));
+
+        CHECK_EQUAL("test", v.getField("field1")->toString());
+        CHECK_EQUAL(100, v.getField("field2")->toUInt());
+    }
+}
+
+#undef DECLARE_TEST_VALID_DESERIALIZATION

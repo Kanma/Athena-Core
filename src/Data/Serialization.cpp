@@ -144,6 +144,82 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
 
 //-----------------------------------------------------------------------
 
+void Athena::Data::fromJSON(const rapidjson::Value& value, Utils::Variant* pVariant)
+{
+    // Assertions
+    assert(pVariant);
+
+    switch (value.GetType())
+    {
+        case rapidjson::kNullType:
+            *pVariant = Variant();
+            break;
+
+        case rapidjson::kFalseType:
+        case rapidjson::kTrueType:
+            *pVariant = Variant(value.GetBool());
+            break;
+
+        case rapidjson::kStringType:
+            *pVariant = Variant(value.GetString());
+            break;
+
+        case rapidjson::kNumberType:
+            if (value.IsUint())
+                *pVariant = Variant(value.GetUint());
+            else if (value.IsInt())
+                *pVariant = Variant(value.GetInt());
+            else if (value.IsDouble())
+                *pVariant = Variant(value.GetDouble());
+            break;
+
+        case rapidjson::kObjectType:
+        {
+            if (value.HasMember("x") && value.HasMember("y") && value.HasMember("z"))
+            {
+                if (value.HasMember("w"))
+                {
+                    *pVariant = Variant(Quaternion(value["w"].GetDouble(),
+                                                   value["x"].GetDouble(),
+                                                   value["y"].GetDouble(),
+                                                   value["z"].GetDouble()));
+                }
+                else
+                {
+                    *pVariant = Variant(Vector3(value["x"].GetDouble(),
+                                                value["y"].GetDouble(),
+                                                value["z"].GetDouble()));
+                }
+            }
+            else if (value.HasMember("r") && value.HasMember("g") &&
+                     value.HasMember("b") && value.HasMember("a"))
+            {
+                *pVariant = Variant(Color(value["r"].GetDouble(),
+                                          value["g"].GetDouble(),
+                                          value["b"].GetDouble(),
+                                          value["a"].GetDouble()));
+            }
+            else
+            {
+                *pVariant = Variant(Variant::STRUCT);
+
+                Value::ConstMemberIterator iter, iterEnd;
+                for (iter = value.MemberBegin(), iterEnd = value.MemberEnd();
+                     iter != iterEnd; ++iter)
+                {
+                    Variant* pField = new Variant();
+                    fromJSON(iter->value, pField);
+                    pVariant->setField(iter->name.GetString(), pField);
+                }
+            }
+
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+
 void Athena::Data::toJSON(Utils::Describable* pDescribable, rapidjson::Value &json_describable,
                           rapidjson::Value::AllocatorType &allocator)
 {
