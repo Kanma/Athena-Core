@@ -315,4 +315,56 @@ SUITE(DescribableJSONDeserialization)
 
         delete pDelayedProperties;
     }
+
+
+    TEST(DeserializationFromString)
+    {
+        MockDescribable2 desc;
+
+        CHECK(fromJSON(std::string("[\n    {\n        \"__category__\": \"Cat2\",\n        \"index\": 100\n    },\n    {\n        \"__category__\": \"Cat1\",\n        \"name\": \"test2\"\n    }\n]"), &desc));
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+        CHECK(!desc.getUnknownProperties());
+    }
+
+
+    TEST(DeserializationFromStringWithUnknownProperties)
+    {
+        MockDescribable2 desc;
+
+        CHECK(fromJSON(std::string("[\n    {\n        \"__category__\": \"Cat3\",\n        \"unknown\": 10\n    },\n    {\n        \"__category__\": \"Cat2\",\n        \"index\": 100\n    },\n    {\n        \"__category__\": \"Cat1\",\n        \"name\": \"test2\"\n    }\n]"), &desc));
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+        PropertiesList* pUnknownProperties = desc.getUnknownProperties();
+        CHECK(pUnknownProperties);
+
+        Variant* pUnknownValue = pUnknownProperties->get("Cat3", "unknown");
+
+        CHECK(pUnknownValue);
+        CHECK_EQUAL(10, pUnknownValue->toInt());
+    }
+
+
+    TEST(DeserializationFromStringWithDelayedProperties)
+    {
+        MockDescribable2 desc;
+
+        PropertiesList* pDelayedProperties = new PropertiesList();
+
+        CHECK(fromJSON(std::string("[\n    {\n        \"__category__\": \"Cat2\",\n        \"index\": 100\n    },\n    {\n        \"__category__\": \"Cat1\",\n        \"name\": \"test2\",\n        \"delayed\": \"unused\"\n    }\n]"), &desc, pDelayedProperties));
+
+        CHECK_EQUAL("test2", desc.strName);
+        CHECK_EQUAL(100, desc.iIndex);
+
+        Variant* pDelayedValue = pDelayedProperties->get("Cat1", "delayed");
+
+        CHECK(pDelayedValue);
+        CHECK_EQUAL("unused", pDelayedValue->toString());
+
+        delete pDelayedProperties;
+    }
 }

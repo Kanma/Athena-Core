@@ -10,6 +10,7 @@
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Color.h>
+#include <Athena-Core/Log/LogManager.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/prettywriter.h>
 
@@ -17,8 +18,17 @@
 using namespace Athena::Data;
 using namespace Athena::Utils;
 using namespace Athena::Math;
+using namespace Athena::Log;
 using namespace rapidjson;
 
+
+/************************************** CONSTANTS ***************************************/
+
+/// Context used for logging
+static const char* __CONTEXT__ = "Serialization";
+
+
+/************************************** FUNCTIONS ***************************************/
 
 void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
                           Value::AllocatorType &allocator)
@@ -328,4 +338,26 @@ std::string Athena::Data::toJSON(Utils::Describable* pDescribable)
     document.Accept(writer);
 
     return s.GetString();
+}
+
+//-----------------------------------------------------------------------
+
+bool Athena::Data::fromJSON(const std::string& json_describable,
+                            Utils::Describable* pDescribable,
+                            PropertiesList* pDelayedProperties)
+{
+    // Assertions
+    assert(pDescribable);
+
+    // Convert to a JSON representation
+    Document document;
+	if (document.Parse<0>(json_describable.c_str()).HasParseError())
+    {
+        ATHENA_LOG_ERROR(document.GetParseError());
+        return false;
+    }
+
+    fromJSON(document, pDescribable, pDelayedProperties);
+
+    return true;
 }

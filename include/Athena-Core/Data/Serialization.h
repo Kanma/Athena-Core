@@ -56,6 +56,10 @@ namespace Data {
     ///
     /// @param json_describable     The rapidjson value
     /// @retval pDescribable        The describable
+    /// @retval pDelayedProperties  If provided, the properties that aren't usable yet
+    ///                             (because, for example, another object which isn't
+    ///                             already created is needed) are put into that list by
+    ///                             the describable
     //------------------------------------------------------------------------------------
     ATHENA_CORE_SYMBOL void fromJSON(const rapidjson::Value& json_describable,
                                      Utils::Describable* pDescribable,
@@ -68,6 +72,20 @@ namespace Data {
     //------------------------------------------------------------------------------------
     ATHENA_CORE_SYMBOL std::string toJSON(Utils::Describable* pDescribable);
 
+
+    //------------------------------------------------------------------------------------
+    /// @brief Returns the Describable object represented by a JSON string
+    ///
+    /// @param  json_describable    The JSON string
+    /// @retval pDescribable        The describable
+    /// @retval pDelayedProperties  If provided, the properties that aren't usable yet
+    ///                             (because, for example, another object which isn't
+    ///                             already created is needed) are put into that list by
+    ///                             the describable
+    //------------------------------------------------------------------------------------
+    ATHENA_CORE_SYMBOL bool fromJSON(const std::string& json_describable,
+                                     Utils::Describable* pDescribable,
+                                     Utils::PropertiesList* pDelayedProperties = 0);
 }
 }
 
