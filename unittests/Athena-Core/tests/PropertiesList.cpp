@@ -102,6 +102,33 @@ SUITE(PropertiesListTests)
     }
 
 
+    TEST(RemoveValueWithCategory)
+    {
+        PropertiesList list;
+        Variant* pValue = new Variant("test");
+
+        list.set("TestCat", "string", pValue);
+        list.remove("TestCat", "string");
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(0, list.nbProperties("TestCat"));
+        CHECK_EQUAL(0, list.nbTotalProperties());
+    }
+
+
+    TEST(RemoveValueWithoutCategory)
+    {
+        PropertiesList list;
+        Variant* pValue = new Variant("test");
+
+        list.set("string", pValue);
+        list.remove("string");
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(0, list.nbTotalProperties());
+    }
+
+
     TEST(SelectCategories)
     {
         PropertiesList list;
@@ -131,6 +158,20 @@ SUITE(PropertiesListTests)
         CHECK_EQUAL("Cat3", category.strName);
 
         CHECK(!iter.hasMoreElements());
+    }
+
+
+    TEST(RemoveEmptyCategories)
+    {
+        PropertiesList list;
+
+        list.selectCategory("Cat1");
+        list.selectCategory("Cat2");
+
+        list.removeEmptyCategories();
+
+        CHECK_EQUAL(0, list.nbCategories());
+        CHECK_EQUAL(0, list.nbTotalProperties());
     }
 
 

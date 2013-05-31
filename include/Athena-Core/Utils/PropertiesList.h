@@ -111,6 +111,26 @@ public:
     Variant* get(const std::string& strName);
 
     //-----------------------------------------------------------------------------------
+    /// @brief  Remove a value from the list
+    ///
+    /// @param  strCategory     Name of the category
+    /// @param  strName         Name of the value
+    //-----------------------------------------------------------------------------------
+    void remove(const std::string& strCategory, const std::string& strName);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Remove a value from the list, in the selected category
+    ///
+    /// @param  strName     Name of the value
+    //-----------------------------------------------------------------------------------
+    void remove(const std::string& strName);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Remove all the empty categories from the list
+    //-----------------------------------------------------------------------------------
+    void removeEmptyCategories();
+
+    //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the categories
     //-----------------------------------------------------------------------------------
     tCategoriesIterator getCategoriesIterator();

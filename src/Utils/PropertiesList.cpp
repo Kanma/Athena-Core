@@ -49,7 +49,6 @@ void PropertiesList::selectCategory(const std::string& strCategory, bool bInsert
     selectCategory(strCategory, bInsertAtEnd ? m_categories.end() : m_categories.begin());
 }
 
-
 //-----------------------------------------------------------------------
 
 void PropertiesList::selectCategory(const std::string& strCategory, tCategoriesList::iterator position)
@@ -162,6 +161,79 @@ Variant* PropertiesList::get(const std::string& strCategory, const std::string& 
 
     // Not found
     return 0;
+}
+
+//-----------------------------------------------------------------------
+
+void PropertiesList::remove(const std::string& strCategory, const std::string& strName)
+{
+    // Assertions
+    assert(!strCategory.empty());
+    assert(!strName.empty());
+
+    tPropertiesList::iterator iterProp, iterPropEnd;
+
+    // Search the category
+    tCategoriesIterator iter = getCategoriesIterator();
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strCategory)
+        {
+            tCategory* pCategory = iter.peekNextPtr();
+            
+            for (iterProp = pCategory->values.begin(), iterPropEnd = pCategory->values.end();
+                 iterProp != iterPropEnd; ++iterProp)
+            {
+                if (iterProp->strName == strName)
+                {
+                    pCategory->values.erase(iterProp);
+                    break;
+                }
+            }
+
+            return;
+        }
+
+        iter.moveNext();
+    }
+}
+
+//-----------------------------------------------------------------------
+
+void PropertiesList::remove(const std::string& strName)
+{
+    // Assertions
+    assert(m_selectedCategory != m_categories.end());
+    assert(!strName.empty());
+
+    tPropertiesList::iterator iterProp, iterPropEnd;
+
+    // Search the property
+    for (iterProp = m_selectedCategory->values.begin(), iterPropEnd = m_selectedCategory->values.end();
+         iterProp != iterPropEnd; ++iterProp)
+    {
+        if (iterProp->strName == strName)
+        {
+            m_selectedCategory->values.erase(iterProp);
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+
+void PropertiesList::removeEmptyCategories()
+{
+    tCategoriesList::iterator iter, current, iterEnd;
+
+    for (iter = m_categories.begin(), iterEnd = m_categories.end(); iter != iterEnd; )
+    {
+        current = iter;
+        ++iter;
+        
+        if (current->values.empty())
+            m_categories.erase(current);
+    }
 }
 
 //-----------------------------------------------------------------------
