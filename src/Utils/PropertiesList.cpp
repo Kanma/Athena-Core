@@ -230,3 +230,40 @@ void PropertiesList::append(PropertiesList* pList, bool bAtEnd)
         iter.moveNext();
     }
 }
+
+//-----------------------------------------------------------------------
+
+unsigned int PropertiesList::nbProperties(const std::string& strCategory)
+{
+    assert(!strCategory.empty());
+
+    // Search the category
+    PropertiesList::tCategoriesIterator iter = getCategoriesIterator();
+    while (iter.hasMoreElements())
+    {
+        if (iter.peekNextPtr()->strName == strCategory)
+            return iter.peekNextPtr()->values.size();
+
+        iter.moveNext();
+    }
+
+    // Not found
+    return 0;
+}
+
+//-----------------------------------------------------------------------
+
+unsigned int PropertiesList::nbTotalProperties()
+{
+    unsigned int nb = 0;
+
+    // Iterate through the categories
+    PropertiesList::tCategoriesIterator iter = getCategoriesIterator();
+    while (iter.hasMoreElements())
+    {
+        nb += iter.peekNextPtr()->values.size();
+        iter.moveNext();
+    }
+
+    return nb;
+}

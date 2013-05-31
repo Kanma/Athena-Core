@@ -112,22 +112,16 @@ public:
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the categories
-    ///
-    /// @return The iterator
     //-----------------------------------------------------------------------------------
     tCategoriesIterator getCategoriesIterator();
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of a category
-    ///
-    /// @return The iterator
     //-----------------------------------------------------------------------------------
     tPropertiesIterator getPropertiesIterator(const std::string& strCategory);
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of the selected category
-    ///
-    /// @return The iterator
     //-----------------------------------------------------------------------------------
     tPropertiesIterator getPropertiesIterator();
 
@@ -138,6 +132,24 @@ public:
     /// @param  bAtEnd  'true' to append at the end, 'false' for the beginning
     //-----------------------------------------------------------------------------------
     void append(PropertiesList* pList, bool bAtEnd = true);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the number of categories
+    //-----------------------------------------------------------------------------------
+    inline unsigned int nbCategories() const
+    {
+        return m_categories.size();
+    }
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the number of properties in the specified category
+    //-----------------------------------------------------------------------------------
+    unsigned int nbProperties(const std::string& strCategory);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the total number of properties in the list
+    //-----------------------------------------------------------------------------------
+    unsigned int nbTotalProperties();
 
 private:
     void selectCategory(const std::string& strCategory, tCategoriesList::iterator position);
