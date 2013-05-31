@@ -17,20 +17,20 @@ set(HEADERS Utils.h
 # List the source files
 set(SRCS main.cpp
          Utils.cpp
-         tests/ConfigFile.cpp
-         tests/Describable.cpp
-         tests/FileDataStream.cpp
-         tests/Iterators.cpp
-         tests/LocationManager.cpp
-         tests/LogManager.cpp
-         tests/PropertiesList.cpp
-         tests/Signal.cpp
-         tests/SignalsList.cpp
-         tests/SignalsUtils.cpp
-         tests/StringsMap.cpp
-         tests/StringUtils.cpp
-         tests/Timer.cpp
-         tests/Variant.cpp
+         tests/test_ConfigFile.cpp
+         tests/test_Describable.cpp
+         tests/test_FileDataStream.cpp
+         tests/test_Iterators.cpp
+         tests/test_LocationManager.cpp
+         tests/test_LogManager.cpp
+         tests/test_PropertiesList.cpp
+         tests/test_Signal.cpp
+         tests/test_SignalsList.cpp
+         tests/test_SignalsUtils.cpp
+         tests/test_StringsMap.cpp
+         tests/test_StringUtils.cpp
+         tests/test_Timer.cpp
+         tests/test_Variant.cpp
 )
 
 
@@ -59,7 +59,7 @@ if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
     add_dependencies(UnitTests-Athena-Core Athena-Core-Scripting-module Run-UnitTests-Athena-Scripting)
 endif()
 
-xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/data/\"")
+xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/Athena-Core/data/\"")
 
 
 # Run the unit tests
