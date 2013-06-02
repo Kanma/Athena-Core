@@ -186,6 +186,7 @@ void PropertiesList::remove(const std::string& strCategory, const std::string& s
             {
                 if (iterProp->strName == strName)
                 {
+                    delete iterProp->pValue;
                     pCategory->values.erase(iterProp);
                     break;
                 }
@@ -214,6 +215,7 @@ void PropertiesList::remove(const std::string& strName)
     {
         if (iterProp->strName == strName)
         {
+            delete iterProp->pValue;
             m_selectedCategory->values.erase(iterProp);
             break;
         }
