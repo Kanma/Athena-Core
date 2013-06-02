@@ -111,23 +111,37 @@ public:
     Variant* get(const std::string& strName);
 
     //-----------------------------------------------------------------------------------
-    /// @brief  Returns an iterator over the categories
+    /// @brief  Remove a value from the list
     ///
-    /// @return The iterator
+    /// @param  strCategory     Name of the category
+    /// @param  strName         Name of the value
+    //-----------------------------------------------------------------------------------
+    void remove(const std::string& strCategory, const std::string& strName);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Remove a value from the list, in the selected category
+    ///
+    /// @param  strName     Name of the value
+    //-----------------------------------------------------------------------------------
+    void remove(const std::string& strName);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Remove all the empty categories from the list
+    //-----------------------------------------------------------------------------------
+    void removeEmptyCategories();
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns an iterator over the categories
     //-----------------------------------------------------------------------------------
     tCategoriesIterator getCategoriesIterator();
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of a category
-    ///
-    /// @return The iterator
     //-----------------------------------------------------------------------------------
     tPropertiesIterator getPropertiesIterator(const std::string& strCategory);
 
     //-----------------------------------------------------------------------------------
     /// @brief  Returns an iterator over the properties of the selected category
-    ///
-    /// @return The iterator
     //-----------------------------------------------------------------------------------
     tPropertiesIterator getPropertiesIterator();
 
@@ -138,6 +152,24 @@ public:
     /// @param  bAtEnd  'true' to append at the end, 'false' for the beginning
     //-----------------------------------------------------------------------------------
     void append(PropertiesList* pList, bool bAtEnd = true);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the number of categories
+    //-----------------------------------------------------------------------------------
+    inline unsigned int nbCategories() const
+    {
+        return m_categories.size();
+    }
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the number of properties in the specified category
+    //-----------------------------------------------------------------------------------
+    unsigned int nbProperties(const std::string& strCategory);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the total number of properties in the list
+    //-----------------------------------------------------------------------------------
+    unsigned int nbTotalProperties();
 
 private:
     void selectCategory(const std::string& strCategory, tCategoriesList::iterator position);

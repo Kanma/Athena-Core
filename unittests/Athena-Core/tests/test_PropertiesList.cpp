@@ -8,12 +8,25 @@ using namespace Athena::Utils;
 
 SUITE(PropertiesListTests)
 {
+    TEST(EmptyList)
+    {
+        PropertiesList list;
+        CHECK_EQUAL(0, list.nbCategories());
+        CHECK_EQUAL(0, list.nbProperties("Unknown"));
+        CHECK_EQUAL(0, list.nbTotalProperties());
+    }
+
+
     TEST(SetGetValueWithCategory)
     {
         PropertiesList list;
         Variant* pValue = new Variant("test");
 
         list.set("TestCat", "string", pValue);
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(1, list.nbProperties("TestCat"));
+        CHECK_EQUAL(1, list.nbTotalProperties());
 
         Variant* pTest = list.get("TestCat", "string");
         CHECK(pTest);
@@ -28,6 +41,9 @@ SUITE(PropertiesListTests)
 
         list.set("string", pValue);
 
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(1, list.nbTotalProperties());
+
         Variant* pTest = list.get("string");
         CHECK(pTest);
         CHECK_EQUAL(pValue->toString(), pTest->toString());
@@ -40,6 +56,10 @@ SUITE(PropertiesListTests)
         Variant* pValue = new Variant("test");
 
         list.set("string", pValue);
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(1, list.nbProperties("DEFAULT"));
+        CHECK_EQUAL(1, list.nbTotalProperties());
 
         Variant* pTest = list.get("DEFAULT", "string");
         CHECK(pTest);
@@ -72,9 +92,40 @@ SUITE(PropertiesListTests)
 
         list.set("TestCat", "string", pValue);
 
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(1, list.nbProperties("TestCat"));
+        CHECK_EQUAL(1, list.nbTotalProperties());
+
         Variant* pTest = list.get("string");
         CHECK(pTest);
         CHECK_EQUAL(pValue->toString(), pTest->toString());
+    }
+
+
+    TEST(RemoveValueWithCategory)
+    {
+        PropertiesList list;
+        Variant* pValue = new Variant("test");
+
+        list.set("TestCat", "string", pValue);
+        list.remove("TestCat", "string");
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(0, list.nbProperties("TestCat"));
+        CHECK_EQUAL(0, list.nbTotalProperties());
+    }
+
+
+    TEST(RemoveValueWithoutCategory)
+    {
+        PropertiesList list;
+        Variant* pValue = new Variant("test");
+
+        list.set("string", pValue);
+        list.remove("string");
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(0, list.nbTotalProperties());
     }
 
 
@@ -85,6 +136,12 @@ SUITE(PropertiesListTests)
         list.selectCategory("Cat1");
         list.selectCategory("Cat2");
         list.selectCategory("Cat3");
+
+        CHECK_EQUAL(3, list.nbCategories());
+        CHECK_EQUAL(0, list.nbProperties("Cat1"));
+        CHECK_EQUAL(0, list.nbProperties("Cat2"));
+        CHECK_EQUAL(0, list.nbProperties("Cat3"));
+        CHECK_EQUAL(0, list.nbTotalProperties());
 
         PropertiesList::tCategoriesIterator iter = list.getCategoriesIterator();
 
@@ -101,6 +158,20 @@ SUITE(PropertiesListTests)
         CHECK_EQUAL("Cat3", category.strName);
 
         CHECK(!iter.hasMoreElements());
+    }
+
+
+    TEST(RemoveEmptyCategories)
+    {
+        PropertiesList list;
+
+        list.selectCategory("Cat1");
+        list.selectCategory("Cat2");
+
+        list.removeEmptyCategories();
+
+        CHECK_EQUAL(0, list.nbCategories());
+        CHECK_EQUAL(0, list.nbTotalProperties());
     }
 
 
@@ -145,6 +216,10 @@ SUITE(PropertiesListTests)
         list.set("string", new Variant("test"));
         list.set("int", new Variant(10));
         list.set("bool", new Variant(true));
+
+        CHECK_EQUAL(1, list.nbCategories());
+        CHECK_EQUAL(3, list.nbProperties("Cat"));
+        CHECK_EQUAL(3, list.nbTotalProperties());
 
         PropertiesList::tPropertiesIterator iter = list.getPropertiesIterator("Cat");
 
@@ -192,6 +267,11 @@ SUITE(PropertiesListTests)
 
         list.selectCategory("Empty");
         list.selectCategory("Cat");
+
+        CHECK_EQUAL(2, list.nbCategories());
+        CHECK_EQUAL(0, list.nbProperties("Empty"));
+        CHECK_EQUAL(3, list.nbProperties("Cat"));
+        CHECK_EQUAL(3, list.nbTotalProperties());
 
 
         PropertiesList::tPropertiesIterator iter = list.getPropertiesIterator();

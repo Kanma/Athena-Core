@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                                 Athena-Core                                  *
-*                                Version 1.2.0                                 *
+*                                Version 1.2.1                                 *
 *                       http://github.com/Kanma/Athena-Core                    *
 *                                                                              *
 ********************************************************************************
@@ -32,6 +32,7 @@ Athena-Core requires the following dependencies:
    - XMake
    - Athena-Math
    - UnitTest++
+   - rapidjson
 
 They are provided as GIT submodules of this repository and will be compiled
 automatically during the compilation of Athena-Core.
