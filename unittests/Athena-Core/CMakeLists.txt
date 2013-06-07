@@ -21,6 +21,7 @@ set(SRCS main.cpp
          tests/test_Iterators.cpp
          tests/test_LocationManager.cpp
          tests/test_LogManager.cpp
+         tests/test_Path.cpp
          tests/test_PropertiesList.cpp
          tests/test_Signal.cpp
          tests/test_SignalsList.cpp

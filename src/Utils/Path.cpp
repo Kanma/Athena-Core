@@ -18,6 +18,8 @@ using namespace Athena::Utils;
 using namespace std;
 
 
+/*********************************** STATIC METHODS *************************************/
+
 std::string Path::getCurrentWorkingDirectory()
 {
     std::string currentWorkingDirectory = "";
@@ -33,4 +35,20 @@ std::string Path::getCurrentWorkingDirectory()
     currentWorkingDirectory = currentPath;
 
     return currentWorkingDirectory;
+}
+
+//-----------------------------------------------------------------------
+
+bool Path::isAbsolute(const std::string& strPath)
+{
+    // Assertions
+    assert(!strPath.empty());
+
+#if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
+    size_t drive_pos = strPath.find(":");
+    return ((drive_pos != string::npos) &&
+            (drive_pos < min(strPath.find("/"), strPath.find("\\"))));
+#else
+    return (strPath[0] == '/');
+#endif
 }
