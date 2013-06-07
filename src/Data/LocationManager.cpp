@@ -130,3 +130,20 @@ LocationManager::tLocationsList LocationManager::locations(const std::string& st
 
     return group->second;
 }
+
+//-----------------------------------------------------------------------
+
+LocationManager::tGroupsList LocationManager::groups() const
+{
+    // Assertions
+    assert(getSingletonPtr());
+
+    tGroupsList list;
+
+    // Ensure that the group exists
+    tGroupsNativeConstIterator iter, iterEnd;
+    for (iter = m_groups.begin(), iterEnd = m_groups.end(); iter != iterEnd; ++iter)
+        list.push_back(iter->first);
+
+    return list;
+}

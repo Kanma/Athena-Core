@@ -35,6 +35,38 @@ struct LocationEnvironment
 };
 
 
+SUITE(LocationManager_Groups)
+{
+    TEST_FIXTURE(LocationEnvironment, OneGroup)
+    {
+        pLocationManager->addLocation("group1", ATHENA_CORE_UNITTESTS_DATA_PATH);
+
+        CHECK_EQUAL(1, pLocationManager->nbGroups());
+
+        LocationManager::tGroupsList groups = pLocationManager->groups();
+
+        CHECK_EQUAL(1, groups.size());
+        CHECK_EQUAL("group1", groups[0]);
+    }
+
+
+    TEST_FIXTURE(LocationEnvironment, TwoGroups)
+    {
+        pLocationManager->addLocation("group1", ATHENA_CORE_UNITTESTS_DATA_PATH);
+        pLocationManager->addLocation("group2", ATHENA_CORE_UNITTESTS_DATA_PATH);
+
+        CHECK_EQUAL(2, pLocationManager->nbGroups());
+
+        LocationManager::tGroupsList groups = pLocationManager->groups();
+
+        CHECK_EQUAL(2, groups.size());
+        CHECK((groups[0] == "group1") || (groups[0] == "group2"));
+        CHECK((groups[1] == "group1") || (groups[1] == "group2"));
+        CHECK(groups[0] != groups[1]);
+    }
+}
+
+
 SUITE(LocationManager_Locations)
 {
     TEST_FIXTURE(LocationEnvironment, UnknownGroup)

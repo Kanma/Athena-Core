@@ -27,6 +27,8 @@ public:
     typedef Utils::VectorIterator<tLocationsList>   tLocationsIterator;
     typedef tLocationsList::iterator                tLocationsNativeIterator;
 
+    typedef std::vector<std::string>                tGroupsList;
+
 private:
     typedef std::map<std::string, tLocationsList>   tGroupsMap;
     typedef Utils::MapIterator<tGroupsMap>          tGroupsIterator;
@@ -91,6 +93,19 @@ public:
     /// @param  strGroup        The group
     //------------------------------------------------------------------------------------
     tLocationsList locations(const std::string& strGroup) const;
+
+    //------------------------------------------------------------------------------------
+    /// @brief  Returns the number of groups
+    //------------------------------------------------------------------------------------
+    inline size_t nbGroups() const
+    {
+        return m_groups.size();
+    }
+
+    //------------------------------------------------------------------------------------
+    /// @brief  Returns a list of the group names
+    //------------------------------------------------------------------------------------
+    tGroupsList groups() const;
 
 
     //_____ Attributes __________
