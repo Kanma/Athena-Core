@@ -1,6 +1,7 @@
 #include <UnitTest++.h>
 #include <Athena-Core/Data/LocationManager.h>
 #include <Athena-Core/Data/DataStream.h>
+#include <Athena-Core/Data/Serialization.h>
 
 using namespace Athena;
 using namespace Athena::Data;
@@ -33,6 +34,38 @@ struct LocationEnvironment
 
     LocationManager* pLocationManager;
 };
+
+
+SUITE(LocationManager_Groups)
+{
+    TEST_FIXTURE(LocationEnvironment, OneGroup)
+    {
+        pLocationManager->addLocation("group1", ATHENA_CORE_UNITTESTS_DATA_PATH);
+
+        CHECK_EQUAL(1, pLocationManager->nbGroups());
+
+        LocationManager::tGroupsList groups = pLocationManager->groups();
+
+        CHECK_EQUAL(1, groups.size());
+        CHECK_EQUAL("group1", groups[0]);
+    }
+
+
+    TEST_FIXTURE(LocationEnvironment, TwoGroups)
+    {
+        pLocationManager->addLocation("group1", ATHENA_CORE_UNITTESTS_DATA_PATH);
+        pLocationManager->addLocation("group2", ATHENA_CORE_UNITTESTS_DATA_PATH);
+
+        CHECK_EQUAL(2, pLocationManager->nbGroups());
+
+        LocationManager::tGroupsList groups = pLocationManager->groups();
+
+        CHECK_EQUAL(2, groups.size());
+        CHECK((groups[0] == "group1") || (groups[0] == "group2"));
+        CHECK((groups[1] == "group1") || (groups[1] == "group2"));
+        CHECK(groups[0] != groups[1]);
+    }
+}
 
 
 SUITE(LocationManager_Locations)
@@ -83,6 +116,27 @@ SUITE(LocationManager_Locations)
 
         CHECK_EQUAL(1, locations.size());
         CHECK_EQUAL(ATHENA_CORE_UNITTESTS_DATA_PATH + string(".."), locations[0]);
+    }
+
+
+    TEST_FIXTURE(LocationEnvironment, FromJSONFile)
+    {
+        rapidjson::Document document;
+        loadJSONFile(ATHENA_CORE_UNITTESTS_DATA_PATH "locations.json", document);
+
+        pLocationManager->addLocations(document);
+
+        LocationManager::tLocationsList locations = pLocationManager->locations("group1");
+
+        CHECK_EQUAL(2, locations.size());
+        CHECK_EQUAL("/location1", locations[0]);
+        CHECK_EQUAL("/location2", locations[1]);
+
+        locations = pLocationManager->locations("group2");
+
+        CHECK_EQUAL(2, locations.size());
+        CHECK_EQUAL("/location3", locations[0]);
+        CHECK_EQUAL("/location4", locations[1]);
     }
 }
 

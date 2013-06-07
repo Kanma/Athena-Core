@@ -5,7 +5,6 @@ configure_file(${ATHENA_CORE_SOURCE_DIR}/src/module.cpp.in
 # List the header files
 set(HEADERS ${XMAKE_BINARY_DIR}/include/Athena-Core/Config.h
             ../include/Athena-Core/Prerequisites.h
-            ../include/Athena-Core/Data/ConfigFile.h
             ../include/Athena-Core/Data/DataStream.h
             ../include/Athena-Core/Data/FileDataStream.h
             ../include/Athena-Core/Data/GenericDataStream.h
@@ -34,7 +33,6 @@ set(HEADERS ${XMAKE_BINARY_DIR}/include/Athena-Core/Config.h
 
 # List the source files
 set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Core/module.cpp
-         Data/ConfigFile.cpp
          Data/DataStream.cpp
          Data/FileDataStream.cpp
          Data/LocationManager.cpp

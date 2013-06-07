@@ -9,6 +9,8 @@
 
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Utils/Iterators.h>
+#include <rapidjson/document.h>
+#include <rapidjson/rapidjson.h>
 
 
 namespace Athena {
@@ -26,6 +28,8 @@ public:
     typedef std::vector<std::string>                tLocationsList;
     typedef Utils::VectorIterator<tLocationsList>   tLocationsIterator;
     typedef tLocationsList::iterator                tLocationsNativeIterator;
+
+    typedef std::vector<std::string>                tGroupsList;
 
 private:
     typedef std::map<std::string, tLocationsList>   tGroupsMap;
@@ -62,6 +66,17 @@ public:
     //_____ Methods __________
 public:
     //------------------------------------------------------------------------------------
+    /// @brief  Add the groups and locations defined by a JSON object
+    ///
+    /// @param  json_locations  The JSON declaration. The format is:
+    ///                         {
+    ///                             "group1": [ "location1", "location2" ],
+    ///                             "group2": [ "location3", "location4" ]
+    ///                         }
+    //------------------------------------------------------------------------------------
+    void addLocations(const rapidjson::Value& json_locations);
+
+    //------------------------------------------------------------------------------------
     /// @brief  Add a location
     ///
     /// @param  strGroup        The group to which the location is added
@@ -91,6 +106,19 @@ public:
     /// @param  strGroup        The group
     //------------------------------------------------------------------------------------
     tLocationsList locations(const std::string& strGroup) const;
+
+    //------------------------------------------------------------------------------------
+    /// @brief  Returns the number of groups
+    //------------------------------------------------------------------------------------
+    inline size_t nbGroups() const
+    {
+        return m_groups.size();
+    }
+
+    //------------------------------------------------------------------------------------
+    /// @brief  Returns a list of the group names
+    //------------------------------------------------------------------------------------
+    tGroupsList groups() const;
 
 
     //_____ Attributes __________

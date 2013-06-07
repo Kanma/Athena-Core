@@ -5,6 +5,7 @@
 */
 
 #include <Athena-Core/Data/Serialization.h>
+#include <Athena-Core/Data/FileDataStream.h>
 #include <Athena-Core/Utils/Describable.h>
 #include <Athena-Core/Utils/PropertiesList.h>
 #include <Athena-Math/Vector3.h>
@@ -358,6 +359,45 @@ bool Athena::Data::fromJSON(const std::string& json_describable,
     }
 
     fromJSON(document, pDescribable, pDelayedProperties);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+
+bool Athena::Data::loadJSONFile(const std::string& strFileName,
+                                rapidjson::Document &document)
+{
+    // Assertions
+    assert(!strFileName.empty());
+
+    // Read the content of the file
+    FileDataStream stream(strFileName, DataStream::READ);
+    if (!stream.isOpen())
+    {
+        ATHENA_LOG_ERROR("File not found: " + strFileName);
+        return false;
+    }
+
+    std::string content;
+
+    char buffer[1025];
+
+    while (!stream.eof())
+    {
+        size_t count = stream.read(buffer, 1024);
+        buffer[count] = 0;
+        content += buffer;
+    }
+
+    stream.close();
+
+    // Convert to a JSON representation
+	if (document.Parse<0>(content.c_str()).HasParseError())
+    {
+        ATHENA_LOG_ERROR(document.GetParseError());
+        return false;
+    }
 
     return true;
 }

@@ -6,12 +6,14 @@
 
 #include <Athena-Core/Data/LocationManager.h>
 #include <Athena-Core/Data/FileDataStream.h>
+#include <Athena-Core/Log/LogManager.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
 using namespace Athena::Data;
 using namespace Athena::Log;
 using namespace Athena::Utils;
+using namespace rapidjson;
 using namespace std;
 
 
@@ -52,6 +54,46 @@ LocationManager* LocationManager::getSingletonPtr()
 
 /*************************************** METHODS ****************************************/
 
+void LocationManager::addLocations(const rapidjson::Value& json_locations)
+{
+    // Assertions
+    assert(getSingletonPtr());
+
+    if (!json_locations.IsObject())
+    {
+        ATHENA_LOG_ERROR("Invalid locations declaration (must be an object)");
+        return;
+    }
+
+    // Iterate through the declared groups
+    Value::ConstMemberIterator iterGroup, iterGroupEnd;
+    for (iterGroup = json_locations.MemberBegin(), iterGroupEnd = json_locations.MemberEnd();
+         iterGroup != iterGroupEnd; ++iterGroup)
+    {
+        if (!iterGroup->value.IsArray())
+        {
+            ATHENA_LOG_ERROR(string("Invalid group declaration (must be an array of locations): ") + iterGroup->name.GetString());
+            continue;
+        }
+
+        // Iterate through the declared location
+        Value::ConstValueIterator iterLocation, iterLocationEnd;
+        for (iterLocation = iterGroup->value.Begin(), iterLocationEnd = iterGroup->value.End();
+             iterLocation != iterLocationEnd; ++iterLocation)
+        {
+            if (!iterLocation->IsString())
+            {
+                ATHENA_LOG_ERROR(string("Invalid location (must be a string) in group: ") + iterGroup->name.GetString());
+                continue;
+            }
+
+            addLocation(iterGroup->name.GetString(), iterLocation->GetString());
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+
 void LocationManager::addLocation(const std::string& strGroup, const std::string& strLocation)
 {
     // Assertions
@@ -65,6 +107,8 @@ void LocationManager::addLocation(const std::string& strGroup, const std::string
 
     // Add the location to the group
     m_groups[strGroup].push_back(strLocation);
+
+    ATHENA_LOG_COMMENT("Location '" + strLocation + "' added to group '" + strGroup + "'");
 }
 
 //-----------------------------------------------------------------------
@@ -129,4 +173,21 @@ LocationManager::tLocationsList LocationManager::locations(const std::string& st
         return tLocationsList();
 
     return group->second;
+}
+
+//-----------------------------------------------------------------------
+
+LocationManager::tGroupsList LocationManager::groups() const
+{
+    // Assertions
+    assert(getSingletonPtr());
+
+    tGroupsList list;
+
+    // Ensure that the group exists
+    tGroupsNativeConstIterator iter, iterEnd;
+    for (iter = m_groups.begin(), iterEnd = m_groups.end(); iter != iterEnd; ++iter)
+        list.push_back(iter->first);
+
+    return list;
 }
