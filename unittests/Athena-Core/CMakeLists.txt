@@ -8,15 +8,13 @@ endif()
 
 
 # List the header files
-set(HEADERS Utils.h
-            mocks/Describable.h
+set(HEADERS mocks/Describable.h
             mocks/LogListener.h
 )
 
 
 # List the source files
 set(SRCS main.cpp
-         Utils.cpp
          tests/test_ConfigFile.cpp
          tests/test_Describable.cpp
          tests/test_FileDataStream.cpp
@@ -59,7 +57,11 @@ if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
     add_dependencies(UnitTests-Athena-Core Athena-Core-Scripting-module Run-UnitTests-Athena-Scripting)
 endif()
 
+
+file(MAKE_DIRECTORY "${XMAKE_BINARY_DIR}/generated/unittests/Athena-Core/")
+
 xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_DATA_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/Athena-Core/data/\"")
+xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_GENERATED_PATH=\"${XMAKE_BINARY_DIR}/generated/unittests/Athena-Core/\"")
 
 
 # Run the unit tests

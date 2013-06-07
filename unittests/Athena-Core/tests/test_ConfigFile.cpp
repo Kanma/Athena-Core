@@ -4,7 +4,6 @@
 #include <Athena-Core/Utils/StringConverter.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Athena-Core/Log/XMLLogListener.h>
-#include "../Utils.h"
 
 using namespace Athena;
 using namespace Athena::Data;
@@ -17,7 +16,7 @@ struct Loader
     Loader()
     : bLoaded(false)
     {
-        bLoaded = cfgFile.load(getFilePath("TestConfigFile.cfg"));
+        bLoaded = cfgFile.load(ATHENA_CORE_UNITTESTS_DATA_PATH "TestConfigFile.cfg");
     }
 
     ~Loader()
@@ -46,12 +45,12 @@ struct General
 
     bool saveAndLoad()
     {
-        if (!cfgFile.save(getFilePath("TestConfigFile2.cfg")))
+        if (!cfgFile.save(ATHENA_CORE_UNITTESTS_GENERATED_PATH "TestConfigFile.cfg"))
             return false;
 
         cfgFile.unload();
 
-        if (!cfgFile.load(getFilePath("TestConfigFile2.cfg")))
+        if (!cfgFile.load(ATHENA_CORE_UNITTESTS_GENERATED_PATH "TestConfigFile.cfg"))
             return false;
 
         return true;
@@ -512,7 +511,7 @@ SUITE(ConfigFile_Others)
     {
         ConfigFile cfgFile;
 
-        CHECK(cfgFile.load(getFilePath("TestConfigFile.cfg")));
+        CHECK(cfgFile.load(ATHENA_CORE_UNITTESTS_DATA_PATH "TestConfigFile.cfg"));
 
         unsigned int uiNbSections = cfgFile.getNbSections();
 
@@ -533,7 +532,7 @@ SUITE(ConfigFile_Others)
 
         ConfigFile cfgFile;
 
-        FileDataStream stream(getFilePath("TestConfigFile.cfg"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "TestConfigFile.cfg");
 
         CHECK(cfgFile.load(&stream));
         CHECK(!cfgFile.reload());

@@ -1,6 +1,5 @@
 #include <UnitTest++.h>
 #include <Athena-Core/Data/FileDataStream.h>
-#include "../Utils.h"
 
 using namespace Athena::Data;
 using namespace std;
@@ -10,7 +9,7 @@ SUITE(FileDataStreamTests)
 {
     TEST(OpenExistingFile)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
         CHECK(stream.isOpen());
         CHECK(!stream.eof());
     }
@@ -25,7 +24,7 @@ SUITE(FileDataStreamTests)
 
     TEST(GetLine)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         string s = stream.getLine();
         CHECK_EQUAL("Line 1", s);
@@ -48,7 +47,7 @@ SUITE(FileDataStreamTests)
 
     TEST(ReadLine)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         char buf[31];
 
@@ -70,7 +69,7 @@ SUITE(FileDataStreamTests)
 
     TEST(SkipLine)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         size_t c = stream.skipLine();
         CHECK_EQUAL(7, c);
@@ -88,7 +87,7 @@ SUITE(FileDataStreamTests)
 
     TEST(Read)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         char buf[31];
 
@@ -113,7 +112,7 @@ SUITE(FileDataStreamTests)
 
     TEST(Skip)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         char buf[31];
 
@@ -145,7 +144,7 @@ SUITE(FileDataStreamTests)
 
     TEST(Seek)
     {
-        FileDataStream stream(getFilePath("lines.txt"));
+        FileDataStream stream(ATHENA_CORE_UNITTESTS_DATA_PATH "lines.txt");
 
         char buf[31];
 
