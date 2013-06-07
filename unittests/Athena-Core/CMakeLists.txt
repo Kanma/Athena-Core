@@ -15,7 +15,6 @@ set(HEADERS mocks/Describable.h
 
 # List the source files
 set(SRCS main.cpp
-         tests/test_ConfigFile.cpp
          tests/test_Describable.cpp
          tests/test_FileDataStream.cpp
          tests/test_Iterators.cpp
