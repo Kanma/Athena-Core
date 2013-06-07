@@ -86,6 +86,16 @@ namespace Data {
     ATHENA_CORE_SYMBOL bool fromJSON(const std::string& json_describable,
                                      Utils::Describable* pDescribable,
                                      Utils::PropertiesList* pDelayedProperties = 0);
+
+
+    //------------------------------------------------------------------------------------
+    /// @brief Load and decode a JSON file
+    ///
+    /// @param  strFileName     Path to the file
+    /// @retval document        The resulting rapidjson document
+    //------------------------------------------------------------------------------------
+    ATHENA_CORE_SYMBOL bool loadJSONFile(const std::string& strFileName,
+                                         rapidjson::Document &document);
 }
 }
 
