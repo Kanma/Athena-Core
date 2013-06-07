@@ -13,7 +13,7 @@ set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 set(ATHENA_CORE_VERSION_MAJOR 1)
 set(ATHENA_CORE_VERSION_MINOR 3)
 set(ATHENA_CORE_VERSION_PATCH 0)
-set(ATHENA_CORE_VERSION_SUFFIX " (Dev)")
+set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
 ##########################################################################################
