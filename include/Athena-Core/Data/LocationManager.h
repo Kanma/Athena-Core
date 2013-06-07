@@ -9,6 +9,8 @@
 
 #include <Athena-Core/Prerequisites.h>
 #include <Athena-Core/Utils/Iterators.h>
+#include <rapidjson/document.h>
+#include <rapidjson/rapidjson.h>
 
 
 namespace Athena {
@@ -63,6 +65,17 @@ public:
 
     //_____ Methods __________
 public:
+    //------------------------------------------------------------------------------------
+    /// @brief  Add the groups and locations defined by a JSON object
+    ///
+    /// @param  json_locations  The JSON declaration. The format is:
+    ///                         {
+    ///                             "group1": [ "location1", "location2" ],
+    ///                             "group2": [ "location3", "location4" ]
+    ///                         }
+    //------------------------------------------------------------------------------------
+    void addLocations(const rapidjson::Value& json_locations);
+
     //------------------------------------------------------------------------------------
     /// @brief  Add a location
     ///

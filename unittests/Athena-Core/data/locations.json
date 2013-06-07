@@ -1,0 +1,10 @@
+{
+    "group1": [
+        "/location1",
+        "/location2"
+    ],
+    "group2": [
+        "/location3",
+        "/location4"
+    ]
+}
