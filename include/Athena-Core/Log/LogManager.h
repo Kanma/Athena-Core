@@ -92,22 +92,9 @@ public:
     /// @param  strFunction   The name of the function in which the call is made
     /// @param  uiLine        The line in the file in which the call is made
     //------------------------------------------------------------------------------------
-    inline static void Log(tMessageType type, const char* strContext,
-                           const std::string& strMessage, const char* strFileName,
-                           const char* strFunction, unsigned int uiLine)
-    {
-        if (ms_Singleton)
-        {
-            ms_Singleton->log(type, strContext, strMessage, strFileName,
-                              strFunction, uiLine);
-        }
-
-        // We want to be notified about errors (at least during development)
-        else if (type == LOG_ERROR)
-        {
-            std::cerr << "ERROR: " << strMessage.c_str() << std::endl;
-        }
-    }
+    static void Log(tMessageType type, const char* strContext,
+                    const std::string& strMessage, const char* strFileName,
+                    const char* strFunction, unsigned int uiLine);
 
 
     //_____ Internal types __________

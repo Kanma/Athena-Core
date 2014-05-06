@@ -150,6 +150,10 @@ void Athena::Data::toJSON(Utils::Variant* pVariant, rapidjson::Value &value,
 
             break;
         }
+
+        case Variant::NONE:
+            // Should not happen, but the compiler complain if not present
+            break;
     }
 }
 
@@ -226,6 +230,10 @@ void Athena::Data::fromJSON(const rapidjson::Value& value, Utils::Variant* pVari
 
             break;
         }
+
+        case rapidjson::kArrayType:
+            // Should not happen, but the compiler complain if not present
+            break;
     }
 }
 

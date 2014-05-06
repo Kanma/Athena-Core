@@ -22,7 +22,11 @@ using namespace std;
 /// Context used for logging
 static const char* __CONTEXT__ = "Location manager";
 
-template<> LocationManager* Singleton<LocationManager>::ms_Singleton = 0;
+namespace Athena {
+    namespace Utils {
+        template<> LocationManager* Athena::Utils::Singleton<LocationManager>::ms_Singleton = 0;
+    }
+}
 
 
 /****************************** CONSTRUCTION / DESTRUCTION ******************************/
