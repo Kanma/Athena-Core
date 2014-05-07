@@ -6,6 +6,7 @@
 
 #include <Athena-Core/Log/ConsoleLogListener.h>
 #include <Athena-Core/Log/LogManager.h>
+#include <string.h>
 
 using namespace Athena::Log;
 using namespace std;
