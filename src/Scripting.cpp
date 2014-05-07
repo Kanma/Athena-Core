@@ -66,6 +66,10 @@ Handle<Value> Athena::Utils::toJavaScript(Variant* pValue)
 
             return handle_scope.Close(obj);
         }
+
+        case Variant::NONE:
+            // Nothing to do, but the compiler complain if not present
+            break;
     }
 
     return Handle<Value>();
