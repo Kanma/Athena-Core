@@ -613,7 +613,7 @@ SUITE(VariantImplicitConversionsSuite)
 
     TEST(ValidConversionFromStringToRadian)
     {
-        Variant v("10.5f");
+        Variant v("10.5");
         CHECK(v.hasType(Variant::STRING));
         CHECK_CLOSE(10.5f, v.toRadian().valueRadians(), 0.0001f);
     }

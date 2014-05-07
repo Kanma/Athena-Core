@@ -18,7 +18,11 @@ using namespace std;
 /// Context used for logging
 static const char*    __CONTEXT__ = "Log manager";
 
-template<> LogManager* Singleton<LogManager>::ms_Singleton = 0;
+namespace Athena {
+    namespace Utils {
+        template<> LogManager* Singleton<LogManager>::ms_Singleton = 0;
+    }
+}
 
 
 /****************************** CONSTRUCTION / DESTRUCTION ******************************/
@@ -122,5 +126,24 @@ void LogManager::log(tMessageType type, const char* strContext, const std::strin
             iter.getNext().pListener->log(strTimestamp, type, strContext, strMessage,
                                           strFileName, strFunction, uiLine);
         }
+    }
+}
+
+//-----------------------------------------------------------------------
+
+void LogManager::Log(tMessageType type, const char* strContext,
+                     const std::string& strMessage, const char* strFileName,
+                     const char* strFunction, unsigned int uiLine)
+{
+    if (ms_Singleton)
+    {
+        ms_Singleton->log(type, strContext, strMessage, strFileName,
+                          strFunction, uiLine);
+    }
+
+    // We want to be notified about errors (at least during development)
+    else if (type == LOG_ERROR)
+    {
+        std::cerr << "ERROR: " << strMessage.c_str() << std::endl;
     }
 }

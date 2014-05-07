@@ -161,8 +161,9 @@ size_t DataStream::skipLine(const string& delim)
 template<typename T> DataStream& DataStream::operator>>(T& val)
 {
     if ((m_mode & READ) == 0)
-        return 0;
+        val = static_cast<T>(0);
+    else
+        read(static_cast<void*>(&val), sizeof(T));
 
-    read(static_cast<void*>(&val), sizeof(T));
     return *this;
 }

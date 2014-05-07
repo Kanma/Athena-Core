@@ -228,13 +228,14 @@ void PropertiesList::removeEmptyCategories()
 {
     tCategoriesList::iterator iter, current, iterEnd;
 
-    for (iter = m_categories.begin(), iterEnd = m_categories.end(); iter != iterEnd; )
+    for (int i = 0; i < m_categories.size(); )
     {
-        current = iter;
-        ++iter;
-        
-        if (current->values.empty())
-            m_categories.erase(current);
+        iter = m_categories.begin() + i;
+
+        if (iter->values.empty())
+            m_categories.erase(iter);
+        else
+            ++i;
     }
 }
 

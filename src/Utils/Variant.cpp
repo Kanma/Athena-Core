@@ -158,6 +158,19 @@ void Variant::clear()
                 }
                 delete static_cast<tFieldsMap*>(m_value._others);
                 break;
+
+            case NONE:
+            case INTEGER:
+            case SHORT:
+            case CHAR:
+            case UNSIGNED_INTEGER:
+            case UNSIGNED_SHORT:
+            case UNSIGNED_CHAR:
+            case FLOAT:
+            case DOUBLE:
+            case BOOLEAN:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
 
         memset(&m_value, 0, sizeof(m_value));
@@ -583,6 +596,12 @@ bool Variant::convertTo(tType type)
                 m_value._others = new Degree(a);
                 return true;
             }
+
+        case NONE:
+        case STRING:
+        case STRUCT:
+            // Nothing to do, but the compiler complain if not present
+            break;
         }
         break;
 
@@ -601,6 +620,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_int, float,             FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_int, double,            DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_int)
+
+            case NONE:
+            case INTEGER:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -619,6 +649,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_short, float,           FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_short, double,          DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_short)
+
+            case NONE:
+            case SHORT:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -637,6 +678,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_char, float,            FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_char, double,           DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_char)
+
+            case NONE:
+            case CHAR:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -655,6 +707,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_uint, float,            FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_uint, double,           DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_uint)
+
+            case NONE:
+            case UNSIGNED_INTEGER:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -673,6 +736,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_ushort, float,          FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_ushort, double,         DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_ushort)
+
+            case NONE:
+            case UNSIGNED_SHORT:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -691,6 +765,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_uchar, float,           FLOAT,              _float)
             DECLARE_CONVERSION_BY_CAST(_uchar, double,          DOUBLE,             _double)
             DECLARE_CONVERSION_TO_BOOLEAN(_uchar)
+
+            case NONE:
+            case UNSIGNED_CHAR:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -699,10 +784,10 @@ bool Variant::convertTo(tType type)
     case FLOAT:
         switch (type)
         {
-        case BOOLEAN:
-            m_type = type;
-            m_value._bool = !MathUtils::RealEqual(m_value._float, 0.0f);
-            return true;
+            case BOOLEAN:
+                m_type = type;
+                m_value._bool = !MathUtils::RealEqual(m_value._float, 0.0f);
+                return true;
 
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_float, Real)
 
@@ -713,6 +798,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_float, unsigned short,  UNSIGNED_SHORT,     _ushort)
             DECLARE_CONVERSION_BY_CAST(_float, unsigned char,   UNSIGNED_CHAR,      _uchar)
             DECLARE_CONVERSION_BY_CAST(_float, double,          DOUBLE,             _double)
+
+            case NONE:
+            case FLOAT:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -721,10 +817,10 @@ bool Variant::convertTo(tType type)
     case DOUBLE:
         switch (type)
         {
-        case BOOLEAN:
-            m_type = type;
-            m_value._bool = !MathUtils::RealEqual((Real) m_value._double, (Real) 0.0);
-            return true;
+            case BOOLEAN:
+                m_type = type;
+                m_value._bool = !MathUtils::RealEqual((Real) m_value._double, (Real) 0.0);
+                return true;
 
             DECLARE_CONVERSION_TO_STRING_WITH_CAST(_double, Real)
 
@@ -735,6 +831,17 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_BY_CAST(_double, unsigned short, UNSIGNED_SHORT,     _ushort)
             DECLARE_CONVERSION_BY_CAST(_double, unsigned char,  UNSIGNED_CHAR,      _uchar)
             DECLARE_CONVERSION_BY_CAST(_double, float,          FLOAT,              _float)
+
+            case NONE:
+            case DOUBLE:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
@@ -743,14 +850,14 @@ bool Variant::convertTo(tType type)
     case BOOLEAN:
         switch (type)
         {
-        case STRING:
-            {
-                m_type = type;
-                string* p = new string();
-                *p = (m_value._bool ? "True" : "False");
-                m_value._others = p;
-                return true;
-            }
+            case STRING:
+                {
+                    m_type = type;
+                    string* p = new string();
+                    *p = (m_value._bool ? "True" : "False");
+                    m_value._others = p;
+                    return true;
+                }
 
             DECLARE_CONVERSION_FROM_BOOLEAN(int,            INTEGER,                _uint)
             DECLARE_CONVERSION_FROM_BOOLEAN(short,          SHORT,                  _short)
@@ -760,118 +867,117 @@ bool Variant::convertTo(tType type)
             DECLARE_CONVERSION_FROM_BOOLEAN(unsigned char,  UNSIGNED_CHAR,          _uchar)
             DECLARE_CONVERSION_FROM_BOOLEAN(float,          FLOAT,                  _float)
             DECLARE_CONVERSION_FROM_BOOLEAN(double,         DOUBLE,                 _double)
+
+            case NONE:
+            case BOOLEAN:
+            case VECTOR3:
+            case QUATERNION:
+            case COLOR:
+            case RADIAN:
+            case DEGREE:
+            case STRUCT:
+                // Nothing to do, but the compiler complain if not present
+                break;
         }
         break;
 
 
         // Vector3 to TYPE
     case VECTOR3:
-        switch (type)
+        if (type == STRING)
         {
-        case STRING:
-            {
-                m_type = type;
-                Vector3* v = static_cast<Vector3*>(m_value._others);
-                string* s = new string();
-                *s += "(" + StringConverter::toString(v->x) + ", " +
-                      StringConverter::toString(v->y) + ", " + StringConverter::toString(v->z) + ")";
-                delete v;
-                m_value._others = s;
-                return true;
-            }
+            m_type = type;
+            Vector3* v = static_cast<Vector3*>(m_value._others);
+            string* s = new string();
+            *s += "(" + StringConverter::toString(v->x) + ", " +
+                  StringConverter::toString(v->y) + ", " + StringConverter::toString(v->z) + ")";
+            delete v;
+            m_value._others = s;
+            return true;
         }
         break;
 
 
         // Quaternion to TYPE
     case QUATERNION:
-        switch (type)
+        if (type == STRING)
         {
-        case STRING:
-            {
-                m_type = type;
-                Quaternion* q = static_cast<Quaternion*>(m_value._others);
-                string* s = new string();
-                *s += "(" + StringConverter::toString(q->w) + ", " + StringConverter::toString(q->x) + ", " +
-                      StringConverter::toString(q->y) + ", " + StringConverter::toString(q->z) + ")";
-                delete q;
-                m_value._others = s;
-                return true;
-            }
+            m_type = type;
+            Quaternion* q = static_cast<Quaternion*>(m_value._others);
+            string* s = new string();
+            *s += "(" + StringConverter::toString(q->w) + ", " + StringConverter::toString(q->x) + ", " +
+                  StringConverter::toString(q->y) + ", " + StringConverter::toString(q->z) + ")";
+            delete q;
+            m_value._others = s;
+            return true;
         }
         break;
 
 
         // Color to TYPE
     case COLOR:
-        switch (type)
+        if (type == STRING)
         {
-        case STRING:
-            {
-                m_type = type;
-                Color* c = static_cast<Color*>(m_value._others);
-                string* s = new string();
-                *s += "(" + StringConverter::toString(c->r) + ", " + StringConverter::toString(c->g) + ", " +
-                      StringConverter::toString(c->b) + ", " + StringConverter::toString(c->a) + ")";
-                delete c;
-                m_value._others = s;
-                return true;
-            }
+            m_type = type;
+            Color* c = static_cast<Color*>(m_value._others);
+            string* s = new string();
+            *s += "(" + StringConverter::toString(c->r) + ", " + StringConverter::toString(c->g) + ", " +
+                  StringConverter::toString(c->b) + ", " + StringConverter::toString(c->a) + ")";
+            delete c;
+            m_value._others = s;
+            return true;
         }
         break;
 
 
         // Radian to TYPE
     case RADIAN:
-        switch (type)
+        if (type == STRING)
         {
-        case STRING:
-            {
-                m_type = type;
-                Radian* a = static_cast<Radian*>(m_value._others);
-                string* s = new string();
-                *s = StringConverter::toString(a->valueRadians());
-                delete a;
-                m_value._others = s;
-                return true;
-            }
-
-        case DEGREE:
-            {
-                m_type = type;
-                Radian* a = static_cast<Radian*>(m_value._others);
-                m_value._others = new Degree(*a);
-                delete a;
-                return true;
-            }
+            m_type = type;
+            Radian* a = static_cast<Radian*>(m_value._others);
+            string* s = new string();
+            *s = StringConverter::toString(a->valueRadians());
+            delete a;
+            m_value._others = s;
+            return true;
+        }
+        else if (type == DEGREE)
+        {
+            m_type = type;
+            Radian* a = static_cast<Radian*>(m_value._others);
+            m_value._others = new Degree(*a);
+            delete a;
+            return true;
         }
         break;
 
 
         // Degree to TYPE
     case DEGREE:
-        switch (type)
+        if (type == STRING)
         {
-        case STRING:
-            {
-                m_type = type;
-                Degree* a = static_cast<Degree*>(m_value._others);
-                string* s = new string();
-                *s = StringConverter::toString(a->valueDegrees());
-                delete a;
-                m_value._others = s;
-                return true;
-            }
-
-        case RADIAN:
-            {
-                m_type = type;
-                Degree* a = static_cast<Degree*>(m_value._others);
-                m_value._others = new Radian(*a);
-                delete a;
-                return true;
-            }
+            m_type = type;
+            Degree* a = static_cast<Degree*>(m_value._others);
+            string* s = new string();
+            *s = StringConverter::toString(a->valueDegrees());
+            delete a;
+            m_value._others = s;
+            return true;
         }
+        else if (type == RADIAN)
+        {
+            m_type = type;
+            Degree* a = static_cast<Degree*>(m_value._others);
+            m_value._others = new Radian(*a);
+            delete a;
+            return true;
+        }
+        break;
+
+    case NONE:
+    case STRUCT:
+        // Nothing to do, but the compiler complain if not present
         break;
     }
 
