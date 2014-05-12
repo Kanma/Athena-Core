@@ -1,7 +1,7 @@
 #include <Athena-Core/Scripting.h>
 #include <Athena-Scripting/Utils.h>
 #include <Athena-Scripting/ScriptingManager.h>
-#include "../mocks/Describable.h"
+#include "../../Athena-Core/mocks/Describable.h"
 #include <v8.h>
 
 using namespace Athena::Utils;
