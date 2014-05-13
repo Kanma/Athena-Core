@@ -2,10 +2,6 @@
 xmake_import_search_paths(ATHENA_CORE)
 xmake_import_search_paths(UNITTEST_CPP)
 
-if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
-    xmake_import_search_paths(ATHENA_SCRIPTING)
-endif()
-
 
 # List the header files
 set(HEADERS mocks/Describable.h
@@ -32,30 +28,11 @@ set(SRCS main.cpp
 )
 
 
-if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
-    set(HEADERS ${HEADERS} environments/ScriptingTestEnvironment.h)
-
-    set(SRCS ${SRCS}
-             module/module.cpp
-             module/Describable.cpp
-             tests/scripting.cpp
-    )
-endif()
-
-
 # Declaration of the executable
 xmake_create_executable(UNITTESTS_ATHENA_CORE UnitTests-Athena-Core ${HEADERS} ${SRCS})
 
-xmake_add_to_list_property(UNITTESTS_ATHENA_CORE COMPILE_DEFINITIONS "ATHENA_CORE_UNITTESTS_SCRIPTS_PATH=\"${ATHENA_CORE_SOURCE_DIR}/unittests/Athena-Core/scripts/\";ATHENA_SCRIPTING_JS_TEST_RUNNER_PATH=\"${ATHENA_SCRIPTING_SOURCE_DIR}/unittests/js-test-runner/\"")
-
 xmake_project_link(UNITTESTS_ATHENA_CORE UNITTEST_CPP)
 xmake_project_link(UNITTESTS_ATHENA_CORE ATHENA_CORE)
-
-if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
-    xmake_project_link(UNITTESTS_ATHENA_CORE ATHENA_SCRIPTING)
-
-    add_dependencies(UnitTests-Athena-Core Athena-Core-Scripting-module Run-UnitTests-Athena-Scripting)
-endif()
 
 
 file(MAKE_DIRECTORY "${XMAKE_BINARY_DIR}/generated/unittests/Athena-Core/")

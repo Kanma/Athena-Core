@@ -12,7 +12,7 @@ set(ATHENA_CORE_DETAILED_LOGS ON CACHE BOOL "Enable detailed logs")
 
 set(ATHENA_CORE_VERSION_MAJOR 1)
 set(ATHENA_CORE_VERSION_MINOR 3)
-set(ATHENA_CORE_VERSION_PATCH 2)
+set(ATHENA_CORE_VERSION_PATCH 3)
 set(ATHENA_CORE_VERSION_SUFFIX "")
 
 
@@ -67,7 +67,3 @@ endif()
 add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(unittests)
-
-if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
-    add_subdirectory(scripting)
-endif()
